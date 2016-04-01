@@ -72,7 +72,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREA_TABLA_MASCOTAS);
-
         db.execSQL(CREA_TABLA_TIPO_EVENTO);
         db.execSQL(CREA_TABLA_EVENTOS);
         insertarMascota1(db);
@@ -96,6 +95,5 @@ public class DBHelper extends SQLiteOpenHelper {
         mascota1.put(CN_NXip,"1");
         mascota1.put(CN_Path,"storage");
         db.insert(TABLA_MASCOTAS,null,mascota1);
-
     }
 }
