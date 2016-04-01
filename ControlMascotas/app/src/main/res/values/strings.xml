@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Control Mascotas</string>
+    <string name="app_name">Control de Mascotas</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Mascotas</string>
+    <string name="title_section2">Nueva mascota</string>
+    <string name="title_section3">Agenda</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
