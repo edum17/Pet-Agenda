@@ -1,6 +1,7 @@
 package com.example.german.controlmascotas;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class ListViewAdapterMascotas extends BaseAdapter {
     ArrayList<ItemMascotas> mascotas;
     LayoutInflater inflater;
 
-    public ListViewAdapterMascotas(Context context, ArrayList<ItemMascotas> mascotas) {
+    public ListViewAdapterMascotas(Context context,ArrayList<ItemMascotas> mascotas) {
         this.context = context;
         this.mascotas = mascotas;
     }
@@ -51,13 +52,10 @@ public class ListViewAdapterMascotas extends BaseAdapter {
         return mascotas.get(position).getFechaNac();
     }
 
-    public Integer getItemNumberX(int position) {
-        return mascotas.get(position).getNXip();
-    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView txtNombre, txtTipo, txtFechaNac, txtNumXip;
+        TextView txtNombre, txtTipo, txtFechaNac;
         ImageView imgImagen;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -67,8 +65,16 @@ public class ListViewAdapterMascotas extends BaseAdapter {
         txtNombre = (TextView) itemView.findViewById(R.id.fila_nombre);
         txtTipo = (TextView) itemView.findViewById(R.id.fila_tipo);
         txtFechaNac = (TextView) itemView.findViewById(R.id.fila_fecha_nac);
-        txtNumXip = (TextView) itemView.findViewById(R.id.fila_nombre);
-        imgImagen = (ImageView) itemView.findViewById(R,id.fila_imagen);
+        imgImagen = (ImageView) itemView.findViewById(R.id.fila_imagen);
+
+        txtNombre.setText(mascotas.get(position).getNombre());
+        txtTipo.setText(mascotas.get(position).getTipo());
+        txtFechaNac.setText(mascotas.get(position).getFechaNac());
+
+        String dir = mascotas.get(position).getPath();
+
+        if(dir.equals("storage")) imgImagen.setBackgroundResource(R.drawable.drawer_shadow);
+
 
         //Pendiente comprobar si tiene imagen o no.
 

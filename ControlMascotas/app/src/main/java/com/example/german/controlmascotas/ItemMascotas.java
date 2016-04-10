@@ -7,8 +7,11 @@ public class ItemMascotas {
     private String Nombre;
     private String Tipo;
     private String FechaNac;
-    private Integer NXip;
-    private Integer Path;
+    private String Path;
+
+    public ItemMascotas(){
+
+    }
 
     public String getNombre() {
         return Nombre;
@@ -34,19 +37,11 @@ public class ItemMascotas {
         FechaNac = fechaNac;
     }
 
-    public Integer getNXip() {
-        return NXip;
-    }
-
-    public void setNXip(Integer NXip) {
-        this.NXip = NXip;
-    }
-
-    public Integer getPath() {
+    public String getPath() {
         return Path;
     }
 
-    public void setPath(Integer path) {
+    public void setPath(String path) {
         Path = path;
     }
 }
