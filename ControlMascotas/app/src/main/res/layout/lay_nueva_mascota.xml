@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
@@ -9,4 +10,110 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Nueva mascota"
         android:id="@+id/textViewNuevaM" />
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Nombre:"
+            android:id="@+id/textVNombreM"
+            android:layout_marginTop="34dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTNombreM"
+            android:inputType="text"
+            android:layout_above="@+id/textVTipoM"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/textVNombreM" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Tipo:"
+            android:id="@+id/textVTipoM"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/textVNombreM"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Número chip:"
+            android:id="@+id/textVNumneroC"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editTNumChip"
+            android:layout_alignBottom="@+id/textVNumneroC"
+            android:layout_toEndOf="@+id/textVNumneroC" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Fecha nacimiento:"
+            android:id="@+id/textVFechaNac"
+            android:layout_below="@+id/textVTipoM"
+            android:layout_toEndOf="@+id/scrollView"
+            android:layout_marginTop="53dp" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/butGuardar"
+            android:id="@+id/butGuardar"
+            android:layout_below="@+id/editTNumChip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="72dp"
+            android:onClick="addMascotaDB()" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTTipoM"
+            android:layout_alignTop="@+id/textVTipoM"
+            android:layout_alignEnd="@+id/editTextFechaN"
+            android:layout_toEndOf="@+id/textVTipoM"
+            android:inputType="text" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextFechaN"
+            android:layout_alignBottom="@+id/textVFechaNac"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/textVFechaNac"
+            android:inputType="date" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir fecha"
+            android:id="@+id/butFecha"
+            android:layout_below="@+id/editTextFechaN"
+            android:layout_alignEnd="@+id/editTextFechaN"
+            android:onClick="addDate" />
+
+    </RelativeLayout>
+
+</GridLayout>

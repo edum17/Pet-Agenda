@@ -1,7 +1,6 @@
 package com.example.german.controlmascotas;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,10 @@ import java.util.ArrayList;
 public class ListViewAdapterMascotas extends BaseAdapter {
 
     Context context;
-    ArrayList<ItemMascotas> mascotas;
+    ArrayList<Mascota> mascotas;
     LayoutInflater inflater;
 
-    public ListViewAdapterMascotas(Context context,ArrayList<ItemMascotas> mascotas) {
+    public ListViewAdapterMascotas(Context context,ArrayList<Mascota> mascotas) {
         this.context = context;
         this.mascotas = mascotas;
     }

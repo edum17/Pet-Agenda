@@ -3,14 +3,23 @@ package com.example.german.controlmascotas;
 /**
  * Created by German on 01/04/2016.
  */
-public class ItemMascotas {
+public class Mascota {
     private String Nombre;
     private String Tipo;
     private String FechaNac;
+    private Integer NXip;
     private String Path;
 
-    public ItemMascotas(){
+    public Mascota() {
 
+    }
+
+    public Mascota(String nombre, String tipo, String fecha, Integer nxip, String path){
+        Nombre = nombre;
+        Tipo = tipo;
+        FechaNac = fecha;
+        NXip = nxip;
+        Path = path;
     }
 
     public String getNombre() {
@@ -35,6 +44,14 @@ public class ItemMascotas {
 
     public void setFechaNac(String fechaNac) {
         FechaNac = fechaNac;
+    }
+
+    public Integer getNXip() {
+        return NXip;
+    }
+
+    public void setNXip(Integer nxip) {
+        NXip = nxip;
     }
 
     public String getPath() {

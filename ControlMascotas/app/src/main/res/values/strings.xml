@@ -9,7 +9,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
-
     <string name="action_settings">Settings</string>
+
+
+    //Nueva Mascota
     <string name="txtMascotas">Mascotas</string>
+    <string name="editTNombreM"/>
+    <string name="textVNumeroC">Número de chip:</string>
+    <string name="buttonFecha">Fecha</string>
+    <string name="butGuardar">Guardar</string>
 </resources>
