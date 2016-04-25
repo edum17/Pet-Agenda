@@ -54,7 +54,7 @@ public class ListViewAdapterMascotas extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView txtNombre, txtTipo, txtFechaNac;
+        TextView txtNombre, txtTipo, txtFechaNac, txtNXip;
         ImageView imgImagen;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,18 +64,17 @@ public class ListViewAdapterMascotas extends BaseAdapter {
         txtNombre = (TextView) itemView.findViewById(R.id.fila_nombre);
         txtTipo = (TextView) itemView.findViewById(R.id.fila_tipo);
         txtFechaNac = (TextView) itemView.findViewById(R.id.fila_fecha_nac);
+        txtNXip = (TextView) itemView.findViewById(R.id.fila_numxip);
         imgImagen = (ImageView) itemView.findViewById(R.id.fila_imagen);
 
         txtNombre.setText(mascotas.get(position).getNombre());
         txtTipo.setText(mascotas.get(position).getTipo());
         txtFechaNac.setText(mascotas.get(position).getFechaNac());
+        txtNXip.setText(mascotas.get(position).getNXip());
 
         String dir = mascotas.get(position).getPath();
 
-        if(dir.equals("storage")) imgImagen.setBackgroundResource(R.drawable.drawer_shadow);
-
-
-        //Pendiente comprobar si tiene imagen o no.
+        if(dir.equals("default")) imgImagen.setBackgroundResource(R.mipmap.img_def_00);
 
         return itemView;
     }

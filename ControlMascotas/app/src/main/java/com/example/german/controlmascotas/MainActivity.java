@@ -59,7 +59,6 @@ public class MainActivity extends Activity
 
         switch (position) {
             case 0:
-
                 //Mascotas
                 fragment = new Mascotas();
 

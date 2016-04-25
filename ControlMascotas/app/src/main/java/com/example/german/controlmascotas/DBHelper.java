@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
             CN_NomM + " TEXT PRIMARY KEY, " +
             CN_TipoM + " TEXT NOT NULL, " +
             CN_FechaNac + " DATE NOT NULL, " +
-            CN_NXip + " INTEGER NOT NULL, " +
+            CN_NXip + " TEXT NOT NULL, " +
             CN_Path + " TEXT);";
 
     public static final String CREA_TABLA_TIPO_EVENTO = "CREATE TABLE " + TABLA_TIPO_EVENTO + "(" +

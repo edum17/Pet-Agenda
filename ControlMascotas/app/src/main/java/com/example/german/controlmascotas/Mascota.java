@@ -7,14 +7,14 @@ public class Mascota {
     private String Nombre;
     private String Tipo;
     private String FechaNac;
-    private Integer NXip;
+    private String NXip;
     private String Path;
 
     public Mascota() {
 
     }
 
-    public Mascota(String nombre, String tipo, String fecha, Integer nxip, String path){
+    public Mascota(String nombre, String tipo, String fecha, String nxip, String path){
         Nombre = nombre;
         Tipo = tipo;
         FechaNac = fecha;
@@ -46,11 +46,11 @@ public class Mascota {
         FechaNac = fechaNac;
     }
 
-    public Integer getNXip() {
+    public String getNXip() {
         return NXip;
     }
 
-    public void setNXip(Integer nxip) {
+    public void setNXip(String nxip) {
         NXip = nxip;
     }
 
