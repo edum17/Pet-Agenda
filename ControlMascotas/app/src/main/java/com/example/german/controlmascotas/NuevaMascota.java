@@ -7,6 +7,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +38,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by German on 01/04/2016.
@@ -45,7 +53,8 @@ public class NuevaMascota extends Fragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
     private String APP_DIRECTORY = "Control de Mascotas";
     private String MEDIA_DIRECTORY = APP_DIRECTORY + "media";
-    private String TEMPORAL_PICTURE_NAME = "temporal.jpg";
+    private String PICTURE_NAME;
+
     String Path;
 
     SQLControlador dbconeccion;
@@ -54,6 +63,7 @@ public class NuevaMascota extends Fragment {
     ImageButton butAnadirImg, butFechaN, butListaT;
 
     ImageView img;
+    CircleImageView cicleiv;
 
     EditText nombre,tipo,fecha,nchip;
 
@@ -107,11 +117,13 @@ public class NuevaMascota extends Fragment {
             }
         });
 
+        Path = "default";
+
         return rootView;
     }
 
     public void addDate() {
-        Toast.makeText(getActivity(), "Funciona", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Funciona", Toast.LENGTH_SHORT).show();
         DialogFragment dialog = new DatePickerFragment();
         dialog.show(getFragmentManager(),"Fecha nacimiento");
     }
@@ -137,8 +149,6 @@ public class NuevaMascota extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (items[which].equals("Hacer foto")) {
-                    //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    //startActivityForResult(intent, 0);
                     openCamera();
                 } else if (items[which].equals("Galería")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -154,7 +164,15 @@ public class NuevaMascota extends Fragment {
 
 
     private void openCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = new File(Environment.getExternalStorageDirectory(), APP_DIRECTORY);
+        file.mkdirs();
+        String timeStamp = new SimpleDateFormat("ddmmyyyy_HHmmss").format(new Date());
+        PICTURE_NAME = "CM_" + timeStamp + ".jpg";
+        String path = Environment.getExternalStorageDirectory() + File.separator + APP_DIRECTORY + File.separator + PICTURE_NAME;
+        File newFile = new File(path);
+
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); //Mediante este llamada se abirar la camara y captura la imagen
+        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(newFile)); //Para almacenar imagen o video
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
@@ -162,13 +180,11 @@ public class NuevaMascota extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) { //Hacemos foto
             if (resultCode == Activity.RESULT_OK) {
-                Bitmap bmp = (Bitmap) data.getExtras().get("data");
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG,100,baos);
-                byte[] b = baos.toByteArray();
-                Path = Base64.encodeToString(b,Base64.DEFAULT);
-                img.setImageBitmap(bmp);
-                //System.out.println("*************************** Path: " + Path.length());
+                String dir = Environment.getExternalStorageDirectory() + File.separator + APP_DIRECTORY + File.separator + PICTURE_NAME;
+                Bitmap bitmap;
+                Path = dir;
+                bitmap = BitmapFactory.decodeFile(dir);
+                img.setImageBitmap(bitmap);
             }
         }
 
@@ -199,7 +215,11 @@ public class NuevaMascota extends Fragment {
     }
 
     public void clear() {
-
+        img.setBackgroundResource(R.mipmap.img_def_01);
+        textVFecha.setText(" ");
+        nombre.setText(" ");
+        tipo.setText(" ");
+        fecha.setText(" ");
+        nchip.setText(" ");
     }
-
 }

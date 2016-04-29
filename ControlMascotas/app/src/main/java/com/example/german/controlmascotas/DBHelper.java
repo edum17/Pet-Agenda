@@ -93,7 +93,7 @@ public class DBHelper extends SQLiteOpenHelper {
         mascota1.put(CN_TipoM,"A");
         mascota1.put(CN_FechaNac,"11/11/1111");
         mascota1.put(CN_NXip,"1");
-        mascota1.put(CN_Path,"storage");
+        mascota1.put(CN_Path,"default");
         db.insert(TABLA_MASCOTAS,null,mascota1);
     }
 }
