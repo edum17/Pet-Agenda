@@ -38,6 +38,8 @@ public class SQLControlador {
         res.put(DBHelper.CN_TipoM,im.getTipo());
         res.put(DBHelper.CN_FechaNac,im.getFechaNac());
         res.put(DBHelper.CN_NXip,im.getNXip());
+        res.put(DBHelper.CN_Med,im.getMedicamento());
+        res.put(DBHelper.CN_Aler,im.getAlergia());
         res.put(DBHelper.CN_Path, im.getPath());
         return res;
     }
@@ -76,6 +78,20 @@ public class SQLControlador {
             m.setPath(c.getString(c.getColumnIndex("_path")));
             m.setNXip(c.getString(c.getColumnIndex("_nxip")));
             res.add(m);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    public ArrayList<String> listarTiposAnimales() {
+        String query = "SELECT DISTINCT " + dbhelper.CN_TipoM + " FROM " + dbhelper.TABLA_MASCOTAS + " ORDER BY " + dbhelper.CN_TipoM;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<String> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            String tipoM;
+            tipoM = c.getString(c.getColumnIndex("_tipoM"));
+            res.add(tipoM);
             c.moveToNext();
         }
         return res;

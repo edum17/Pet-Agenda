@@ -8,17 +8,20 @@
     <LinearLayout android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_marginLeft="35dp">>
         <ImageView
             android:id="@id/fila_imagen"
             android:layout_width="80dp"
-            android:layout_height="80dp" />
+            android:layout_height="80dp"
+/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp">
         <TextView
             android:id="@+id/fila_nombre"
             android:text="Nombre"

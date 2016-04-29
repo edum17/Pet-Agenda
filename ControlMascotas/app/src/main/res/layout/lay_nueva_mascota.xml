@@ -122,6 +122,39 @@
                 android:layout_alignBottom="@+id/textVNumneroC"
                 android:layout_toEndOf="@+id/textVNumneroC" />
 
+            <View style="@style/Divisor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginLeft="35dp"
+                android:text="Cuidados adicionales de la mascota:"/>
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Medicación"
+                android:inputType="text"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:ems="10"
+                android:id="@+id/editTMedicacion" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Alergía"
+                android:inputType="text"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:ems="10"
+                android:id="@+id/editTAlergia" />
+
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

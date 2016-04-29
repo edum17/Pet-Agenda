@@ -39,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -63,9 +64,8 @@ public class NuevaMascota extends Fragment {
     ImageButton butAnadirImg, butFechaN, butListaT;
 
     ImageView img;
-    CircleImageView cicleiv;
 
-    EditText nombre,tipo,fecha,nchip;
+    EditText nombre,tipo,fecha,nchip,medicamento,alergia;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +84,8 @@ public class NuevaMascota extends Fragment {
         tipo = (EditText) rootView.findViewById(R.id.editTTipoM);
         fecha = (EditText) rootView.findViewById(R.id.editTextFechaN);
         nchip = (EditText) rootView.findViewById(R.id.editTNumChip);
+        medicamento = (EditText) rootView.findViewById(R.id.editTMedicacion);
+        alergia = (EditText) rootView.findViewById(R.id.editTAlergia);
         butFechaN = (ImageButton) rootView.findViewById(R.id.butFecha);
         butFechaN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,14 +132,28 @@ public class NuevaMascota extends Fragment {
 
     public void addMascotaDB() {
         //Comprobar si el tipo de animal se ha seleccionado de una lista o se ha añadido manualmente
-        Mascota m = new Mascota(nombre.getText().toString(),tipo.getText().toString(),fecha.getText().toString(),nchip.getText().toString(),Path);
-        if (dbconeccion.insertarDatos(m)) {
-            dbconeccion.cerrar();
-            Toast.makeText(getActivity(), "Mascota guardada", Toast.LENGTH_SHORT).show();
-            clear();
+        if (!nombre.getText().toString().isEmpty() && !tipo.getText().toString().isEmpty() && !fecha.getText().toString().isEmpty() && !nchip.getText().toString().isEmpty()) {
+            Mascota m = new Mascota(nombre.getText().toString(), tipo.getText().toString(), fecha.getText().toString(), nchip.getText().toString(), medicamento.getText().toString(), alergia.getText().toString(), Path);
+            if (dbconeccion.insertarDatos(m)) {
+                dbconeccion.cerrar();
+                Toast.makeText(getActivity(), "Mascota guardada", Toast.LENGTH_SHORT).show();
+                clear();
+            } else
+                Toast.makeText(getActivity(), "Existe una mascota con ese nombre", Toast.LENGTH_SHORT).show();
         }
-        else Toast.makeText(getActivity(), "Existe una mascota con ese nombre", Toast.LENGTH_SHORT).show();
-
+        else {
+            AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
+            Adialog.setTitle("Guardar mascota");
+            Adialog.setMessage("Para registrar una nueva mascota necesario introducir su nombre, el tipo de animal, la fecha de nacimiento y el número del chip.");
+            Adialog.setPositiveButton("Entiendo", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog Alertdialog = Adialog.create();
+            Alertdialog.show();
+        }
     }
 
     public void anadirImagen() {
@@ -211,15 +227,40 @@ public class NuevaMascota extends Fragment {
 
 
     public void listarTipoAnimales() {
-        Toast.makeText(getActivity(), "Listo todos los tipos de animales", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Listo todos los tipos de animales", Toast.LENGTH_SHORT).show();
+        final ArrayList<String> tipoM = dbconeccion.listarTiposAnimales();
+
+        //Creacion de sequencia de items
+        final CharSequence[] Animals = tipoM.toArray(new String[tipoM.size()]);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        dialogBuilder.setTitle("Animales");
+        dialogBuilder.setItems(Animals, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                String animalSel = Animals[item].toString();  //Selected item in listview
+                tipo.setText(animalSel);
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        //Creacion del objeto alert dialog via builder
+        AlertDialog alertDialogObject = dialogBuilder.create();
+        //Mostramos el dialog
+        alertDialogObject.show();
+
+
+
     }
 
     public void clear() {
-        img.setBackgroundResource(R.mipmap.img_def_01);
-        textVFecha.setText(" ");
-        nombre.setText(" ");
-        tipo.setText(" ");
-        fecha.setText(" ");
-        nchip.setText(" ");
+        nombre.setText(null);
+        tipo.setText(null);
+        fecha.setText(null);
+        nchip.setText(null);
+        medicamento.setText(null);
+        alergia.setText(null);
     }
 }

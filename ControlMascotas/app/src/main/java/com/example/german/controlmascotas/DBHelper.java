@@ -25,11 +25,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CN_TipoM = "_tipoM";
     public static final String CN_FechaNac = "_fechaNac";
     public static final String CN_NXip = "_nxip";
+    public static final String CN_Med = "_medicacion";
+    public static final String CN_Aler = "_alergia";
     public static final String CN_Path = "_path";
 
     //Tabla Eventos
     public static final String TABLA_EVENTOS = "Eventos";
-    public static final String CN_NomE = "_nomE";
+    public static final String CN_NomME = "_nomME";
     public static final String CN_FechaE = "_fechaE";
     public static final String CN_HoraE = "_hora";
     public static final String CN_TipoE = "_tipoE";
@@ -46,18 +48,20 @@ public class DBHelper extends SQLiteOpenHelper {
             CN_TipoM + " TEXT NOT NULL, " +
             CN_FechaNac + " DATE NOT NULL, " +
             CN_NXip + " TEXT NOT NULL, " +
+            CN_Med + " TEXT NOT NULL, " +
+            CN_Aler + " TEXT NOT NULL, " +
             CN_Path + " TEXT);";
 
     public static final String CREA_TABLA_TIPO_EVENTO = "CREATE TABLE " + TABLA_TIPO_EVENTO + "(" +
             CN_NomTE + "TEXT PRIMARY KEY);";
 
     public static final String CREA_TABLA_EVENTOS = "CREATE TABLE " + TABLA_EVENTOS + "(" +
-            CN_NomE + " TEXT NOT NULL, " +
+            CN_NomME + " TEXT NOT NULL, " +
             CN_FechaE + " TEXT NOT NULL, " +
             CN_HoraE + " TEXT NOT NULL, " +
             CN_TipoE + " TEXT NOT NULL, " +
-            "PRIMARY KEY (" + CN_NomE + "," + CN_FechaE + "," + CN_HoraE + "), " +
-            "FOREIGN KEY (" + CN_NomE + ") REFERENCES " + TABLA_MASCOTAS + " (" + CN_NomM + "), " +
+            "PRIMARY KEY (" + CN_NomME + "," + CN_FechaE + "," + CN_HoraE + "), " +
+            "FOREIGN KEY (" + CN_NomME + ") REFERENCES " + TABLA_MASCOTAS + " (" + CN_NomM + "), " +
             "FOREIGN KEY (" + CN_TipoE + ") REFERENCES " + TABLA_TIPO_EVENTO + " (" + CN_NomTE + "));";
 
 
@@ -75,6 +79,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREA_TABLA_TIPO_EVENTO);
         db.execSQL(CREA_TABLA_EVENTOS);
         insertarMascota1(db);
+        insertarMascota2(db);
+        insertarTipoEvento(db);
     }
 
     @Override
@@ -93,7 +99,41 @@ public class DBHelper extends SQLiteOpenHelper {
         mascota1.put(CN_TipoM,"A");
         mascota1.put(CN_FechaNac,"11/11/1111");
         mascota1.put(CN_NXip,"1");
+        mascota1.put(CN_Med,"No");
+        mascota1.put(CN_Aler,"Paracetamol");
         mascota1.put(CN_Path,"default");
         db.insert(TABLA_MASCOTAS,null,mascota1);
+    }
+
+
+    private void insertarMascota2(SQLiteDatabase db) {
+        ContentValues mascota2 = new ContentValues();
+        mascota2.put(CN_NomM,"B");
+        mascota2.put(CN_TipoM,"B");
+        mascota2.put(CN_FechaNac,"22/22/2222");
+        mascota2.put(CN_NXip,"2");
+        mascota2.put(CN_Med,"Gelocatil");
+        mascota2.put(CN_Aler,"Paracetamol");
+        mascota2.put(CN_Path,"default");
+        db.insert(TABLA_MASCOTAS,null,mascota2);
+    }
+
+    private void insertarTipoEvento(SQLiteDatabase db) {
+        ContentValues tevento = new ContentValues();
+
+        tevento.put(CN_NomTE,"Vacunación");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento);
+
+        tevento.put(CN_NomTE,"Desparacitación");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento);
+
+        tevento.put(CN_NomTE,"Veterinario");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento);
+
+        tevento.put(CN_NomTE,"Peluquería");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento);
+
+        tevento.put(CN_NomTE,"Adiestrador");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento);
     }
 }
