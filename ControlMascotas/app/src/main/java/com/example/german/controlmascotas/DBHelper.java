@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CN_HoraE = "_hora";
     public static final String CN_TipoE = "_tipoE";
 
-    //Tabla Eventos
+    //Tabla TipoEventos
     public static final String TABLA_TIPO_EVENTO = "TipoEventos";
     public static final String CN_NomTE = "_nomTE";
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
             CN_Path + " TEXT);";
 
     public static final String CREA_TABLA_TIPO_EVENTO = "CREATE TABLE " + TABLA_TIPO_EVENTO + "(" +
-            CN_NomTE + "TEXT PRIMARY KEY);";
+            CN_NomTE + " TEXT PRIMARY KEY);";
 
     public static final String CREA_TABLA_EVENTOS = "CREATE TABLE " + TABLA_EVENTOS + "(" +
             CN_NomME + " TEXT NOT NULL, " +
@@ -80,7 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREA_TABLA_EVENTOS);
         insertarMascota1(db);
         insertarMascota2(db);
-        insertarTipoEvento(db);
+        insertarTiposEventos(db);
     }
 
     @Override
@@ -118,22 +118,25 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(TABLA_MASCOTAS,null,mascota2);
     }
 
-    private void insertarTipoEvento(SQLiteDatabase db) {
-        ContentValues tevento = new ContentValues();
+    private void insertarTiposEventos(SQLiteDatabase db) {
+        ContentValues tevento1 = new ContentValues();
+        tevento1.put(CN_NomTE,"Vacunación");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento1);
 
-        tevento.put(CN_NomTE,"Vacunación");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento);
+        ContentValues tevento2 = new ContentValues();
+        tevento2.put(CN_NomTE,"Desparacitación");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento2);
 
-        tevento.put(CN_NomTE,"Desparacitación");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento);
+        ContentValues tevento3 = new ContentValues();
+        tevento3.put(CN_NomTE,"Veterinario");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento3);
 
-        tevento.put(CN_NomTE,"Veterinario");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento);
+        ContentValues tevento4 = new ContentValues();
+        tevento4.put(CN_NomTE,"Peluquería");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento4);
 
-        tevento.put(CN_NomTE,"Peluquería");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento);
-
-        tevento.put(CN_NomTE,"Adiestrador");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento);
+        ContentValues tevento5 = new ContentValues();
+        tevento5.put(CN_NomTE,"Adiestrador");
+        db.insert(TABLA_TIPO_EVENTO,null,tevento5);
     }
 }
