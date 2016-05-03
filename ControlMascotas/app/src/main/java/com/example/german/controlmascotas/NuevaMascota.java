@@ -256,6 +256,7 @@ public class NuevaMascota extends Fragment {
     }
 
     public void clear() {
+        img.setBackgroundResource(R.mipmap.img_def_01);
         nombre.setText(null);
         tipo.setText(null);
         fecha.setText(null);

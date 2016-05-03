@@ -18,4 +18,8 @@
     <string name="textVNumeroC">Número de chip:</string>
     <string name="buttonFecha">Fecha</string>
     <string name="butGuardar">Guardar</string>
+
+    //Layout Consultar Mascota
+    <string name="activity_consultar_mascota">Consultar mascota</string>
+
 </resources>

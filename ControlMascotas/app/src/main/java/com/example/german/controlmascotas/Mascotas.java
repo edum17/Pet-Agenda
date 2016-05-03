@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.content.Intent;
 
 
 /**
@@ -25,7 +26,7 @@ public class Mascotas extends Fragment {
 
         View rootView = inflater.inflate(R.layout.lay_mascotas, container, false);
 
-        context = container.getContext();
+        context = rootView.getContext();
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
 
@@ -40,9 +41,17 @@ public class Mascotas extends Fragment {
         final ListViewAdapterMascotas adapter = new ListViewAdapterMascotas(context,dbconeccion.listarMascotas());
         adapter.notifyDataSetChanged();
         lista.setAdapter(adapter);
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent consultar_mascota = new Intent(getActivity(),ConsultarMascota.class);
+                String nombre = adapter.getItemName(position);
+                consultar_mascota.putExtra("nombreM",nombre);
+                getActivity().startActivity(consultar_mascota);
+            }
+        });
     }
 }
-
 
 /*
 
