@@ -52,11 +52,3 @@ public class Mascotas extends Fragment {
         });
     }
 }
-
-/*
-
-Intent conultar_mascota = new Intent(context,ConsultarMascota.class);
-                String nombre = adapter.getItemName(position);
-                consultar_mascota.putExtra("nombreM",nombre);
-                startActivity(conultar_mascota);
- */

@@ -53,7 +53,6 @@ public class NuevaMascota extends Fragment {
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
     private String APP_DIRECTORY = "Control de Mascotas";
-    private String MEDIA_DIRECTORY = APP_DIRECTORY + "media";
     private String PICTURE_NAME;
 
     String Path;
@@ -133,9 +132,12 @@ public class NuevaMascota extends Fragment {
     public void addMascotaDB() {
         //Comprobar si el tipo de animal se ha seleccionado de una lista o se ha añadido manualmente
         if (!nombre.getText().toString().isEmpty() && !tipo.getText().toString().isEmpty() && !fecha.getText().toString().isEmpty() && !nchip.getText().toString().isEmpty()) {
+            if (medicamento.getText().toString().isEmpty()) medicamento.setText("No");
+            if (alergia.getText().toString().isEmpty()) alergia.setText("No");
             Mascota m = new Mascota(nombre.getText().toString(), tipo.getText().toString(), fecha.getText().toString(), nchip.getText().toString(), medicamento.getText().toString(), alergia.getText().toString(), Path);
+
             if (dbconeccion.insertarDatos(m)) {
-                dbconeccion.cerrar();
+                //dbconeccion.cerrar();
                 Toast.makeText(getActivity(), "Mascota guardada", Toast.LENGTH_SHORT).show();
                 clear();
             } else
@@ -158,7 +160,7 @@ public class NuevaMascota extends Fragment {
 
     public void anadirImagen() {
         //Toast.makeText(getActivity(),"Llamo a la camara",Toast.LENGTH_SHORT).show();
-        final CharSequence[] items = {"Hacer foto","Galería","Cancelar"};
+        final CharSequence[] items = {"Hacer foto","Galería"};
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Añadir imagen");
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -170,9 +172,13 @@ public class NuevaMascota extends Fragment {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
                     startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen"), SELECT_PICTURE);
-                } else if (items[which].equals("Cancelar")) {
-                    dialog.dismiss();
                 }
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
         });
         builder.show();

@@ -6,7 +6,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by German on 01/04/2016.
@@ -92,6 +97,43 @@ public class SQLControlador {
             String tipoM;
             tipoM = c.getString(c.getColumnIndex("_tipoM"));
             res.add(tipoM);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+
+    public String getDiaSemana(String fecha) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaActual = null;
+        try {
+            fechaActual = df.parse(fecha);
+        } catch (ParseException e) {
+            System.err.println("No se ha podido parsear la fecha.");
+            e.printStackTrace();
+        }
+        GregorianCalendar fechaCalendario = new GregorianCalendar();
+        fechaCalendario.setTime(fechaActual);
+        int diaSemana = fechaCalendario.get(Calendar.DAY_OF_WEEK);
+        if (diaSemana == 1) return "Domingo";
+        else if (diaSemana == 2) return "Lunes";
+        else if (diaSemana == 3) return "Martes";
+        else if (diaSemana == 4) return "Miércoles";
+        else if (diaSemana == 5) return "Jueves";
+        else if (diaSemana == 6) return "Viernes";
+        else return "Sábado";
+    }
+
+    public ArrayList<DiaFechaAgenda> listarDiasAgenda() {
+        String query = "SELECT DISTINCT " + dbhelper.CN_FechaE + " FROM " + dbhelper.TABLA_EVENTOS + " ORDER BY " + dbhelper.CN_FechaE;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<DiaFechaAgenda> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            DiaFechaAgenda dfa = new DiaFechaAgenda();
+            dfa.setDiaSemana(getDiaSemana(c.getString(c.getColumnIndex("_fechaE"))));
+            dfa.setFecha(c.getString(c.getColumnIndex("_fechaE")));
+            res.add(dfa);
             c.moveToNext();
         }
         return res;

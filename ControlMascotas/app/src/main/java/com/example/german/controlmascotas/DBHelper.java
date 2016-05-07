@@ -81,6 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
         insertarMascota1(db);
         insertarMascota2(db);
         insertarTiposEventos(db);
+        insertarEventos(db);
     }
 
     @Override
@@ -138,5 +139,42 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues tevento5 = new ContentValues();
         tevento5.put(CN_NomTE,"Adiestrador");
         db.insert(TABLA_TIPO_EVENTO,null,tevento5);
+    }
+
+    private void insertarEventos(SQLiteDatabase db) {
+        ContentValues evento1 = new ContentValues();
+        evento1.put(CN_NomME,"A");
+        evento1.put(CN_FechaE,"11/11/1111");
+        evento1.put(CN_HoraE,"08:00");
+        evento1.put(CN_TipoE,"Vacunación");
+        db.insert(TABLA_EVENTOS,null,evento1);
+
+        ContentValues evento2 = new ContentValues();
+        evento2.put(CN_NomME,"A");
+        evento2.put(CN_FechaE,"11/11/1111");
+        evento2.put(CN_HoraE,"09:00");
+        evento2.put(CN_TipoE,"Desparacitación");
+        db.insert(TABLA_EVENTOS,null,evento2);
+
+        ContentValues evento3 = new ContentValues();
+        evento3.put(CN_NomME,"A");
+        evento3.put(CN_FechaE,"12/11/1111");
+        evento3.put(CN_HoraE,"08:30");
+        evento3.put(CN_TipoE,"Veterinario");
+        db.insert(TABLA_EVENTOS,null,evento3);
+
+        ContentValues evento4 = new ContentValues();
+        evento4.put(CN_NomME,"B");
+        evento4.put(CN_FechaE,"12/11/1111");
+        evento4.put(CN_HoraE,"09:30");
+        evento4.put(CN_TipoE,"Peluquería");
+        db.insert(TABLA_EVENTOS,null,evento4);
+
+        ContentValues evento5 = new ContentValues();
+        evento5.put(CN_NomME,"A");
+        evento5.put(CN_FechaE,"13/11/1111");
+        evento5.put(CN_HoraE,"08:30");
+        evento5.put(CN_TipoE,"Adiestrador");
+        db.insert(TABLA_EVENTOS,null,evento5);
     }
 }
