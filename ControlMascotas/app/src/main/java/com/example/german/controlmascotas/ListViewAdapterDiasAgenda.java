@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,18 +16,21 @@ import java.util.ArrayList;
 public class ListViewAdapterDiasAgenda extends BaseAdapter {
 
     Context context;
-    ArrayList<DiaFechaAgenda> diaFechaAgenda;
+    ArrayList<Evento> evento;
     LayoutInflater inflater;
+    SQLControlador dbconeccion;
 
 
-    public ListViewAdapterDiasAgenda(Context context, ArrayList<DiaFechaAgenda> diaFechaAgenda) {
+    public ListViewAdapterDiasAgenda(Context context, ArrayList<Evento> evento) {
         this.context = context;
-        this.diaFechaAgenda = diaFechaAgenda;
+        this.evento = evento;
+        dbconeccion = new SQLControlador(context);
+        dbconeccion.abrirBaseDatos();
     }
 
     @Override
     public int getCount() {
-        return diaFechaAgenda.size();
+        return evento.size();
     }
 
     @Override
@@ -41,17 +45,23 @@ public class ListViewAdapterDiasAgenda extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView diaSemana,fecha;
+        TextView diaSemana;
+        ListView eventosDia;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View itemView = inflater.inflate(R.layout.formato_fila_dias_agenda,parent,false);
 
         diaSemana = (TextView) itemView.findViewById(R.id.fila_dia_diaSemana);
-        fecha = (TextView) itemView.findViewById(R.id.fila_dia_fecha);
+        eventosDia = (ListView) itemView.findViewById(R.id.listViewEventosDia);
 
-        diaSemana.setText(diaFechaAgenda.get(position).getDiaSemana());
-        fecha.setText(diaFechaAgenda.get(position).getFecha());
+        diaSemana.setText(evento.get(position).getNomDiaFecha());
+
+        System.out.println("*************************** FECHA ADAPTER: " + evento.get(position).getFecha());
+        final ListViewAdapterEventosDia adapterHoraEvento = new ListViewAdapterEventosDia(context, dbconeccion.listarEventosDia(evento.get(position).getFecha()));
+        adapterHoraEvento.notifyDataSetChanged();
+        eventosDia.setAdapter(adapterHoraEvento);
+
 
         return itemView;
     }

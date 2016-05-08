@@ -102,8 +102,7 @@ public class SQLControlador {
         return res;
     }
 
-
-    public String getDiaSemana(String fecha) {
+    private String getDiaSemana(String fecha) {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaActual = null;
         try {
@@ -124,15 +123,85 @@ public class SQLControlador {
         else return "Sábado";
     }
 
-    public ArrayList<DiaFechaAgenda> listarDiasAgenda() {
+
+    private String getMes(String fecha) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaActual = null;
+        try {
+            fechaActual = df.parse(fecha);
+        } catch (ParseException e) {
+            System.err.println("No se ha podido parsear la fecha.");
+            e.printStackTrace();
+        }
+        GregorianCalendar fechaCalendario = new GregorianCalendar();
+        fechaCalendario.setTime(fechaActual);
+        int mes = fechaCalendario.get(Calendar.MONTH);
+        if (mes == 0) return "enero";
+        else if (mes == 1) return "febrero";
+        else if (mes == 2) return "marzo";
+        else if (mes == 3) return "abril";
+        else if (mes == 4) return "mayo";
+        else if (mes == 5) return "junio";
+        else if (mes == 6) return "julio";
+        else if (mes == 7) return "agosto";
+        else if (mes == 8) return "septiembre";
+        else if (mes == 9) return "octubre";
+        else if (mes == 10) return "noviembre";
+        else return "diciembre";
+    }
+
+    private String getDiaFecha(String fecha) {
+        String dia = getDiaSemana(fecha) + ", ";
+        String mes = "";
+        int i = 0;
+        int cont = 0;
+        boolean trobat = false;
+        while (i < fecha.length()) {
+            if (fecha.charAt(i) == '/') {
+                if (cont < 1) dia += " ";
+                else {
+                    dia += " ";
+                }
+                ++cont;
+            } else {
+                if (cont == 1 && !trobat) {
+                    dia += getMes(fecha);
+                    trobat = true;
+                    if (fecha.charAt(i+1) != '/') ++i;
+                }
+                else dia += fecha.charAt(i);
+            }
+            ++i;
+        }
+        return dia;
+    }
+
+    public ArrayList<Evento> listarDiasAgenda() {
         String query = "SELECT DISTINCT " + dbhelper.CN_FechaE + " FROM " + dbhelper.TABLA_EVENTOS + " ORDER BY " + dbhelper.CN_FechaE;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
-        ArrayList<DiaFechaAgenda> res = new ArrayList<>();
+        ArrayList<Evento> res = new ArrayList<>();
         while (c.isAfterLast() == false) {
-            DiaFechaAgenda dfa = new DiaFechaAgenda();
-            dfa.setDiaSemana(getDiaSemana(c.getString(c.getColumnIndex("_fechaE"))));
+            Evento dfa = new Evento();
             dfa.setFecha(c.getString(c.getColumnIndex("_fechaE")));
+            dfa.setNomDiaFecha(getDiaFecha(c.getString(c.getColumnIndex("_fechaE"))));
+            res.add(dfa);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    public ArrayList<Evento> listarEventosDia(String fecha) {
+        String query = "SELECT " + dbhelper.CN_NomME + "," + dbhelper.CN_HoraIniE + "," +dbhelper.CN_HoraFinE + "," + dbhelper.CN_TipoE + " FROM " + dbhelper.TABLA_EVENTOS + " WHERE " + dbhelper.CN_FechaE + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniE;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<Evento> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            Evento dfa = new Evento();
+            String s = "La mascota " + c.getString(c.getColumnIndex("_nomME")) + " tiene " + c.getString(c.getColumnIndex("_tipoE"));
+            dfa.setHoraIni(c.getString(c.getColumnIndex("_horaIni")));
+            dfa.setHoraFin(c.getString(c.getColumnIndex("_horaFin")));
+            dfa.setNomMascotaTipoE(s);
             res.add(dfa);
             c.moveToNext();
         }

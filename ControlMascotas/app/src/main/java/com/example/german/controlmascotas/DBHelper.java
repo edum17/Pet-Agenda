@@ -33,7 +33,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLA_EVENTOS = "Eventos";
     public static final String CN_NomME = "_nomME";
     public static final String CN_FechaE = "_fechaE";
-    public static final String CN_HoraE = "_hora";
+    public static final String CN_HoraIniE = "_horaIni";
+    public static final String CN_HoraFinE = "_horaFin";
     public static final String CN_TipoE = "_tipoE";
 
     //Tabla TipoEventos
@@ -58,9 +59,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CREA_TABLA_EVENTOS = "CREATE TABLE " + TABLA_EVENTOS + "(" +
             CN_NomME + " TEXT NOT NULL, " +
             CN_FechaE + " TEXT NOT NULL, " +
-            CN_HoraE + " TEXT NOT NULL, " +
+            CN_HoraIniE + " TEXT NOT NULL, " +
+            CN_HoraFinE + " TEXT NOT NULL, " +
             CN_TipoE + " TEXT NOT NULL, " +
-            "PRIMARY KEY (" + CN_NomME + "," + CN_FechaE + "," + CN_HoraE + "), " +
+            "PRIMARY KEY (" + CN_NomME + "," + CN_FechaE + "," + CN_HoraIniE + "), " +
             "FOREIGN KEY (" + CN_NomME + ") REFERENCES " + TABLA_MASCOTAS + " (" + CN_NomM + "), " +
             "FOREIGN KEY (" + CN_TipoE + ") REFERENCES " + TABLA_TIPO_EVENTO + " (" + CN_NomTE + "));";
 
@@ -142,39 +144,49 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void insertarEventos(SQLiteDatabase db) {
-        ContentValues evento1 = new ContentValues();
-        evento1.put(CN_NomME,"A");
-        evento1.put(CN_FechaE,"11/11/1111");
-        evento1.put(CN_HoraE,"08:00");
-        evento1.put(CN_TipoE,"Vacunación");
-        db.insert(TABLA_EVENTOS,null,evento1);
+        //Evento 1
+        ContentValues evento = new ContentValues();
+        evento.put(CN_NomME, "A");
+        evento.put(CN_FechaE, "11/11/1111");
+        evento.put(CN_HoraIniE, "08:00");
+        evento.put(CN_HoraFinE, "09:00");
+        evento.put(CN_TipoE, "Vacunación");
+        db.insert(TABLA_EVENTOS, null, evento);
 
-        ContentValues evento2 = new ContentValues();
-        evento2.put(CN_NomME,"A");
-        evento2.put(CN_FechaE,"11/11/1111");
-        evento2.put(CN_HoraE,"09:00");
-        evento2.put(CN_TipoE,"Desparacitación");
-        db.insert(TABLA_EVENTOS,null,evento2);
+        //Evento 2
+        evento = new ContentValues();
+        evento.put(CN_NomME, "A");
+        evento.put(CN_FechaE, "11/11/1111");
+        evento.put(CN_HoraIniE, "09:00");
+        evento.put(CN_HoraFinE, "09:30");
+        evento.put(CN_TipoE, "Desparacitación");
+        db.insert(TABLA_EVENTOS, null, evento);
 
-        ContentValues evento3 = new ContentValues();
-        evento3.put(CN_NomME,"A");
-        evento3.put(CN_FechaE,"12/11/1111");
-        evento3.put(CN_HoraE,"08:30");
-        evento3.put(CN_TipoE,"Veterinario");
-        db.insert(TABLA_EVENTOS,null,evento3);
+        //Evento 3
+        evento = new ContentValues();
+        evento.put(CN_NomME, "A");
+        evento.put(CN_FechaE, "12/11/1111");
+        evento.put(CN_HoraIniE, "09:00");
+        evento.put(CN_HoraFinE, "09:30");
+        evento.put(CN_TipoE,"Veterinario");
+        db.insert(TABLA_EVENTOS, null, evento);
 
-        ContentValues evento4 = new ContentValues();
-        evento4.put(CN_NomME,"B");
-        evento4.put(CN_FechaE,"12/11/1111");
-        evento4.put(CN_HoraE,"09:30");
-        evento4.put(CN_TipoE,"Peluquería");
-        db.insert(TABLA_EVENTOS,null,evento4);
+        //Evento 4
+        evento = new ContentValues();
+        evento.put(CN_NomME, "B");
+        evento.put(CN_FechaE, "12/11/1111");
+        evento.put(CN_HoraIniE, "09:30");
+        evento.put(CN_HoraFinE, "10:00");
+        evento.put(CN_TipoE,"Peluquería");
+        db.insert(TABLA_EVENTOS, null, evento);
 
-        ContentValues evento5 = new ContentValues();
-        evento5.put(CN_NomME,"A");
-        evento5.put(CN_FechaE,"13/11/1111");
-        evento5.put(CN_HoraE,"08:30");
-        evento5.put(CN_TipoE,"Adiestrador");
-        db.insert(TABLA_EVENTOS,null,evento5);
+        //Evento 5
+        evento = new ContentValues();
+        evento.put(CN_NomME, "A");
+        evento.put(CN_FechaE, "13/11/1111");
+        evento.put(CN_HoraIniE, "09:30");
+        evento.put(CN_HoraFinE, "10:00");
+        evento.put(CN_TipoE,"Adiestrador");
+        db.insert(TABLA_EVENTOS, null, evento);
     }
 }
