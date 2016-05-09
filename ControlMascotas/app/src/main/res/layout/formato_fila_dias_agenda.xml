@@ -18,14 +18,15 @@
             android:textColor="@color/Azul"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             />
 
         <ListView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:id="@+id/listViewEventosDia"
             android:layout_gravity="center_horizontal"
-            android:padding="5dp" />
+            />
 
     </LinearLayout>
 

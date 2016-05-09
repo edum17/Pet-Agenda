@@ -188,5 +188,14 @@ public class DBHelper extends SQLiteOpenHelper {
         evento.put(CN_HoraFinE, "10:00");
         evento.put(CN_TipoE,"Adiestrador");
         db.insert(TABLA_EVENTOS, null, evento);
+
+        //Evento 6
+        evento = new ContentValues();
+        evento.put(CN_NomME, "B");
+        evento.put(CN_FechaE, "11/11/1111");
+        evento.put(CN_HoraIniE, "07:00");
+        evento.put(CN_HoraFinE, "08:00");
+        evento.put(CN_TipoE,"Adiestrador");
+        db.insert(TABLA_EVENTOS, null, evento);
     }
 }

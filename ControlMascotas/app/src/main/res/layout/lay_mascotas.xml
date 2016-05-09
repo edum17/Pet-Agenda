@@ -16,5 +16,5 @@
         android:layout_height="fill_parent"
         android:id="@+id/listViewMascotas"
         android:layout_gravity="center_horizontal"
-        android:padding="5dp" />
+        android:padding="5dp"/>
 </LinearLayout>

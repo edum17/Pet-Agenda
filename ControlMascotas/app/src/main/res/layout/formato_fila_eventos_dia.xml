@@ -13,14 +13,20 @@
         <TextView
             android:id="@+id/fila_evento_horaIni"
             android:text="HoraIni"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/Negro"/>
 
         <TextView
             android:id="@+id/fila_evento_horaFin"
             android:text="HoraFin"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/Negro"/>
 
     </LinearLayout>
 
@@ -28,7 +34,9 @@
         android:id="@+id/fila_evento_evento"
         android:text="Evento"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/Negro"/>
 
 
 </LinearLayout>

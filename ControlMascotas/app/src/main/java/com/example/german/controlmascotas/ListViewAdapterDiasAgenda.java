@@ -57,12 +57,11 @@ public class ListViewAdapterDiasAgenda extends BaseAdapter {
 
         diaSemana.setText(evento.get(position).getNomDiaFecha());
 
-        System.out.println("*************************** FECHA ADAPTER: " + evento.get(position).getFecha());
+        //System.out.println("*************************** FECHA ADAPTER: " + evento.get(position).getFecha());
         final ListViewAdapterEventosDia adapterHoraEvento = new ListViewAdapterEventosDia(context, dbconeccion.listarEventosDia(evento.get(position).getFecha()));
         adapterHoraEvento.notifyDataSetChanged();
         eventosDia.setAdapter(adapterHoraEvento);
-
-
+        ListViewSinScroll.setListViewHeightBasedOnItems(eventosDia);
         return itemView;
     }
 }

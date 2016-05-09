@@ -26,25 +26,29 @@
             android:id="@+id/fila_nombre"
             android:text="Nombre"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/Negro"/>
 
         <TextView
             android:id="@+id/fila_tipo"
             android:text="Tipo"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/Negro"/>
 
         <TextView
             android:id="@+id/fila_fecha_nac"
             android:text="FechaNac"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/Negro"/>
 
         <TextView
             android:id="@+id/fila_numxip"
             android:text="NumXip"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/Negro"/>
     </LinearLayout>
 
 
