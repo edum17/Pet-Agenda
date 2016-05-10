@@ -52,7 +52,7 @@ public class NuevaMascota extends Fragment {
     private final int SELECT_PICTURE = 200;
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
-    private String APP_DIRECTORY = "Control de Mascotas";
+    private String APP_DIRECTORY = "Control de ListaMascotas";
     private String PICTURE_NAME;
 
     String Path;
@@ -61,6 +61,7 @@ public class NuevaMascota extends Fragment {
     TextView textVFecha;
     Button butGuardarM;
     ImageButton butAnadirImg, butFechaN, butListaT;
+    View rootView;
 
     ImageView img;
 
@@ -69,7 +70,7 @@ public class NuevaMascota extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.lay_nueva_mascota, container, false);
+        rootView = inflater.inflate(R.layout.lay_nueva_mascota, container, false);
 
         context = container.getContext();
         dbconeccion = new SQLControlador(context);
@@ -262,6 +263,7 @@ public class NuevaMascota extends Fragment {
     }
 
     public void clear() {
+        img = (ImageView) rootView.findViewById(R.id.image);
         img.setBackgroundResource(R.mipmap.img_def_01);
         nombre.setText(null);
         tipo.setText(null);

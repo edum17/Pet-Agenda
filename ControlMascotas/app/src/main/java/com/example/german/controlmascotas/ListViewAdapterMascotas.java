@@ -3,7 +3,6 @@ package com.example.german.controlmascotas;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,7 @@ public class ListViewAdapterMascotas extends BaseAdapter {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.formato_fila_mascotas,parent,false);
+        View itemView = inflater.inflate(R.layout.formato_fila_lista_mascotas,parent,false);
 
         txtNombre = (TextView) itemView.findViewById(R.id.fila_nombre);
         txtTipo = (TextView) itemView.findViewById(R.id.fila_tipo);

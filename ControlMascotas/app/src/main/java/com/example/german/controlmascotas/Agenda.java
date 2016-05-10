@@ -2,10 +2,12 @@ package com.example.german.controlmascotas;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.text.ParseException;
@@ -23,6 +25,7 @@ public class Agenda extends Fragment {
     Context context;
     SQLControlador dbconeccion;
     ListView listaDia;
+    Button crearcita;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +36,13 @@ public class Agenda extends Fragment {
         View rootView = inflater.inflate(R.layout.lay_agenda, container, false);
 
         listaDia = (ListView) rootView.findViewById(R.id.listViewAgenda);
+        crearcita = (Button) rootView.findViewById(R.id.butCrearCita);
+        crearcita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crearCita();
+            }
+        });
 
         listarEventos();
 
@@ -43,5 +53,10 @@ public class Agenda extends Fragment {
         final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, dbconeccion.listarDiasAgenda());
         adapterDiaFecha.notifyDataSetChanged();
         listaDia.setAdapter(adapterDiaFecha);
+    }
+
+    public void crearCita() {
+        Intent creaCita = new Intent(context,CrearCita.class);
+        getActivity().startActivity(creaCita);
     }
 }

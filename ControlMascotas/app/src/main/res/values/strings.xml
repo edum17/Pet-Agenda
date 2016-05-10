@@ -14,12 +14,21 @@
 
     //Nueva Mascota
     <string name="txtMascotas">Mascotas</string>
-    <string name="editTNombreM"/>
+    <string name="editTNombreM" />
     <string name="textVNumeroC">Número de chip:</string>
     <string name="buttonFecha">Fecha</string>
     <string name="butGuardar">Guardar</string>
 
     //Layout Consultar Mascota
     <string name="activity_consultar_mascota">Consultar mascota</string>
+
+
+    //Agenda
+    <string name="butCrearCita">Crear cita</string>
+
+    //Crear cita
+    <string name="activity_crear_cita">Crear cita</string>
+    <string name="butCrea">Crea cita</string>
+    <string name="butCancelaCrea">Canelar</string>
 
 </resources>

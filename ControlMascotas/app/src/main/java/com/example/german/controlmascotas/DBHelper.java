@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //Definicion de los parametros de cada tabla:
 
-    //Tabla Mascotas
+    //Tabla ListaMascotas
     public static final String TABLA_MASCOTAS = "Mascotas";
     public static final String CN_NomM = "_nomM";
     public static final String CN_TipoM = "_tipoM";

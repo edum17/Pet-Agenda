@@ -22,6 +22,11 @@
             android:label="@string/activity_consultar_mascota" >
         </activity>
 
+        <activity
+            android:name=".CrearCita"
+            android:label="@string/activity_crear_cita" >
+        </activity>
+
     </application>
 
     <uses-feature android:name="android.hardware.camera" android:required="true" />
