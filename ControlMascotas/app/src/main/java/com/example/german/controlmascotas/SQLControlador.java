@@ -207,4 +207,19 @@ public class SQLControlador {
         }
         return res;
     }
+
+    public ArrayList<String> listarNombresMascotas() {
+        String query = "SELECT DISTINCT " + dbhelper.CN_NomM + " FROM " + dbhelper.TABLA_MASCOTAS + " ORDER BY " + dbhelper.CN_NomM;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<String> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            String nomM;
+            nomM = c.getString(c.getColumnIndex("_nomM"));
+            res.add(nomM);
+            c.moveToNext();
+        }
+        return res;
+    }
+
 }

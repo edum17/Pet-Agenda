@@ -7,23 +7,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EdgeEffect;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -32,14 +24,12 @@ import android.app.DialogFragment;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -126,8 +116,20 @@ public class NuevaMascota extends Fragment {
 
     public void addDate() {
         //Toast.makeText(getActivity(), "Funciona", Toast.LENGTH_SHORT).show();
-        DialogFragment dialog = new DatePickerFragment();
-        dialog.show(getFragmentManager(),"Fecha nacimiento");
+        Calendar mcurrentDate=Calendar.getInstance();
+        int mYear=mcurrentDate.get(Calendar.YEAR);
+        int mMonth=mcurrentDate.get(Calendar.MONTH);
+        int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog mDatePicker=new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                // TODO Auto-generated method stub
+                String date = selectedday + "/" + (selectedmonth+1) + "/" + selectedyear;
+                TextView textVFecha = (TextView) getActivity().findViewById(R.id.editTextFechaN);
+                textVFecha.setText(date);
+            }
+        },mYear, mMonth, mDay);
+        mDatePicker.show();
     }
 
     public void addMascotaDB() {
@@ -257,9 +259,6 @@ public class NuevaMascota extends Fragment {
         AlertDialog alertDialogObject = dialogBuilder.create();
         //Mostramos el dialog
         alertDialogObject.show();
-
-
-
     }
 
     public void clear() {

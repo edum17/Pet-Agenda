@@ -26,7 +26,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
                 DateFormat.is24HourFormat(getActivity()));
     }
 
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+    public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
     }
 }

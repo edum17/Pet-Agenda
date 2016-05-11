@@ -27,9 +27,14 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
    }
 
    @Override
-   public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+   public void onDateSet(android.widget.DatePicker view, int year, int monthOfYear, int dayOfMonth) {
       String date = dayOfMonth + "/" + monthOfYear + "/" + year;
+      //Nueva mascota
       TextView textVFecha = (TextView) getActivity().findViewById(R.id.editTextFechaN);
       textVFecha.setText(date);
+
+      //Crear cita
+      TextView textViewFechaC = (TextView) getActivity().findViewById(R.id.textViewFechaCita);
+      textViewFechaC.setText(date);
    }
 }
