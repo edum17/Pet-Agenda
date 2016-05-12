@@ -176,29 +176,29 @@ public class SQLControlador {
         return dia;
     }
 
-    public ArrayList<Evento> listarDiasAgenda() {
-        String query = "SELECT DISTINCT " + dbhelper.CN_FechaE + " FROM " + dbhelper.TABLA_EVENTOS + " ORDER BY " + dbhelper.CN_FechaE;
+    public ArrayList<Cita> listarDiasAgenda() {
+        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
-        ArrayList<Evento> res = new ArrayList<>();
+        ArrayList<Cita> res = new ArrayList<>();
         while (c.isAfterLast() == false) {
-            Evento dfa = new Evento();
-            dfa.setFecha(c.getString(c.getColumnIndex("_fechaE")));
-            dfa.setNomDiaFecha(getDiaFecha(c.getString(c.getColumnIndex("_fechaE"))));
+            Cita dfa = new Cita();
+            dfa.setFecha(c.getString(c.getColumnIndex("_fechaC")));
+            dfa.setNomDiaFecha(getDiaFecha(c.getString(c.getColumnIndex("_fechaC"))));
             res.add(dfa);
             c.moveToNext();
         }
         return res;
     }
 
-    public ArrayList<Evento> listarEventosDia(String fecha) {
-        String query = "SELECT " + dbhelper.CN_NomME + "," + dbhelper.CN_HoraIniE + "," +dbhelper.CN_HoraFinE + "," + dbhelper.CN_TipoE + " FROM " + dbhelper.TABLA_EVENTOS + " WHERE " + dbhelper.CN_FechaE + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniE;
+    public ArrayList<Cita> listarCitasDia(String fecha) {
+        String query = "SELECT " + dbhelper.CN_NomMC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_FechaC + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniC;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
-        ArrayList<Evento> res = new ArrayList<>();
+        ArrayList<Cita> res = new ArrayList<>();
         while (c.isAfterLast() == false) {
-            Evento dfa = new Evento();
-            String s = "La mascota " + c.getString(c.getColumnIndex("_nomME")) + " tiene " + c.getString(c.getColumnIndex("_tipoE"));
+            Cita dfa = new Cita();
+            String s = "La mascota " + c.getString(c.getColumnIndex("_nomMC")) + " tiene " + c.getString(c.getColumnIndex("_tipoC"));
             dfa.setHoraIni(c.getString(c.getColumnIndex("_horaIni")));
             dfa.setHoraFin(c.getString(c.getColumnIndex("_horaFin")));
             dfa.setNomMascotaTipoE(s);
@@ -222,4 +222,49 @@ public class SQLControlador {
         return res;
     }
 
+    public ArrayList<String> listarTiposCitas() {
+        String query = "SELECT DISTINCT * FROM " + dbhelper.TABLA_TIPO_CITA + " ORDER BY " + dbhelper.CN_NomTC;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<String> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            String nomTC;
+            nomTC = c.getString(c.getColumnIndex("_nomTC"));
+            res.add(nomTC);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    //Busquedas y altas de nuevas mascotas
+    private ContentValues valoresCita(Cita c) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_NomMC,c.getNom());
+        res.put(DBHelper.CN_FechaC,c.getFecha());
+        res.put(DBHelper.CN_HoraIniC,c.getHoraIni());
+        res.put(DBHelper.CN_HoraFinC,c.getHoraFin());
+        res.put(DBHelper.CN_TipoC,c.getTipo());
+        return res;
+    }
+
+    public boolean existeixCita(String nombreM, String fecha, String horaIni) {
+        ArrayList<String> res = new ArrayList<>();
+        String query = "SELECT " + dbhelper.CN_NomMC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_NomMC + "='" + nombreM +"' and " + dbhelper.CN_FechaC + "='" + fecha + "' and " + dbhelper.CN_HoraIniC + "='" + horaIni +"'";
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        while (c.isAfterLast() == false) {
+            res.add(c.getString(c.getColumnIndex("_nomMC")));
+            c.moveToNext();
+        }
+        if (res.size() == 0) return false;
+        else return true;
+    }
+
+    public boolean insertarCita(Cita c) {
+        if (!existeixCita(c.getNom(), c.getFecha(), c.getHoraIni())) {
+            database.insert(DBHelper.TABLA_CITA,null,valoresCita(c));
+            return true;
+        }
+        else return false;
+    }
 }

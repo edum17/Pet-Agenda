@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * Created by German on 01/04/2016.
  */
@@ -29,17 +26,17 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CN_Aler = "_alergia";
     public static final String CN_Path = "_path";
 
-    //Tabla Eventos
-    public static final String TABLA_EVENTOS = "Eventos";
-    public static final String CN_NomME = "_nomME";
-    public static final String CN_FechaE = "_fechaE";
-    public static final String CN_HoraIniE = "_horaIni";
-    public static final String CN_HoraFinE = "_horaFin";
-    public static final String CN_TipoE = "_tipoE";
+    //Tabla Citas
+    public static final String TABLA_CITA = "Cita";
+    public static final String CN_NomMC = "_nomMC";
+    public static final String CN_FechaC = "_fechaC";
+    public static final String CN_HoraIniC = "_horaIni";
+    public static final String CN_HoraFinC = "_horaFin";
+    public static final String CN_TipoC = "_tipoC";
 
-    //Tabla TipoEventos
-    public static final String TABLA_TIPO_EVENTO = "TipoEventos";
-    public static final String CN_NomTE = "_nomTE";
+    //Tabla TipoCita
+    public static final String TABLA_TIPO_CITA = "TipoCita";
+    public static final String CN_NomTC = "_nomTC";
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Creacion de las tablas
@@ -53,18 +50,18 @@ public class DBHelper extends SQLiteOpenHelper {
             CN_Aler + " TEXT NOT NULL, " +
             CN_Path + " TEXT);";
 
-    public static final String CREA_TABLA_TIPO_EVENTO = "CREATE TABLE " + TABLA_TIPO_EVENTO + "(" +
-            CN_NomTE + " TEXT PRIMARY KEY);";
+    public static final String CREA_TABLA_TIPO_CITA = "CREATE TABLE " + TABLA_TIPO_CITA + "(" +
+            CN_NomTC + " TEXT PRIMARY KEY);";
 
-    public static final String CREA_TABLA_EVENTOS = "CREATE TABLE " + TABLA_EVENTOS + "(" +
-            CN_NomME + " TEXT NOT NULL, " +
-            CN_FechaE + " TEXT NOT NULL, " +
-            CN_HoraIniE + " TEXT NOT NULL, " +
-            CN_HoraFinE + " TEXT NOT NULL, " +
-            CN_TipoE + " TEXT NOT NULL, " +
-            "PRIMARY KEY (" + CN_NomME + "," + CN_FechaE + "," + CN_HoraIniE + "), " +
-            "FOREIGN KEY (" + CN_NomME + ") REFERENCES " + TABLA_MASCOTAS + " (" + CN_NomM + "), " +
-            "FOREIGN KEY (" + CN_TipoE + ") REFERENCES " + TABLA_TIPO_EVENTO + " (" + CN_NomTE + "));";
+    public static final String CREA_TABLA_EVENTOS = "CREATE TABLE " + TABLA_CITA + "(" +
+            CN_NomMC + " TEXT NOT NULL, " +
+            CN_FechaC + " TEXT NOT NULL, " +
+            CN_HoraIniC + " TEXT NOT NULL, " +
+            CN_HoraFinC + " TEXT NOT NULL, " +
+            CN_TipoC + " TEXT NOT NULL, " +
+            "PRIMARY KEY (" + CN_NomMC + "," + CN_FechaC + "," + CN_HoraIniC + "), " +
+            "FOREIGN KEY (" + CN_NomMC + ") REFERENCES " + TABLA_MASCOTAS + " (" + CN_NomM + "), " +
+            "FOREIGN KEY (" + CN_TipoC + ") REFERENCES " + TABLA_TIPO_CITA + " (" + CN_NomTC + "));";
 
 
 
@@ -78,19 +75,19 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREA_TABLA_MASCOTAS);
-        db.execSQL(CREA_TABLA_TIPO_EVENTO);
+        db.execSQL(CREA_TABLA_TIPO_CITA);
         db.execSQL(CREA_TABLA_EVENTOS);
         insertarMascota1(db);
         insertarMascota2(db);
-        insertarTiposEventos(db);
-        insertarEventos(db);
+        insertarTiposCita(db);
+        insertarCitas(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXEISTS " + TABLA_MASCOTAS);
-        db.execSQL("DROP TABLE IF EXEISTS " + TABLA_EVENTOS);
-        db.execSQL("DROP TABLE IF EXEISTS " + TABLA_TIPO_EVENTO);
+        db.execSQL("DROP TABLE IF EXEISTS " + TABLA_CITA);
+        db.execSQL("DROP TABLE IF EXEISTS " + TABLA_TIPO_CITA);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -121,81 +118,81 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(TABLA_MASCOTAS,null,mascota2);
     }
 
-    private void insertarTiposEventos(SQLiteDatabase db) {
-        ContentValues tevento1 = new ContentValues();
-        tevento1.put(CN_NomTE,"Vacunación");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento1);
+    private void insertarTiposCita(SQLiteDatabase db) {
+        ContentValues tcita1 = new ContentValues();
+        tcita1.put(CN_NomTC, "Vacunación");
+        db.insert(TABLA_TIPO_CITA, null, tcita1);
 
-        ContentValues tevento2 = new ContentValues();
-        tevento2.put(CN_NomTE,"Desparacitación");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento2);
+        ContentValues tcita2 = new ContentValues();
+        tcita2.put(CN_NomTC, "Desparacitación");
+        db.insert(TABLA_TIPO_CITA, null, tcita2);
 
-        ContentValues tevento3 = new ContentValues();
-        tevento3.put(CN_NomTE,"Veterinario");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento3);
+        ContentValues tcita3 = new ContentValues();
+        tcita3.put(CN_NomTC, "Veterinario");
+        db.insert(TABLA_TIPO_CITA, null, tcita3);
 
-        ContentValues tevento4 = new ContentValues();
-        tevento4.put(CN_NomTE,"Peluquería");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento4);
+        ContentValues tcita4 = new ContentValues();
+        tcita4.put(CN_NomTC, "Peluquería");
+        db.insert(TABLA_TIPO_CITA,null,tcita4);
 
-        ContentValues tevento5 = new ContentValues();
-        tevento5.put(CN_NomTE,"Adiestrador");
-        db.insert(TABLA_TIPO_EVENTO,null,tevento5);
+        ContentValues tcita5 = new ContentValues();
+        tcita5.put(CN_NomTC, "Adiestrador");
+        db.insert(TABLA_TIPO_CITA,null,tcita5);
     }
 
-    private void insertarEventos(SQLiteDatabase db) {
-        //Evento 1
-        ContentValues evento = new ContentValues();
-        evento.put(CN_NomME, "A");
-        evento.put(CN_FechaE, "11/11/1111");
-        evento.put(CN_HoraIniE, "08:00");
-        evento.put(CN_HoraFinE, "09:00");
-        evento.put(CN_TipoE, "Vacunación");
-        db.insert(TABLA_EVENTOS, null, evento);
+    private void insertarCitas(SQLiteDatabase db) {
+        //Cita 1
+        ContentValues cita = new ContentValues();
+        cita.put(CN_NomMC, "A");
+        cita.put(CN_FechaC, "11/11/1111");
+        cita.put(CN_HoraIniC, "08:00");
+        cita.put(CN_HoraFinC, "09:00");
+        cita.put(CN_TipoC, "Vacunación");
+        db.insert(TABLA_CITA, null, cita);
 
-        //Evento 2
-        evento = new ContentValues();
-        evento.put(CN_NomME, "A");
-        evento.put(CN_FechaE, "11/11/1111");
-        evento.put(CN_HoraIniE, "09:00");
-        evento.put(CN_HoraFinE, "09:30");
-        evento.put(CN_TipoE, "Desparacitación");
-        db.insert(TABLA_EVENTOS, null, evento);
+        //Cita 2
+        cita = new ContentValues();
+        cita.put(CN_NomMC, "A");
+        cita.put(CN_FechaC, "11/11/1111");
+        cita.put(CN_HoraIniC, "09:00");
+        cita.put(CN_HoraFinC, "09:30");
+        cita.put(CN_TipoC, "Desparacitación");
+        db.insert(TABLA_CITA, null, cita);
 
-        //Evento 3
-        evento = new ContentValues();
-        evento.put(CN_NomME, "A");
-        evento.put(CN_FechaE, "12/11/1111");
-        evento.put(CN_HoraIniE, "09:00");
-        evento.put(CN_HoraFinE, "09:30");
-        evento.put(CN_TipoE,"Veterinario");
-        db.insert(TABLA_EVENTOS, null, evento);
+        //Cita 3
+        cita = new ContentValues();
+        cita.put(CN_NomMC, "A");
+        cita.put(CN_FechaC, "12/11/1111");
+        cita.put(CN_HoraIniC, "09:00");
+        cita.put(CN_HoraFinC, "09:30");
+        cita.put(CN_TipoC,"Veterinario");
+        db.insert(TABLA_CITA, null, cita);
 
-        //Evento 4
-        evento = new ContentValues();
-        evento.put(CN_NomME, "B");
-        evento.put(CN_FechaE, "12/11/1111");
-        evento.put(CN_HoraIniE, "09:30");
-        evento.put(CN_HoraFinE, "10:00");
-        evento.put(CN_TipoE,"Peluquería");
-        db.insert(TABLA_EVENTOS, null, evento);
+        //Cita 4
+        cita = new ContentValues();
+        cita.put(CN_NomMC, "B");
+        cita.put(CN_FechaC, "12/11/1111");
+        cita.put(CN_HoraIniC, "09:30");
+        cita.put(CN_HoraFinC, "10:00");
+        cita.put(CN_TipoC,"Peluquería");
+        db.insert(TABLA_CITA, null, cita);
 
-        //Evento 5
-        evento = new ContentValues();
-        evento.put(CN_NomME, "A");
-        evento.put(CN_FechaE, "13/11/1111");
-        evento.put(CN_HoraIniE, "09:30");
-        evento.put(CN_HoraFinE, "10:00");
-        evento.put(CN_TipoE,"Adiestrador");
-        db.insert(TABLA_EVENTOS, null, evento);
+        //Cita 5
+        cita = new ContentValues();
+        cita.put(CN_NomMC, "A");
+        cita.put(CN_FechaC, "13/11/1111");
+        cita.put(CN_HoraIniC, "09:30");
+        cita.put(CN_HoraFinC, "10:00");
+        cita.put(CN_TipoC,"Adiestrador");
+        db.insert(TABLA_CITA, null, cita);
 
-        //Evento 6
-        evento = new ContentValues();
-        evento.put(CN_NomME, "B");
-        evento.put(CN_FechaE, "11/11/1111");
-        evento.put(CN_HoraIniE, "07:00");
-        evento.put(CN_HoraFinE, "08:00");
-        evento.put(CN_TipoE,"Adiestrador");
-        db.insert(TABLA_EVENTOS, null, evento);
+        //Cita 6
+        cita = new ContentValues();
+        cita.put(CN_NomMC, "B");
+        cita.put(CN_FechaC, "11/11/1111");
+        cita.put(CN_HoraIniC, "07:00");
+        cita.put(CN_HoraFinC, "08:00");
+        cita.put(CN_TipoC,"Adiestrador");
+        db.insert(TABLA_CITA, null, cita);
     }
 }

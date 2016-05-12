@@ -3,8 +3,6 @@ package com.example.german.controlmascotas;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,21 +19,21 @@ import java.util.ArrayList;
 public class ListViewAdapterDiasAgenda extends BaseAdapter {
 
     Context context;
-    ArrayList<Evento> evento;
+    ArrayList<Cita> cita;
     LayoutInflater inflater;
     SQLControlador dbconeccion;
 
 
-    public ListViewAdapterDiasAgenda(Context context, ArrayList<Evento> evento) {
+    public ListViewAdapterDiasAgenda(Context context, ArrayList<Cita> cita) {
         this.context = context;
-        this.evento = evento;
+        this.cita = cita;
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
     }
 
     @Override
     public int getCount() {
-        return evento.size();
+        return cita.size();
     }
 
     @Override
@@ -61,10 +58,10 @@ public class ListViewAdapterDiasAgenda extends BaseAdapter {
         diaSemana = (TextView) itemView.findViewById(R.id.fila_dia_diaSemana);
         eventosDia = (ListView) itemView.findViewById(R.id.listViewEventosDia);
 
-        diaSemana.setText(evento.get(position).getNomDiaFecha());
+        diaSemana.setText(cita.get(position).getNomDiaFecha());
 
-        //System.out.println("*************************** FECHA ADAPTER: " + evento.get(position).getFecha());
-        final ListViewAdapterEventosDia adapterHoraEvento = new ListViewAdapterEventosDia(context, dbconeccion.listarEventosDia(evento.get(position).getFecha()));
+        //System.out.println("*************************** FECHA ADAPTER: " + cita.get(position).getFecha());
+        final ListViewAdapterCitaDia adapterHoraEvento = new ListViewAdapterCitaDia(context, dbconeccion.listarCitasDia(cita.get(position).getFecha()));
         adapterHoraEvento.notifyDataSetChanged();
         eventosDia.setAdapter(adapterHoraEvento);
         ListViewSinScroll.setListViewHeightBasedOnItems(eventosDia);

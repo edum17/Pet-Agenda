@@ -3,7 +3,7 @@ package com.example.german.controlmascotas;
 /**
  * Created by German on 07/05/2016.
  */
-public class Evento {
+public class Cita {
 
     private String nom;
     private String diaSemana;
@@ -14,7 +14,7 @@ public class Evento {
     private String nomDiaFecha;
     private String nomMascotaTipoE;
 
-    public Evento() {
+    public Cita() {
     }
 
     public String getDiaSemana() {

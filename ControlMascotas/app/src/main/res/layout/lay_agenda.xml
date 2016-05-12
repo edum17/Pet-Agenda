@@ -13,7 +13,7 @@
 
     <ListView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:id="@+id/listViewAgenda"
         android:layout_gravity="center_horizontal"/>
 
@@ -24,7 +24,8 @@
         android:textColor="@color/Blanco"
         android:id="@+id/butCrearCita"
         android:layout_marginBottom="30dp"
-        android:onClick="crearCita()"
+        android:onClick="creabrCita()"
+        android:layout_marginTop="10dp"
         android:textAllCaps="false"
         android:background="@drawable/btn_style"
         android:layout_gravity="center_horizontal" />

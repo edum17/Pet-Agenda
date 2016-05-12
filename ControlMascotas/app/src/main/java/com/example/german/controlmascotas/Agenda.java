@@ -10,13 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 /**
  * Created by German on 01/04/2016.
  */
@@ -44,12 +37,12 @@ public class Agenda extends Fragment {
             }
         });
 
-        listarEventos();
+        listarCitas();
 
         return rootView;
     }
 
-    private void listarEventos() {
+    private void listarCitas() {
         final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, dbconeccion.listarDiasAgenda());
         adapterDiaFecha.notifyDataSetChanged();
         listaDia.setAdapter(adapterDiaFecha);

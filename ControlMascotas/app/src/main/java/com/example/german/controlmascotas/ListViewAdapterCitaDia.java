@@ -12,21 +12,21 @@ import java.util.ArrayList;
 /**
  * Created by German on 07/05/2016.
  */
-public class ListViewAdapterEventosDia  extends BaseAdapter {
+public class ListViewAdapterCitaDia extends BaseAdapter {
 
     Context context;
-    ArrayList<Evento> evento;
+    ArrayList<Cita> cita;
     LayoutInflater inflater;
 
 
-    public ListViewAdapterEventosDia(Context context, ArrayList<Evento> evento) {
+    public ListViewAdapterCitaDia(Context context, ArrayList<Cita> cita) {
         this.context = context;
-        this.evento = evento;
+        this.cita = cita;
     }
 
     @Override
     public int getCount() {
-        return evento.size();
+        return cita.size();
     }
 
     @Override
@@ -51,9 +51,9 @@ public class ListViewAdapterEventosDia  extends BaseAdapter {
         horaFin =  (TextView) itemView.findViewById(R.id.fila_evento_horaFin);
         nomEvento = (TextView) itemView.findViewById(R.id.fila_evento_evento);
 
-        horaIni.setText(evento.get(position).getHoraIni());
-        horaFin.setText(evento.get(position).getHoraFin());
-        nomEvento.setText(evento.get(position).getNomMascotaTipoE());
+        horaIni.setText(cita.get(position).getHoraIni());
+        horaFin.setText(cita.get(position).getHoraFin());
+        nomEvento.setText(cita.get(position).getNomMascotaTipoE());
 
         return itemView;
     }
