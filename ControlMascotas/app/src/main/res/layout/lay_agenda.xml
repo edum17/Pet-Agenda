@@ -13,7 +13,7 @@
 
     <ListView
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
+        android:layout_height="405dp"
         android:id="@+id/listViewAgenda"
         android:layout_gravity="center_horizontal"/>
 

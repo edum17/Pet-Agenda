@@ -177,7 +177,7 @@ public class SQLControlador {
     }
 
     public ArrayList<Cita> listarDiasAgenda() {
-        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA;
+        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA + " ORDER BY " + dbhelper.CN_AnyC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_DiaC ;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
@@ -192,13 +192,15 @@ public class SQLControlador {
     }
 
     public ArrayList<Cita> listarCitasDia(String fecha) {
-        String query = "SELECT " + dbhelper.CN_NomMC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_FechaC + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniC;
+        String query = "SELECT " + dbhelper.CN_NomMC + "," + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_FechaC + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniC;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
         while (c.isAfterLast() == false) {
             Cita dfa = new Cita();
             String s = "La mascota " + c.getString(c.getColumnIndex("_nomMC")) + " tiene " + c.getString(c.getColumnIndex("_tipoC"));
+            dfa.setFecha(c.getString(c.getColumnIndex("_fechaC")));
+            dfa.setNom(c.getString(c.getColumnIndex("_nomMC")));
             dfa.setHoraIni(c.getString(c.getColumnIndex("_horaIni")));
             dfa.setHoraFin(c.getString(c.getColumnIndex("_horaFin")));
             dfa.setNomMascotaTipoE(s);
@@ -241,6 +243,9 @@ public class SQLControlador {
         ContentValues res = new ContentValues();
         res.put(DBHelper.CN_NomMC,c.getNom());
         res.put(DBHelper.CN_FechaC,c.getFecha());
+        res.put(DBHelper.CN_DiaC,c.getDiaC());
+        res.put(DBHelper.CN_MesC,c.getMesC());
+        res.put(DBHelper.CN_AnyC,c.getAnyC());
         res.put(DBHelper.CN_HoraIniC,c.getHoraIni());
         res.put(DBHelper.CN_HoraFinC,c.getHoraFin());
         res.put(DBHelper.CN_TipoC,c.getTipo());
@@ -266,5 +271,9 @@ public class SQLControlador {
             return true;
         }
         else return false;
+    }
+
+    public void eliminarCita(String nomMC, String fecha, String horaIni) {
+        database.delete(DBHelper.TABLA_CITA, DBHelper.CN_NomMC + "='" + nomMC + "' and " + DBHelper.CN_FechaC + "='" + fecha + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'" ,null);
     }
 }

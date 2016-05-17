@@ -2,6 +2,7 @@ package com.example.german.controlmascotas;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -20,16 +22,22 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by German on 10/05/2016.
  */
-public class CrearCita extends FragmentActivity {
+public class CrearCita extends FragmentActivity  {
 
     Context context;
     SQLControlador dbconeccion;
+
     ListView listaDia;
 
     TextView nombre, fechaC, horaIni, horaFin, tipoC;
@@ -220,20 +228,69 @@ public class CrearCita extends FragmentActivity {
         alertDialogObject.show();
     }
 
-    /*
-        nombre = (TextView) findViewById(R.id.textViewNombreM);
-        fechaC = (TextView) findViewById(R.id.textViewFechaCita);
-        horaIni = (TextView) findViewById(R.id.textViewHoraIni);
-        horaFin = (TextView) findViewById(R.id.textViewHoraFin);
-        tipoC = (TextView) findViewById(R.id.textViewTipoE);
+    private String getDia(String fecha) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaActual = null;
+        try {
+            fechaActual = df.parse(fecha);
+        } catch (ParseException e) {
+            System.err.println("No se ha podido parsear la fecha.");
+            e.printStackTrace();
+        }
+        GregorianCalendar fechaCalendario = new GregorianCalendar();
+        fechaCalendario.setTime(fechaActual);
+        int dia = fechaCalendario.get(Calendar.DAY_OF_MONTH);
+        return Integer.toString(dia);
+    }
 
-     */
+    private String getMes(String fecha) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaActual = null;
+        try {
+            fechaActual = df.parse(fecha);
+        } catch (ParseException e) {
+            System.err.println("No se ha podido parsear la fecha.");
+            e.printStackTrace();
+        }
+        GregorianCalendar fechaCalendario = new GregorianCalendar();
+        fechaCalendario.setTime(fechaActual);
+        int mes = fechaCalendario.get(Calendar.MONTH);
+        if (mes == 0) return "1";
+        else if (mes == 1) return "2";
+        else if (mes == 2) return "3";
+        else if (mes == 3) return "4";
+        else if (mes == 4) return "5";
+        else if (mes == 5) return "6";
+        else if (mes == 6) return "7";
+        else if (mes == 7) return "8";
+        else if (mes == 8) return "9";
+        else if (mes == 9) return "10";
+        else if (mes == 10) return "11";
+        else return "12";
+    }
 
+    private String getAny(String fecha) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaActual = null;
+        try {
+            fechaActual = df.parse(fecha);
+        } catch (ParseException e) {
+            System.err.println("No se ha podido parsear la fecha.");
+            e.printStackTrace();
+        }
+        GregorianCalendar fechaCalendario = new GregorianCalendar();
+        fechaCalendario.setTime(fechaActual);
+        int year = fechaCalendario.get(Calendar.YEAR);
+        return Integer.toString(year);
+    }
 
     public void addCita() {
         Cita e = new Cita();
         e.setNom(nombre.getText().toString());
         e.setFecha(fechaC.getText().toString());
+        e.setDiaC(getDia(fechaC.getText().toString()));
+        e.setMesC(getMes(fechaC.getText().toString()));
+        e.setAnyC(getAny(fechaC.getText().toString()));
         e.setHoraIni(horaIni.getText().toString());
         e.setHoraFin(horaFin.getText().toString());
         e.setTipo(tipoC.getText().toString());
@@ -249,17 +306,21 @@ public class CrearCita extends FragmentActivity {
     }
 
     public void cancelaCita() {
+
+        //Funciona perfectamente:
+        Intent main = new Intent(context,MainActivity.class);
+        startActivity(main);
+        finish();
+
+/*
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Agenda agenda = new Agenda();
-        fragmentTransaction.attach(agenda);
+        fragmentTransaction.replace(android.R.id.content, agenda);
         fragmentTransaction.commit();
-        //finish();
-        /*
-        final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(android.R.id.content, dbconeccion.listarDiasAgenda());
-        adapterDiaFecha.notifyDataSetChanged();
-        listaDia.setAdapter(adapterDiaFecha);
-        */
+
+*/
 
     }
 }

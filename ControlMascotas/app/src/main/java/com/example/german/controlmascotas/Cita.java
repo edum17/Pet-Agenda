@@ -8,6 +8,9 @@ public class Cita {
     private String nom;
     private String diaSemana;
     private String fecha;
+    private String diaC;
+    private String mesC;
+    private String anyC;
     private String horaIni;
     private String horaFin;
     private String tipo;
@@ -80,6 +83,30 @@ public class Cita {
 
     public void setNomDiaFecha(String nomDiaFecha) {
         this.nomDiaFecha = nomDiaFecha;
+    }
+
+    public String getDiaC() {
+        return diaC;
+    }
+
+    public void setDiaC(String diaC) {
+        this.diaC = diaC;
+    }
+
+    public String getMesC() {
+        return mesC;
+    }
+
+    public void setMesC(String mesC) {
+        this.mesC = mesC;
+    }
+
+    public String getAnyC() {
+        return anyC;
+    }
+
+    public void setAnyC(String anyC) {
+        this.anyC = anyC;
     }
 
 }

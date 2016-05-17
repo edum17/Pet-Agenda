@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -19,6 +20,7 @@ public class Agenda extends Fragment {
     SQLControlador dbconeccion;
     ListView listaDia;
     Button crearcita;
+    View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,7 +28,7 @@ public class Agenda extends Fragment {
         context = container.getContext();
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
-        View rootView = inflater.inflate(R.layout.lay_agenda, container, false);
+        rootView = inflater.inflate(R.layout.lay_agenda, container, false);
 
         listaDia = (ListView) rootView.findViewById(R.id.listViewAgenda);
         crearcita = (Button) rootView.findViewById(R.id.butCrearCita);
@@ -42,7 +44,7 @@ public class Agenda extends Fragment {
         return rootView;
     }
 
-    private void listarCitas() {
+    public void listarCitas() {
         final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, dbconeccion.listarDiasAgenda());
         adapterDiaFecha.notifyDataSetChanged();
         listaDia.setAdapter(adapterDiaFecha);
@@ -52,4 +54,5 @@ public class Agenda extends Fragment {
         Intent creaCita = new Intent(context,CrearCita.class);
         getActivity().startActivity(creaCita);
     }
+
 }

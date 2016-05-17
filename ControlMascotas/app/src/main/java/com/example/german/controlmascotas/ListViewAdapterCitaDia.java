@@ -39,6 +39,14 @@ public class ListViewAdapterCitaDia extends BaseAdapter {
         return 0;
     }
 
+    public String getItemNameC(int position) {
+        return cita.get(position).getNom();
+    }
+
+    public String getItemHoraIni(int position) {
+        return cita.get(position).getHoraIni();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView horaIni, horaFin,nomEvento;
