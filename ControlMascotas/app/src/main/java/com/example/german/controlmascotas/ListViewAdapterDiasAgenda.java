@@ -1,11 +1,13 @@
 package com.example.german.controlmascotas;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,19 +53,9 @@ public class ListViewAdapterDiasAgenda extends BaseAdapter{
         return 0;
     }
 
-
-    private boolean existeCitaFecha(ArrayList<Cita> listaDiasAgenda, ArrayList<Cita> listaCitasDia) {
-        boolean b = false;
-        int i = 0;
-        while (i < listaDiasAgenda.size() && !b) {
-            int j = 0;
-            while (j < listaCitasDia.size() && !b) {
-                if (listaDiasAgenda.get(i).getFecha().toString().equals(listaCitasDia.get(j).getFecha().toString())) b = true;
-                else ++j;
-            }
-            ++i;
-        }
-        return b;
+    public void updateAdapter(ArrayList<Cita> arrylst) {
+        cita = arrylst;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -85,9 +77,9 @@ public class ListViewAdapterDiasAgenda extends BaseAdapter{
         //if (existeCitaFecha(dbconeccion.listarDiasAgenda(),dbconeccion.listarCitasDia(fecha))) diaSemana.setText(cita.get(position).getNomDiaFecha());
         //else diaSemana.setText(null);
 
-        final ListViewAdapterCitaDia[] adapterHoraEvento = {new ListViewAdapterCitaDia(context, dbconeccion.listarCitasDia(fecha))};
-        adapterHoraEvento[0].notifyDataSetChanged();
-        eventosDia.setAdapter(adapterHoraEvento[0]);
+        final ListViewAdapterCitaDia[] adapterCitasDia = {new ListViewAdapterCitaDia(context, dbconeccion.listarCitasDia(fecha))};
+        adapterCitasDia[0].notifyDataSetChanged();
+        eventosDia.setAdapter(adapterCitasDia[0]);
         ListViewSinScroll.setListViewHeightBasedOnItems(eventosDia);
         eventosDia.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -99,23 +91,11 @@ public class ListViewAdapterDiasAgenda extends BaseAdapter{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar cita")) {
-                            String nomC = adapterHoraEvento[0].getItemNameC(position);
-                            String horaIni = adapterHoraEvento[0].getItemHoraIni(position);
+                            String nomC = adapterCitasDia[0].getItemNameC(position);
+                            String horaIni = adapterCitasDia[0].getItemHoraIni(position);
                             dbconeccion.eliminarCita(nomC, fecha, horaIni);
-
-                            //¡¡¡¡¡ERROR!!!!!
-                            //===============
-                            //No funciona al cien por cien
-                            if (existeCitaFecha(dbconeccion.listarDiasAgenda(), dbconeccion.listarCitasDia(fecha)))
-                                diaSemana.setText(cita.get(position).getNomDiaFecha());
-
-                            else diaSemana.setText(null);
-                            final ListViewAdapterCitaDia[] adapterHoraEvento = {new ListViewAdapterCitaDia(context, dbconeccion.listarCitasDia(fecha))};
-                            adapterHoraEvento[0].notifyDataSetChanged();
-                            eventosDia.setAdapter(adapterHoraEvento[0]);
-                            ListViewSinScroll.setListViewHeightBasedOnItems(eventosDia);
-
-
+                            adapterCitasDia[0].updateAdapter(dbconeccion.listarCitasDia(fecha));
+                            updateAdapter(dbconeccion.listarDiasAgenda());
                             Toast.makeText(context, "La cita ha sido eliminada", Toast.LENGTH_SHORT).show();
                         } else if (items[which].equals("Modificar cita")) {
                         }
@@ -130,6 +110,7 @@ public class ListViewAdapterDiasAgenda extends BaseAdapter{
                 builder.show();
             }
         });
+
         return itemView;
     }
 }

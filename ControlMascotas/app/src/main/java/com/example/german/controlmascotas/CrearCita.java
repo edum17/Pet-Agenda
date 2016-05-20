@@ -12,7 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -33,7 +35,7 @@ import java.util.List;
 /**
  * Created by German on 10/05/2016.
  */
-public class CrearCita extends FragmentActivity  {
+public class CrearCita extends FragmentActivity{
 
     Context context;
     SQLControlador dbconeccion;
@@ -44,6 +46,7 @@ public class CrearCita extends FragmentActivity  {
     ImageButton nombresM,fecha, horaI, horaF, tiposC;
     Button butCrear,butCancelCrea;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,7 @@ public class CrearCita extends FragmentActivity  {
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
 
-        listaDia = (ListView) findViewById(R.id.listViewAgenda);
+        //System.out.println("*************************** listaDia: " + R.id.listViewAgenda);
 
         //TextView
         nombre = (TextView) findViewById(R.id.textViewNombreM);
@@ -74,7 +77,7 @@ public class CrearCita extends FragmentActivity  {
         butCancelCrea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelaCita();
+                cerrarCita();
             }
         });
 
@@ -117,6 +120,8 @@ public class CrearCita extends FragmentActivity  {
                 anadirTipoCita();
             }
         });
+
+
     }
 
     public void listarAnimales() {
@@ -297,7 +302,7 @@ public class CrearCita extends FragmentActivity  {
         if (dbconeccion.insertarCita(e)) {
             //dbconeccion.cerrar();
             Toast.makeText(this, "Cita creada", Toast.LENGTH_SHORT).show();
-            cancelaCita();
+            cerrarCita();
         } else {
             String res = "La mascota " + nombre.getText().toString() + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
             Toast.makeText(this, res , Toast.LENGTH_SHORT).show();
@@ -305,31 +310,34 @@ public class CrearCita extends FragmentActivity  {
         }
     }
 
-    public void cancelaCita() {
+    public void cerrarCita() {
+        System.out.println("*************************** Singleton.getInstance().getContainerId(): " + Singleton.getInstance().getContainerId());
+        System.out.println("*************************** Singleton.getInstance().getContext(): " + Singleton.getInstance().getContext());
+
+
+        final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, dbconeccion.listarDiasAgenda());
+        adapterDiaFecha.updateAdapter(dbconeccion.listarDiasAgenda());
+
+        finish();
+        /*
 
         //Funciona perfectamente:
         Intent main = new Intent(context,MainActivity.class);
         startActivity(main);
         finish();
+        */
 
-/*
-
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Agenda agenda = new Agenda();
-        fragmentTransaction.replace(android.R.id.content, agenda);
-        fragmentTransaction.commit();
-
-*/
 
     }
 }
 
 /*
-FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Agenda agenda = new Agenda();
         fragmentTransaction.add(android.R.id.content, agenda);
         fragmentTransaction.commit();
         finish();
+        http://www.mzan.com/article/6925941-get-fragments-container-view-id.shtml#sthash.JJPNm8VD.dpuf
+
  */

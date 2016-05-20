@@ -47,6 +47,12 @@ public class ListViewAdapterCitaDia extends BaseAdapter {
         return cita.get(position).getHoraIni();
     }
 
+    public void updateAdapter(ArrayList<Cita> arrylst) {
+        cita = arrylst;
+        notifyDataSetChanged();
+    }
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView horaIni, horaFin,nomEvento;
