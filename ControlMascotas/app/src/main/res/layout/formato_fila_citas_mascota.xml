@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/fila_cita_fechaCM"
+        android:text="fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="2dp"
+        android:textColor="@color/Negro"/>
+
+    <TextView
+        android:id="@+id/fila_cita_horaIniCM"
+        android:text="horaIni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/Negro"/>
+
+    <TextView
+        android:id="@+id/fila_cita_separadorCM"
+        android:text=" - "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="1dp"
+        android:textColor="@color/Negro"/>
+
+    <TextView
+        android:id="@+id/fila_cita_horaFinCM"
+        android:text="horaFin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="1dp"
+        android:textColor="@color/Negro"/>
+
+    <TextView
+        android:id="@+id/fila_cita_tipoCitaCM"
+        android:text="tipoCita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/Negro"/>
+
+
+</LinearLayout>

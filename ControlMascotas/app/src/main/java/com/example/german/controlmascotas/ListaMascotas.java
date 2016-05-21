@@ -56,8 +56,7 @@ public class ListaMascotas extends Fragment {
                             String nomC = adapter.getItemName(position);
                             dbconeccion.eliminarMascota(nomC);
                             Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
-                            Intent main = new Intent(context,MainActivity.class);
-                            getActivity().startActivity(main);
+                            adapter.updateAdapter(dbconeccion.listarMascotas());
                         }
                         else if (items[which].equals("Modificar mascota")) {
                             Intent consultar_mascota = new Intent(context,ConsultarMascota.class);

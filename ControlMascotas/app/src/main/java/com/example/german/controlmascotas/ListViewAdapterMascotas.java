@@ -45,6 +45,11 @@ public class ListViewAdapterMascotas extends BaseAdapter {
         return mascotas.get(position).getNombre();
     }
 
+    public void updateAdapter(ArrayList<Mascota> arrylst) {
+        mascotas = arrylst;
+        notifyDataSetChanged();
+    }
+
     public String getItemType(int position) {
         return mascotas.get(position).getTipo();
     }

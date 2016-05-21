@@ -14,7 +14,6 @@ import android.widget.EditText;
 public class ConsultarMascota extends FragmentActivity {
 
     String nombreM;
-    EditText nomM;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +21,7 @@ public class ConsultarMascota extends FragmentActivity {
 
         nombreM = getIntent().getStringExtra("nombreM");
 
-        nomM = (EditText) findViewById(R.id.eTNombreMASCOTA);
-        nomM.setText(nombreM);
     }
+
+    public void updateMascota() {}
 }
