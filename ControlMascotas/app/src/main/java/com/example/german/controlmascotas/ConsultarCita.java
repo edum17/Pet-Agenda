@@ -4,18 +4,25 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by German on 21/05/2016.
@@ -29,7 +36,7 @@ public class ConsultarCita extends FragmentActivity {
 
     EditText nombreMC, fechaC, horaIniC, horaFinC, tipoC;
 
-    ImageButton nombresM,fecha, horaI, horaF, tiposC;
+    ImageButton fecha, horaI, horaF, tiposC;
     Button guardarMod, cancel;
 
     Cita cita;
@@ -68,13 +75,6 @@ public class ConsultarCita extends FragmentActivity {
         });
 
         //Buttons
-        nombresM = (ImageButton) findViewById(R.id.butNombreM);
-        nombresM.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listarAnimales();
-            }
-        });
 
         fecha = (ImageButton) findViewById(R.id.butFechaCita);
         fecha.setOnClickListener(new View.OnClickListener() {
@@ -110,50 +110,159 @@ public class ConsultarCita extends FragmentActivity {
 
         //Boton desactivado
         guardarMod.setEnabled(false);
+        guardarMod.setFocusable(false);
 
         cita = dbconeccion.consultarCita(nombreM,fechaCita,horaIni);
 
         nombreMC.setText(nombreM);
+        nombreMC.setEnabled(false);
         fechaC.setText(fechaCita);
-        horaIniC.setText(horaIni);
-        horaFinC.setText(cita.getHoraFin());
-        tipoC.setText(cita.getTipo());
-    }
-
-    private void updateCita() {
-        if (!nombreMC.getText().toString().equals(cita.getNom()) ||
-                !fechaC.getText().toString().equals(cita.getFecha()) ||
-                !horaIniC.getText().toString().equals(cita.getHoraIni()) ||
-                !horaFinC.getText().toString().equals(cita.getHoraFin()) ||
-                !tipoC.getText().toString().equals(cita.getTipo())) {
-            guardarMod.setEnabled(true);
-        }
-    }
-
-    public void listarAnimales() {
-        //Toast.makeText(getActivity(), "Listo todos los tipos de animales", Toast.LENGTH_SHORT).show();
-        final ArrayList<String> tipoM = dbconeccion.listarNombresMascotas();
-
-        //Creacion de sequencia de items
-        final CharSequence[] Animals = tipoM.toArray(new String[tipoM.size()]);
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setTitle("Mascotas");
-        dialogBuilder.setItems(Animals, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                String animalSel = Animals[item].toString();  //Selected item in listview
-                nombreMC.setText(animalSel);
-            }
-        });
-        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        fechaC.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!fechaC.getText().toString().equals(cita.getFecha())) {
+                    guardarMod.setEnabled(true);
+                    guardarMod.setFocusable(true);
+                }
             }
         });
-        //Creacion del objeto alert dialog via builder
-        AlertDialog alertDialogObject = dialogBuilder.create();
-        //Mostramos el dialog
-        alertDialogObject.show();
+        horaIniC.setText(horaIni);
+        horaIniC.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!horaIniC.getText().toString().equals(cita.getHoraIni())) {
+                    guardarMod.setEnabled(true);
+                    guardarMod.setFocusable(true);
+                }
+            }
+        });
+        horaFinC.setText(cita.getHoraFin());
+        horaFinC.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!horaFinC.getText().toString().equals(cita.getHoraFin())) {
+                    guardarMod.setEnabled(true);
+                    guardarMod.setFocusable(true);
+                }
+            }
+        });
+        tipoC.setText(cita.getTipo());
+        tipoC.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!tipoC.getText().toString().equals(cita.getTipo())) {
+                    guardarMod.setEnabled(true);
+                    guardarMod.setFocusable(true);
+                }
+            }
+        });
+    }
+
+    private String getDia(String fecha) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaActual = null;
+        try {
+            fechaActual = df.parse(fecha);
+        } catch (ParseException e) {
+            System.err.println("No se ha podido parsear la fecha.");
+            e.printStackTrace();
+        }
+        GregorianCalendar fechaCalendario = new GregorianCalendar();
+        fechaCalendario.setTime(fechaActual);
+        int dia = fechaCalendario.get(Calendar.DAY_OF_MONTH);
+        return Integer.toString(dia);
+    }
+
+    private String getMes(String fecha) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaActual = null;
+        try {
+            fechaActual = df.parse(fecha);
+        } catch (ParseException e) {
+            System.err.println("No se ha podido parsear la fecha.");
+            e.printStackTrace();
+        }
+        GregorianCalendar fechaCalendario = new GregorianCalendar();
+        fechaCalendario.setTime(fechaActual);
+        int mes = fechaCalendario.get(Calendar.MONTH);
+        if (mes == 0) return "1";
+        else if (mes == 1) return "2";
+        else if (mes == 2) return "3";
+        else if (mes == 3) return "4";
+        else if (mes == 4) return "5";
+        else if (mes == 5) return "6";
+        else if (mes == 6) return "7";
+        else if (mes == 7) return "8";
+        else if (mes == 8) return "9";
+        else if (mes == 9) return "10";
+        else if (mes == 10) return "11";
+        else return "12";
+    }
+
+    private String getAny(String fecha) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaActual = null;
+        try {
+            fechaActual = df.parse(fecha);
+        } catch (ParseException e) {
+            System.err.println("No se ha podido parsear la fecha.");
+            e.printStackTrace();
+        }
+        GregorianCalendar fechaCalendario = new GregorianCalendar();
+        fechaCalendario.setTime(fechaActual);
+        int year = fechaCalendario.get(Calendar.YEAR);
+        return Integer.toString(year);
+    }
+
+    public void updateCita() {
+        dbconeccion.eliminarCita(nombreM,fechaCita,horaIni);
+        Cita e = new Cita();
+        e.setNom(nombreM);
+        e.setFecha(fechaC.getText().toString());
+        e.setDiaC(getDia(fechaC.getText().toString()));
+        e.setMesC(getMes(fechaC.getText().toString()));
+        e.setAnyC(getAny(fechaC.getText().toString()));
+        e.setHoraIni(horaIniC.getText().toString());
+        e.setHoraFin(horaFinC.getText().toString());
+        e.setTipo(tipoC.getText().toString());
+        if (dbconeccion.insertarCita(e)) {
+            dbconeccion.cerrar();
+            Intent main = new Intent(this,MainActivity.class);
+            startActivity(main);
+
+        } else {
+            String res = "La mascota " + nombreM + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
+            Toast.makeText(this, res , Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     public void anadirFecha() {

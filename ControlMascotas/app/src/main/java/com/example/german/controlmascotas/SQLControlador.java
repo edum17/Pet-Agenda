@@ -177,7 +177,7 @@ public class SQLControlador {
     }
 
     public ArrayList<Cita> listarDiasAgenda() {
-        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA + " ORDER BY " + dbhelper.CN_AnyC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_DiaC ;
+        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA + " ORDER BY " + dbhelper.CN_DiaC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_AnyC;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
@@ -297,17 +297,3 @@ public class SQLControlador {
         return res;
     }
 }
-
-/*
-        String query = "SELECT DISTINCT * FROM " + dbhelper.TABLA_TIPO_CITA + " ORDER BY " + dbhelper.CN_NomTC;
-        Cursor c = database.rawQuery(query,null);
-        if (c != null) c.moveToFirst();
-        ArrayList<String> res = new ArrayList<>();
-        while (c.isAfterLast() == false) {
-            String nomTC;
-            nomTC = c.getString(c.getColumnIndex("_nomTC"));
-            res.add(nomTC);
-            c.moveToNext();
-        }
-        return res;
- */

@@ -19,16 +19,8 @@
             android:layout_marginTop="25dp"
             android:layout_marginLeft="35dp"
             android:inputType="text"
-            android:textColor="@color/Negro"
-            android:layout_weight="0.2" />
+            android:textColor="@color/Negro" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/butNombreM"
-            android:layout_marginTop="23dp"
-            android:background="@android:drawable/ic_menu_more"
-            android:onClick=""/>
     </LinearLayout>
 
     <!--Mostramos la fecha de la cita -->
