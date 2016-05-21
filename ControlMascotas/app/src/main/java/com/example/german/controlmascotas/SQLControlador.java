@@ -296,4 +296,10 @@ public class SQLControlador {
         }
         return res;
     }
+
+    public void eliminarMascota(String nomM) {
+        database.delete(DBHelper.TABLA_MASCOTAS, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        database.delete(DBHelper.TABLA_CITA,DBHelper.CN_NomMC + "='" + nomM + "'",null);
+    }
+
 }

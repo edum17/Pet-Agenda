@@ -1,5 +1,7 @@
 package com.example.german.controlmascotas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.content.Intent;
+import android.widget.Toast;
 
 
 /**
@@ -42,11 +45,35 @@ public class ListaMascotas extends Fragment {
         lista.setAdapter(adapter);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent consultar_mascota = new Intent(context,ConsultarMascota.class);
-                String nombre = adapter.getItemName(position);
-                consultar_mascota.putExtra("nombreM", nombre);
-                getActivity().startActivity(consultar_mascota);
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                final CharSequence[] items = {"Eliminar mascota", "Modificar mascota"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Mascota");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (items[which].equals("Eliminar mascota")) {
+                            String nomC = adapter.getItemName(position);
+                            dbconeccion.eliminarMascota(nomC);
+                            Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
+                            Intent main = new Intent(context,MainActivity.class);
+                            getActivity().startActivity(main);
+                        }
+                        else if (items[which].equals("Modificar mascota")) {
+                            Intent consultar_mascota = new Intent(context,ConsultarMascota.class);
+                            String nombre = adapter.getItemName(position);
+                            consultar_mascota.putExtra("nombreM", nombre);
+                            getActivity().startActivity(consultar_mascota);
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
             }
         });
     }
