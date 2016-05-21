@@ -30,12 +30,10 @@ public class Agenda extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = container.getContext();
-        System.out.println("################################### context: " + context);
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
         rootView = inflater.inflate(R.layout.lay_agenda, container, false);
 
-        System.out.println("################################### R.id.container: " + R.id.container);
         listaDia = (ListView) rootView.findViewById(R.id.listViewAgenda);
         crearcita = (Button) rootView.findViewById(R.id.butCrearCita);
         crearcita.setOnClickListener(new View.OnClickListener() {
@@ -57,9 +55,9 @@ public class Agenda extends Fragment {
     }
 
     private void crearCita() {
-        Singleton.getInstance().setContext(context);
-        Singleton.getInstance().setContainerId(((ViewGroup)getView().getParent()).getId());
-        System.out.println("*************************** ((ViewGroup)getView().getParent()).getId(): " + ((ViewGroup)getView().getParent()).getId());
+        //Singleton.getInstance().setContext(context);
+        //Singleton.getInstance().setContainerId(((ViewGroup)getView().getParent()).getId());
+        //System.out.println("*************************** ((ViewGroup)getView().getParent()).getId(): " + ((ViewGroup)getView().getParent()).getId());
         Intent creaCita = new Intent(context,CrearCita.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         getActivity().startActivity(creaCita);
     }

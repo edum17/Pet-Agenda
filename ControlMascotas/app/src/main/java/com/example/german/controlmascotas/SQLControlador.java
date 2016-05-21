@@ -276,4 +276,38 @@ public class SQLControlador {
     public void eliminarCita(String nomMC, String fecha, String horaIni) {
         database.delete(DBHelper.TABLA_CITA, DBHelper.CN_NomMC + "='" + nomMC + "' and " + DBHelper.CN_FechaC + "='" + fecha + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'" ,null);
     }
+
+    public Cita consultarCita(String nomMC,String fecha, String horaIni) {
+        String query = "SELECT " + dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA +
+                " WHERE " + dbhelper.CN_NomMC + "='" + nomMC + "' and " + dbhelper.CN_FechaC + "='" + fecha + "' and " +
+                dbhelper.CN_HoraIniC + "='" + horaIni + "'";
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        Cita res = new Cita();
+        res.setNom(nomMC);
+        res.setFecha(fecha);
+        res.setHoraIni(horaIni);
+        while (c.isAfterLast() == false) {
+            String horaFin = c.getString(c.getColumnIndex("_horaFin"));
+            String tipoC = c.getString(c.getColumnIndex("_tipoC"));
+            res.setHoraFin(horaFin);
+            res.setTipo(tipoC);
+            c.moveToNext();
+        }
+        return res;
+    }
 }
+
+/*
+        String query = "SELECT DISTINCT * FROM " + dbhelper.TABLA_TIPO_CITA + " ORDER BY " + dbhelper.CN_NomTC;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<String> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            String nomTC;
+            nomTC = c.getString(c.getColumnIndex("_nomTC"));
+            res.add(nomTC);
+            c.moveToNext();
+        }
+        return res;
+ */

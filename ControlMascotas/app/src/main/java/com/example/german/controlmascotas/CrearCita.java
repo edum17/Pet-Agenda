@@ -13,8 +13,10 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.view.ContextThemeWrapper;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -66,21 +68,6 @@ public class CrearCita extends FragmentActivity{
         tipoC = (TextView) findViewById(R.id.textViewTipoE);
 
         //Buttons
-        butCrear = (Button) findViewById(R.id.butCrea);
-        butCrear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addCita();
-            }
-        });
-        butCancelCrea = (Button) findViewById(R.id.butCancelaCrea);
-        butCancelCrea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cerrarCita();
-            }
-        });
-
         nombresM = (ImageButton) findViewById(R.id.butNombreM);
         nombresM.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +108,24 @@ public class CrearCita extends FragmentActivity{
             }
         });
 
+        butCrear = (Button) findViewById(R.id.butCrea);
+        butCrear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addCita();
+                Intent main = new Intent(context,MainActivity.class);
+                startActivity(main);
+                dbconeccion.cerrar();
+            }
+        });
+        butCancelCrea = (Button) findViewById(R.id.butCancelaCrea);
+        butCancelCrea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                dbconeccion.cerrar();
+            }
+        });
 
     }
 
@@ -153,7 +158,7 @@ public class CrearCita extends FragmentActivity{
     public void anadirFecha() {
         //Toast.makeText(getActivity(), "Funciona", Toast.LENGTH_SHORT).show();
         Calendar mcurrentDate=Calendar.getInstance();
-        int mYear=mcurrentDate.get(Calendar.YEAR);
+        int mYear = mcurrentDate.get(Calendar.YEAR);
         int mMonth=mcurrentDate.get(Calendar.MONTH);
         int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
@@ -302,32 +307,12 @@ public class CrearCita extends FragmentActivity{
         if (dbconeccion.insertarCita(e)) {
             //dbconeccion.cerrar();
             Toast.makeText(this, "Cita creada", Toast.LENGTH_SHORT).show();
-            cerrarCita();
+
         } else {
             String res = "La mascota " + nombre.getText().toString() + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
             Toast.makeText(this, res , Toast.LENGTH_SHORT).show();
 
         }
-    }
-
-    public void cerrarCita() {
-        System.out.println("*************************** Singleton.getInstance().getContainerId(): " + Singleton.getInstance().getContainerId());
-        System.out.println("*************************** Singleton.getInstance().getContext(): " + Singleton.getInstance().getContext());
-
-
-        final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, dbconeccion.listarDiasAgenda());
-        adapterDiaFecha.updateAdapter(dbconeccion.listarDiasAgenda());
-
-        finish();
-        /*
-
-        //Funciona perfectamente:
-        Intent main = new Intent(context,MainActivity.class);
-        startActivity(main);
-        finish();
-        */
-
-
     }
 }
 

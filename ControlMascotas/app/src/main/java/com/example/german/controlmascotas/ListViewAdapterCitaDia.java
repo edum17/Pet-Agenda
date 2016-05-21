@@ -47,6 +47,8 @@ public class ListViewAdapterCitaDia extends BaseAdapter {
         return cita.get(position).getHoraIni();
     }
 
+    public String getItemFecha(int position) {return cita.get(position).getFecha();}
+
     public void updateAdapter(ArrayList<Cita> arrylst) {
         cita = arrylst;
         notifyDataSetChanged();

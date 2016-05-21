@@ -31,4 +31,9 @@
     <string name="butCrea">Crea cita</string>
     <string name="butCancelaCrea">Canelar</string>
 
+
+    //Consultar cita
+    <string name="activity_consultar_cita">Cita</string>
+    <string name="butGuardarMod">Guardar cambios</string>
+
 </resources>
