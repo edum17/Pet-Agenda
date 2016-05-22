@@ -49,6 +49,7 @@ public class CrearCita extends FragmentActivity{
     Button butCrear,butCancelCrea;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -296,7 +297,8 @@ public class CrearCita extends FragmentActivity{
 
     public void addCita() {
         Cita e = new Cita();
-        e.setNom(nombre.getText().toString());
+        e.setIdMascota(dbconeccion.getIdMascota(nombre.getText().toString()));
+        e.setNombreM(nombre.getText().toString());
         e.setFecha(fechaC.getText().toString());
         e.setDiaC(getDia(fechaC.getText().toString()));
         e.setMesC(getMes(fechaC.getText().toString()));

@@ -36,11 +36,7 @@ public class ListViewAdapterCitaDia extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
-    }
-
-    public String getItemNameC(int position) {
-        return cita.get(position).getNom();
+        return cita.get(position).getIdMascota();
     }
 
     public String getItemHoraIni(int position) {

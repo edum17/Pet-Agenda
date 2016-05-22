@@ -60,13 +60,11 @@ public class ConsultarMascota extends FragmentActivity {
     ListView listaCitasMascota;
 
     Button guardar;
-    String nombreM;
 
     Context context;
 
     Mascota mascotaOrg;
-
-
+    String idMascota;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +73,13 @@ public class ConsultarMascota extends FragmentActivity {
 
         context = this;
 
-        nombreM = getIntent().getStringExtra("nombreM");
+        idMascota = getIntent().getStringExtra("idMascota");
 
         dbconeccion = new SQLControlador(this);
         dbconeccion.abrirBaseDatos();
 
-        mascotaOrg = dbconeccion.consultarMascota(nombreM);
+        //Obtenemos los parametros de la mascota con identificador idMascota
+        mascotaOrg = dbconeccion.consultarMascota(Integer.parseInt(idMascota));
 
         imagenMascotaCM = (ImageView) findViewById(R.id.imageCM);
         anadirFoto = (ImageButton) findViewById(R.id.butImagenCM);
@@ -114,85 +113,9 @@ public class ConsultarMascota extends FragmentActivity {
 
 
         nombreMCM.setText(mascotaOrg.getNombre());
-        nombreMCM.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!nombreMCM.getText().toString().equals(mascotaOrg.getNombre())) {
-                    guardar.setEnabled(true);
-                    guardar.setFocusable(true);
-                }
-            }
-        });
         tipoMCM.setText(mascotaOrg.getTipo());
-        tipoMCM.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!tipoMCM.getText().toString().equals(mascotaOrg.getTipo())) {
-                    guardar.setEnabled(true);
-                    guardar.setFocusable(true);
-                }
-            }
-        });
         fechaMCM.setText(mascotaOrg.getFechaNac());
-        fechaMCM.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!fechaMCM.getText().toString().equals(mascotaOrg.getFechaNac())) {
-                    guardar.setEnabled(true);
-                    guardar.setFocusable(true);
-                }
-            }
-        });
         nxipMCM.setText(mascotaOrg.getNXip());
-        nxipMCM.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!nxipMCM.getText().toString().equals(mascotaOrg.getNXip())) {
-                    guardar.setEnabled(true);
-                    guardar.setFocusable(true);
-                }
-            }
-        });
         medicacionMCM.setText(mascotaOrg.getMedicamento());
         medicacionMCM.addTextChangedListener(new TextWatcher() {
             @Override
@@ -236,7 +159,13 @@ public class ConsultarMascota extends FragmentActivity {
 
         //System.out.println("*************************** Path: " + mascotaOrg.getPath());
 
+        System.out.println("*************************** mascotaOrg.getid(): " + mascotaOrg.getId());
+        System.out.println("*************************** mascotaOrg.getnom(): " + mascotaOrg.getNombre());
+
+
+        System.out.println("*************************** mascotaOrg.getPath(): " + mascotaOrg.getPath());
         String dir = mascotaOrg.getPath();
+        System.out.println("*************************** dir: " + dir);
         if(dir.equals("default")) imagenMascotaCM.setBackgroundResource(R.mipmap.img_def_00);
         else {
             Bitmap bitmap;
@@ -262,7 +191,7 @@ public class ConsultarMascota extends FragmentActivity {
     }
 
     private void citasMascota() {
-        final ListViewAdapterCitasMascota adapter = new ListViewAdapterCitasMascota(this,dbconeccion.listarCitaMascota(nombreM));
+        final ListViewAdapterCitasMascota adapter = new ListViewAdapterCitasMascota(this,dbconeccion.listarCitaMascota(Integer.parseInt(idMascota)));
         adapter.notifyDataSetChanged();
         listaCitasMascota.setAdapter(adapter);
         ListViewSinScroll.setListViewHeightBasedOnItems(listaCitasMascota);
@@ -278,8 +207,8 @@ public class ConsultarMascota extends FragmentActivity {
                         if (items[which].equals("Eliminar cita")) {
                             String fecha = adapter.getItemFechaC(position);
                             String horaIni = adapter.getItemHoraIni(position);
-                            dbconeccion.eliminarCita(nombreM, fecha, horaIni);
-                            adapter.updateAdapter(dbconeccion.listarCitaMascota(nombreM));
+                            dbconeccion.eliminarCita(Integer.parseInt(idMascota), fecha, horaIni);
+                            adapter.updateAdapter(dbconeccion.listarCitaMascota(Integer.parseInt(idMascota)));
                             Toast.makeText(getApplicationContext(), "La cita ha sido eliminada", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -297,27 +226,12 @@ public class ConsultarMascota extends FragmentActivity {
 
     public void updateMascota() {
         //Toast.makeText(context, "Boton activado", Toast.LENGTH_SHORT).show();
-        if (!mascotaOrg.getPath().equals(Path)) {
-            dbconeccion.updatePathM(nombreMCM.getText().toString(), Path);
-        }
 
-        if (!nombreMCM.getText().toString().equals(mascotaOrg.getNombre())) {
-            Toast.makeText(context, "Nombre", Toast.LENGTH_SHORT).show();
-        }
-        if (!tipoMCM.getText().toString().equals(mascotaOrg.getTipo())) {
-            dbconeccion.updateTipoM(nombreMCM.getText().toString(), tipoMCM.getText().toString());
-        }
-        if (!fechaMCM.getText().toString().equals(mascotaOrg.getFechaNac())){
-            dbconeccion.updateFechaM(nombreMCM.getText().toString(), fechaMCM.getText().toString());
-        }
-        if (!nxipMCM.getText().toString().equals(mascotaOrg.getNXip())){
-            dbconeccion.updateNXipM(nombreMCM.getText().toString(), nxipMCM.getText().toString());
-        }
         if (!medicacionMCM.getText().toString().equals(mascotaOrg.getMedicamento())){
-            dbconeccion.updateMedM(nombreMCM.getText().toString(), medicacionMCM.getText().toString());
+            dbconeccion.updateMedM(Integer.parseInt(idMascota), medicacionMCM.getText().toString());
         }
         if (!alergiaMCM.getText().toString().equals(mascotaOrg.getAlergia())){
-            dbconeccion.updateAlerM(nombreMCM.getText().toString(), alergiaMCM.getText().toString());
+            dbconeccion.updateAlerM(Integer.parseInt(idMascota), alergiaMCM.getText().toString());
         }
 
         Intent main = new Intent(this,MainActivity.class);
@@ -354,21 +268,21 @@ public class ConsultarMascota extends FragmentActivity {
                     openCamera();
                     guardar.setEnabled(true);
                     guardar.setFocusable(true);
-                    if(!mascotaOrg.getPath().equals(Path)) dbconeccion.updatePathM(nombreMCM.getText().toString(),Path);
+                    if(!mascotaOrg.getPath().equals(Path)) dbconeccion.updatePathM(mascotaOrg.getId(),Path);
                 } else if (items[which].equals("Galería")) {
                     guardar.setEnabled(true);
                     guardar.setFocusable(true);
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
                     startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen"), SELECT_PICTURE);
-                    if(!mascotaOrg.getPath().equals(Path)) dbconeccion.updatePathM(nombreMCM.getText().toString(),Path);
+                    if(!mascotaOrg.getPath().equals(Path)) dbconeccion.updatePathM(mascotaOrg.getId(),Path);
                 }
                 else if (items[which].equals("Eliminar imagen")) {
                     guardar.setEnabled(true);
                     guardar.setFocusable(true);
                     Path = "default";
                     imagenMascotaCM.setBackgroundResource(R.mipmap.img_def_01);
-                    if(!mascotaOrg.getPath().equals(Path)) dbconeccion.updatePathM(nombreMCM.getText().toString(),Path);
+                    if(!mascotaOrg.getPath().equals(Path)) dbconeccion.updatePathM(mascotaOrg.getId(),Path);
                 }
             }
         });

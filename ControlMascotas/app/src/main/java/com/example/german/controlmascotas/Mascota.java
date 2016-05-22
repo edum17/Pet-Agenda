@@ -6,6 +6,7 @@ import android.app.AlertDialog;
  * Created by German on 01/04/2016.
  */
 public class Mascota {
+    private int id;
     private String Nombre;
     private String Tipo;
     private String FechaNac;
@@ -26,6 +27,14 @@ public class Mascota {
         Medicamento = medicamento;
         Alergia = alergia;
         Path = path;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {

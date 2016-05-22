@@ -71,12 +71,13 @@ public class SQLControlador {
     }
 
     public ArrayList<Mascota> listarMascotas() {
-        String query = "SELECT " + dbhelper.CN_NomM + "," + dbhelper.CN_TipoM + "," + dbhelper.CN_FechaNac + "," + dbhelper.CN_Path + "," + dbhelper.CN_NXip + " FROM " + dbhelper.TABLA_MASCOTAS + " ORDER BY " + dbhelper.CN_NomM;
+        String query = "SELECT " + dbhelper.CN_idM + "," + dbhelper.CN_NomM + "," + dbhelper.CN_TipoM + "," + dbhelper.CN_FechaNac + "," + dbhelper.CN_Path + "," + dbhelper.CN_NXip + " FROM " + dbhelper.TABLA_MASCOTAS + " ORDER BY " + dbhelper.CN_NomM;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Mascota> res = new ArrayList<>();
         while (c.isAfterLast() == false) {
             Mascota m = new Mascota();
+            m.setId(Integer.parseInt(c.getString(c.getColumnIndex("_idM"))));
             m.setNombre(c.getString(c.getColumnIndex("_nomM")));
             m.setTipo(c.getString(c.getColumnIndex("_tipoM")));
             m.setFechaNac(c.getString(c.getColumnIndex("_fechaNac")));
@@ -191,16 +192,30 @@ public class SQLControlador {
         return res;
     }
 
+    public String getNomMascota(int id) {
+        String query = "SELECT " + dbhelper.CN_NomM + " FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_idM + " = " + id;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        String res = null;
+        while (c.isAfterLast() == false) {
+            res = c.getString(c.getColumnIndex("_nomM"));
+            c.moveToNext();
+        }
+        return res;
+    }
+
     public ArrayList<Cita> listarCitasDia(String fecha) {
-        String query = "SELECT " + dbhelper.CN_NomMC + "," + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_FechaC + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniC;
+        String query = "SELECT " + dbhelper.CN_idMC+ "," + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_FechaC + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniC;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
         while (c.isAfterLast() == false) {
             Cita dfa = new Cita();
-            String s = "La mascota " + c.getString(c.getColumnIndex("_nomMC")) + " tiene " + c.getString(c.getColumnIndex("_tipoC"));
+            String nombreMascota = getNomMascota(Integer.parseInt(c.getString(c.getColumnIndex("_idMC"))));
+            String s = "La mascota " + nombreMascota + " tiene " + c.getString(c.getColumnIndex("_tipoC"));
             dfa.setFecha(c.getString(c.getColumnIndex("_fechaC")));
-            dfa.setNom(c.getString(c.getColumnIndex("_nomMC")));
+            dfa.setIdMascota(Integer.parseInt(c.getString(c.getColumnIndex("_idMC"))));
+            dfa.setNombreM(nombreMascota);
             dfa.setHoraIni(c.getString(c.getColumnIndex("_horaIni")));
             dfa.setHoraFin(c.getString(c.getColumnIndex("_horaFin")));
             dfa.setNomMascotaTipoE(s);
@@ -238,10 +253,22 @@ public class SQLControlador {
         return res;
     }
 
+    public int getIdMascota(String nomM) {
+        String query = "SELECT " + dbhelper.CN_idM + " FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_NomM + " = '" + nomM + "'";
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        int res = -1;
+        while (c.isAfterLast() == false) {
+            res = c.getInt(c.getColumnIndex("_idM"));
+            c.moveToNext();
+        }
+        return res;
+    }
+
     //Busquedas y altas de nuevas mascotas
     private ContentValues valoresCita(Cita c) {
         ContentValues res = new ContentValues();
-        res.put(DBHelper.CN_NomMC,c.getNom());
+        res.put(DBHelper.CN_idMC,c.getIdMascota());
         res.put(DBHelper.CN_FechaC,c.getFecha());
         res.put(DBHelper.CN_DiaC,c.getDiaC());
         res.put(DBHelper.CN_MesC,c.getMesC());
@@ -252,13 +279,13 @@ public class SQLControlador {
         return res;
     }
 
-    public boolean existeixCita(String nombreM, String fecha, String horaIni) {
+    public boolean existeixCita(int idMC, String fecha, String horaIni) {
         ArrayList<String> res = new ArrayList<>();
-        String query = "SELECT " + dbhelper.CN_NomMC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_NomMC + "='" + nombreM +"' and " + dbhelper.CN_FechaC + "='" + fecha + "' and " + dbhelper.CN_HoraIniC + "='" + horaIni +"'";
+        String query = "SELECT " + dbhelper.CN_idMC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_idMC + "=" + idMC +" and " + dbhelper.CN_FechaC + "='" + fecha + "' and " + dbhelper.CN_HoraIniC + "='" + horaIni +"'";
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         while (c.isAfterLast() == false) {
-            res.add(c.getString(c.getColumnIndex("_nomMC")));
+            res.add(c.getString(c.getColumnIndex("_idMC")));
             c.moveToNext();
         }
         if (res.size() == 0) return false;
@@ -266,25 +293,25 @@ public class SQLControlador {
     }
 
     public boolean insertarCita(Cita c) {
-        if (!existeixCita(c.getNom(), c.getFecha(), c.getHoraIni())) {
+        if (!existeixCita(c.getIdMascota(), c.getFecha(), c.getHoraIni())) {
             database.insert(DBHelper.TABLA_CITA,null,valoresCita(c));
             return true;
         }
         else return false;
     }
 
-    public void eliminarCita(String nomMC, String fecha, String horaIni) {
-        database.delete(DBHelper.TABLA_CITA, DBHelper.CN_NomMC + "='" + nomMC + "' and " + DBHelper.CN_FechaC + "='" + fecha + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'" ,null);
+    public void eliminarCita(int idMC, String fecha, String horaIni) {
+        database.delete(DBHelper.TABLA_CITA, DBHelper.CN_idMC + "=" + idMC + " and " + DBHelper.CN_FechaC + "='" + fecha + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'" ,null);
     }
 
-    public Cita consultarCita(String nomMC,String fecha, String horaIni) {
+    public Cita consultarCita(int idMC,String fecha, String horaIni) {
         String query = "SELECT " + dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA +
-                " WHERE " + dbhelper.CN_NomMC + "='" + nomMC + "' and " + dbhelper.CN_FechaC + "='" + fecha + "' and " +
+                " WHERE " + dbhelper.CN_idMC + "=" + idMC + " and " + dbhelper.CN_FechaC + "='" + fecha + "' and " +
                 dbhelper.CN_HoraIniC + "='" + horaIni + "'";
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         Cita res = new Cita();
-        res.setNom(nomMC);
+        res.setIdMascota(idMC);
         res.setFecha(fecha);
         res.setHoraIni(horaIni);
         while (c.isAfterLast() == false) {
@@ -297,13 +324,13 @@ public class SQLControlador {
         return res;
     }
 
-    public void eliminarMascotaYCitas(String nomM) {
-        database.delete(DBHelper.TABLA_MASCOTAS, DBHelper.CN_NomM + "='" + nomM + "'", null);
-        database.delete(DBHelper.TABLA_CITA,DBHelper.CN_NomMC + "='" + nomM + "'",null);
+    public void eliminarMascotaYCitas(int idM) {
+        database.delete(DBHelper.TABLA_MASCOTAS, DBHelper.CN_idM + "=" + idM, null);
+        database.delete(DBHelper.TABLA_CITA,DBHelper.CN_idMC + "=" + idM,null);
     }
 
-    public ArrayList<Cita> listarCitaMascota(String nombreM) {
-        String query = "SELECT " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_NomMC + " = '" + nombreM + "' ORDER BY " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC;
+    public ArrayList<Cita> listarCitaMascota(int idMC) {
+        String query = "SELECT " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_idMC + " = " + idMC + " ORDER BY " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
@@ -319,8 +346,8 @@ public class SQLControlador {
         return res;
     }
 
-    public Mascota consultarMascota(String nomM) {
-        String query = "SELECT * FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_NomM + "='" + nomM + "'";
+    public Mascota consultarMascota(int idM) {
+        String query = "SELECT * FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_idM + "=" + idM;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         Mascota res = new Mascota();
@@ -347,45 +374,25 @@ public class SQLControlador {
         return res;
     }
 
-    public int updatePathM(String nomM, String newPathM) {
+    //Actulitacio de les dades dinaqiques d'una mascota
+    public int updatePathM(int idMascota, String newPathM) {
         ContentValues res = new ContentValues();
         res.put(DBHelper.CN_Path,newPathM);
-        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res,  DBHelper.CN_idM + "=" + idMascota,null);
         return i;
     }
 
-    public int updateTipoM(String nomM, String newTipoM) {
-        ContentValues res = new ContentValues();
-        res.put(DBHelper.CN_TipoM,newTipoM);
-        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
-        return i;
-    }
-
-    public int updateFechaM(String nomM, String newFechaM) {
-        ContentValues res = new ContentValues();
-        res.put(DBHelper.CN_FechaNac,newFechaM);
-        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
-        return i;
-    }
-
-    public int updateNXipM(String nomM, String newNxipM) {
-        ContentValues res = new ContentValues();
-        res.put(DBHelper.CN_NXip,newNxipM);
-        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
-        return i;
-    }
-
-    public int updateMedM(String nomM, String newMedM) {
+    public int updateMedM(int idMascota, String newMedM) {
         ContentValues res = new ContentValues();
         res.put(DBHelper.CN_Med,newMedM);
-        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res,  DBHelper.CN_idM + "=" + idMascota,null);
         return i;
     }
 
-    public int updateAlerM(String nomM, String newAlerM) {
+    public int updateAlerM(int idMascota, String newAlerM) {
         ContentValues res = new ContentValues();
         res.put(DBHelper.CN_Aler,newAlerM);
-        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_idM + "=" + idMascota,null);
         return i;
     }
 }

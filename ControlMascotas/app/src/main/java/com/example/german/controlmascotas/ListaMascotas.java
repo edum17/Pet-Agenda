@@ -54,14 +54,15 @@ public class ListaMascotas extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
                             String nomC = adapter.getItemName(position);
-                            dbconeccion.eliminarMascotaYCitas(nomC);
+                            String identficador = Long.toString(adapter.getItemId(position));
+                            dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
                             Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
                             adapter.updateAdapter(dbconeccion.listarMascotas());
                         }
                         else if (items[which].equals("Modificar mascota")) {
                             Intent consultar_mascota = new Intent(context,ConsultarMascota.class);
-                            String nombre = adapter.getItemName(position);
-                            consultar_mascota.putExtra("nombreM", nombre);
+                            String identficador = Long.toString(adapter.getItemId(position));
+                            consultar_mascota.putExtra("idMascota", identficador);
                             getActivity().startActivity(consultar_mascota);
                         }
                     }

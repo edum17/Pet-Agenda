@@ -5,7 +5,8 @@ package com.example.german.controlmascotas;
  */
 public class Cita {
 
-    private String nom;
+    private int idMascota;
+    private String nombreM;
     private String diaSemana;
     private String fecha;
     private String diaC;
@@ -18,6 +19,14 @@ public class Cita {
     private String nomMascotaTipoE;
 
     public Cita() {
+    }
+
+    public String getNombreM() {
+        return nombreM;
+    }
+
+    public void setNombreM(String nombreM) {
+        this.nombreM = nombreM;
     }
 
     public String getDiaSemana() {
@@ -36,12 +45,12 @@ public class Cita {
         this.fecha = fecha;
     }
 
-    public String getNom() {
-        return nom;
+    public int getIdMascota() {
+        return idMascota;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setIdMascota(int idMascota) {
+        this.idMascota = idMascota;
     }
 
     public String getHoraIni() {

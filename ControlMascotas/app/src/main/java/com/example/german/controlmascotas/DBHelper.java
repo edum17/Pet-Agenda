@@ -18,6 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Tabla ListaMascotas
     public static final String TABLA_MASCOTAS = "Mascotas";
+    public static final String CN_idM = "_idM";
     public static final String CN_NomM = "_nomM";
     public static final String CN_TipoM = "_tipoM";
     public static final String CN_FechaNac = "_fechaNac";
@@ -28,7 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Tabla Citas
     public static final String TABLA_CITA = "Cita";
-    public static final String CN_NomMC = "_nomMC";
+    public static final String CN_idMC = "_idMC";
     public static final String CN_FechaC = "_fechaC";
     public static final String CN_DiaC = "_diaC";
     public static final String CN_MesC = "_mesC";
@@ -45,7 +46,8 @@ public class DBHelper extends SQLiteOpenHelper {
     //Creacion de las tablas
 
     public static final String CREA_TABLA_MASCOTAS = "CREATE TABLE " + TABLA_MASCOTAS + "(" +
-            CN_NomM + " TEXT PRIMARY KEY, " +
+            CN_idM + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            CN_NomM + " TEXT NOT NULL, " +
             CN_TipoM + " TEXT NOT NULL, " +
             CN_FechaNac + " DATE NOT NULL, " +
             CN_NXip + " TEXT NOT NULL, " +
@@ -57,7 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
             CN_NomTC + " TEXT PRIMARY KEY);";
 
     public static final String CREA_TABLA_EVENTOS = "CREATE TABLE " + TABLA_CITA + "(" +
-            CN_NomMC + " TEXT NOT NULL, " +
+            CN_idMC + " INTEGER NOT NULL, " +
             CN_FechaC + " TEXT NOT NULL, " +
             CN_DiaC + " TEXT NOT NULL, " +
             CN_MesC + " TEXT NOT NULL, " +
@@ -65,8 +67,8 @@ public class DBHelper extends SQLiteOpenHelper {
             CN_HoraIniC + " TEXT NOT NULL, " +
             CN_HoraFinC + " TEXT NOT NULL, " +
             CN_TipoC + " TEXT NOT NULL, " +
-            "PRIMARY KEY (" + CN_NomMC + "," + CN_FechaC + "," + CN_HoraIniC + "), " +
-            "FOREIGN KEY (" + CN_NomMC + ") REFERENCES " + TABLA_MASCOTAS + " (" + CN_NomM + "), " +
+            "PRIMARY KEY (" + CN_idMC + "," + CN_FechaC + "," + CN_HoraIniC + "), " +
+            "FOREIGN KEY (" + CN_idMC + ") REFERENCES " + TABLA_MASCOTAS + " (" + CN_idMC + "), " +
             "FOREIGN KEY (" + CN_TipoC + ") REFERENCES " + TABLA_TIPO_CITA + " (" + CN_NomTC + "));";
 
 
@@ -101,6 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private void insertarMascota1(SQLiteDatabase db) {
         ContentValues mascota1 = new ContentValues();
+        mascota1.put(CN_idM,1);
         mascota1.put(CN_NomM,"A");
         mascota1.put(CN_TipoM,"A");
         mascota1.put(CN_FechaNac,"11/11/1111");
@@ -114,6 +117,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private void insertarMascota2(SQLiteDatabase db) {
         ContentValues mascota2 = new ContentValues();
+        mascota2.put(CN_idM,2);
         mascota2.put(CN_NomM,"B");
         mascota2.put(CN_TipoM,"B");
         mascota2.put(CN_FechaNac,"22/22/2222");
@@ -149,11 +153,11 @@ public class DBHelper extends SQLiteOpenHelper {
     private void insertarCitas(SQLiteDatabase db) {
         //Cita 1
         ContentValues cita = new ContentValues();
-        cita.put(CN_NomMC, "A");
+        cita.put(CN_idMC, 1);
         cita.put(CN_FechaC, "11/11/1111");
-        cita.put(CN_DiaC,"11");
-        cita.put(CN_MesC,"11");
-        cita.put(CN_AnyC,"1111");
+        cita.put(CN_DiaC, "11");
+        cita.put(CN_MesC, "11");
+        cita.put(CN_AnyC, "1111");
         cita.put(CN_HoraIniC, "08:00");
         cita.put(CN_HoraFinC, "09:00");
         cita.put(CN_TipoC, "Vacunación");
@@ -161,11 +165,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Cita 2
         cita = new ContentValues();
-        cita.put(CN_NomMC, "A");
+        cita.put(CN_idMC, 1);
         cita.put(CN_FechaC, "11/11/1111");
         cita.put(CN_DiaC,"11");
-        cita.put(CN_MesC,"11");
-        cita.put(CN_AnyC,"1111");
+        cita.put(CN_MesC, "11");
+        cita.put(CN_AnyC, "1111");
         cita.put(CN_HoraIniC, "09:00");
         cita.put(CN_HoraFinC, "09:30");
         cita.put(CN_TipoC, "Desparacitación");
@@ -173,11 +177,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Cita 3
         cita = new ContentValues();
-        cita.put(CN_NomMC, "A");
+        cita.put(CN_idMC, 1);
         cita.put(CN_FechaC, "12/11/1111");
         cita.put(CN_DiaC,"12");
         cita.put(CN_MesC,"11");
-        cita.put(CN_AnyC,"1111");
+        cita.put(CN_AnyC, "1111");
         cita.put(CN_HoraIniC, "09:00");
         cita.put(CN_HoraFinC, "09:30");
         cita.put(CN_TipoC,"Veterinario");
@@ -185,7 +189,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Cita 4
         cita = new ContentValues();
-        cita.put(CN_NomMC, "B");
+        cita.put(CN_idMC, 2);
         cita.put(CN_FechaC, "12/11/1111");
         cita.put(CN_DiaC,"12");
         cita.put(CN_MesC,"11");
@@ -197,7 +201,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Cita 5
         cita = new ContentValues();
-        cita.put(CN_NomMC, "A");
+        cita.put(CN_idMC, 1);
         cita.put(CN_FechaC, "13/11/1111");
         cita.put(CN_DiaC,"13");
         cita.put(CN_MesC,"11");
@@ -209,7 +213,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Cita 6
         cita = new ContentValues();
-        cita.put(CN_NomMC, "B");
+        cita.put(CN_idMC, 2);
         cita.put(CN_FechaC, "11/11/1111");
         cita.put(CN_DiaC,"11");
         cita.put(CN_MesC,"11");

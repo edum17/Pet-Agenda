@@ -40,6 +40,7 @@ public class ConsultarCita extends FragmentActivity {
     Button guardarMod, cancel;
 
     Cita cita;
+    String idMascota;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +48,12 @@ public class ConsultarCita extends FragmentActivity {
 
         dbconeccion = new SQLControlador(this);
         dbconeccion.abrirBaseDatos();
-        nombreM = getIntent().getStringExtra("nombreM");
+        //Obtenemos el id de la mascota
+        idMascota = getIntent().getStringExtra("idMC");
         fechaCita = getIntent().getStringExtra("fecha");
         horaIni = getIntent().getStringExtra("horaIni");
-
+        //Obtenemos el nombre del id de la mascota
+        nombreM = dbconeccion.getNomMascota(Integer.parseInt(idMascota));
 
         nombreMC = (EditText) findViewById(R.id.editTextNombreMC);
         fechaC = (EditText) findViewById(R.id.editTextFechaCita);
@@ -112,7 +115,7 @@ public class ConsultarCita extends FragmentActivity {
         guardarMod.setEnabled(false);
         guardarMod.setFocusable(false);
 
-        cita = dbconeccion.consultarCita(nombreM,fechaCita,horaIni);
+        cita = dbconeccion.consultarCita(Integer.parseInt(idMascota),fechaCita,horaIni);
 
         nombreMC.setText(nombreM);
         nombreMC.setEnabled(false);
@@ -243,9 +246,9 @@ public class ConsultarCita extends FragmentActivity {
     }
 
     public void updateCita() {
-        dbconeccion.eliminarCita(nombreM,fechaCita,horaIni);
+        dbconeccion.eliminarCita(Integer.parseInt(idMascota),fechaCita,horaIni);
         Cita e = new Cita();
-        e.setNom(nombreM);
+        e.setIdMascota(Integer.parseInt(idMascota));
         e.setFecha(fechaC.getText().toString());
         e.setDiaC(getDia(fechaC.getText().toString()));
         e.setMesC(getMes(fechaC.getText().toString()));

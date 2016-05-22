@@ -91,20 +91,20 @@ public class ListViewAdapterDiasAgenda extends BaseAdapter{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar cita")) {
-                            String nomC = adapterCitasDia[0].getItemNameC(position);
+                            String idMC = Long.toString(adapterCitasDia[0].getItemId(position));
                             String horaIni = adapterCitasDia[0].getItemHoraIni(position);
-                            dbconeccion.eliminarCita(nomC, fecha, horaIni);
+                            dbconeccion.eliminarCita(Integer.parseInt(idMC), fecha, horaIni);
                             adapterCitasDia[0].updateAdapter(dbconeccion.listarCitasDia(fecha));
                             updateAdapter(dbconeccion.listarDiasAgenda());
                             Toast.makeText(context, "La cita ha sido eliminada", Toast.LENGTH_SHORT).show();
                         } else if (items[which].equals("Modificar cita")) {
                             Intent consultar_cita = new Intent(context, ConsultarCita.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                            String nombreM = adapterCitasDia[0].getItemNameC(position);
+                            String idMC = Long.toString(adapterCitasDia[0].getItemId(position));
                             String fecha = adapterCitasDia[0].getItemFecha(position);
                             String horaIni = adapterCitasDia[0].getItemHoraIni(position);
 
-                            consultar_cita.putExtra("nombreM", nombreM);
+                            consultar_cita.putExtra("idMC", idMC);
                             consultar_cita.putExtra("fecha", fecha);
                             consultar_cita.putExtra("horaIni", horaIni);
 

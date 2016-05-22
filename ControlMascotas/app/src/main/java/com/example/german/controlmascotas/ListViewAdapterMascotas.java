@@ -38,7 +38,7 @@ public class ListViewAdapterMascotas extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return mascotas.get(position).getId();
     }
 
     public String getItemName(int position) {
