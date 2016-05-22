@@ -166,11 +166,9 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/butGuardar"
+                android:text="@string/butGuardarModCM"
                 android:textColor="@color/Blanco"
-                android:id="@+id/butGuardar"
-                android:layout_below="@+id/editTNumChip"
-                android:layout_centerHorizontal="true"
+                android:id="@+id/butGuardarModCM"
                 android:layout_marginTop="30dp"
                 android:onClick="updateMascota()"
                 android:textAllCaps="false"

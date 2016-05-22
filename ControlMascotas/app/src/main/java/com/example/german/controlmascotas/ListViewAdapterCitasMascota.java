@@ -39,6 +39,14 @@ public class ListViewAdapterCitasMascota extends BaseAdapter {
         return 0;
     }
 
+    public String getItemFechaC(int position) {
+        return citas.get(position).getFecha();
+    }
+
+    public String getItemHoraIni(int position) {
+        return citas.get(position).getHoraIni();
+    }
+
     public void updateAdapter(ArrayList<Cita> arrylst) {
         citas = arrylst;
         notifyDataSetChanged();
@@ -46,24 +54,23 @@ public class ListViewAdapterCitasMascota extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView txtFechaNac, txtHoraIni, txtSepadorCM,txtHoraFin, txtTipoCitaCM;
+        TextView fechaNac, txtHoraIni, txtSepadorCM,txtHoraFin, txtTipoCitaCM;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.formato_fila_lista_mascotas,parent,false);
+        View itemView = inflater.inflate(R.layout.formato_fila_citas_mascota, parent, false);
 
-        txtFechaNac = (TextView) itemView.findViewById(R.id.fila_cita_fechaCM);
+        fechaNac = (TextView) itemView.findViewById(R.id.fila_cita_fechaCM);
         txtHoraIni = (TextView) itemView.findViewById(R.id.fila_cita_horaIniCM);
         txtSepadorCM = (TextView) itemView.findViewById(R.id.fila_cita_separadorCM);
         txtHoraFin = (TextView) itemView.findViewById(R.id.fila_cita_horaFinCM);
         txtTipoCitaCM = (TextView) itemView.findViewById(R.id.fila_cita_tipoCitaCM);
 
-        txtFechaNac.setText(citas.get(position).getFecha());
+        fechaNac.setText(citas.get(position).getFecha());
         txtHoraIni.setText(citas.get(position).getHoraIni());
         txtSepadorCM.setText("-");
         txtHoraFin.setText(citas.get(position).getHoraFin());
         txtTipoCitaCM.setText(citas.get(position).getTipo());
-
 
         return itemView;
     }

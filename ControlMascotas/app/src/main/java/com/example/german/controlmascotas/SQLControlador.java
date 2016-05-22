@@ -297,9 +297,95 @@ public class SQLControlador {
         return res;
     }
 
-    public void eliminarMascota(String nomM) {
-        database.delete(DBHelper.TABLA_MASCOTAS, DBHelper.CN_NomM + "='" + nomM + "'",null);
+    public void eliminarMascotaYCitas(String nomM) {
+        database.delete(DBHelper.TABLA_MASCOTAS, DBHelper.CN_NomM + "='" + nomM + "'", null);
         database.delete(DBHelper.TABLA_CITA,DBHelper.CN_NomMC + "='" + nomM + "'",null);
     }
 
+    public ArrayList<Cita> listarCitaMascota(String nombreM) {
+        String query = "SELECT " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_NomMC + " = '" + nombreM + "' ORDER BY " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<Cita> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            Cita dfa = new Cita();
+            dfa.setFecha(c.getString(c.getColumnIndex("_fechaC")));
+            dfa.setHoraIni(c.getString(c.getColumnIndex("_horaIni")));
+            dfa.setHoraFin(c.getString(c.getColumnIndex("_horaFin")));
+            dfa.setTipo(c.getString(c.getColumnIndex("_tipoC")));
+            res.add(dfa);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    public Mascota consultarMascota(String nomM) {
+        String query = "SELECT * FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_NomM + "='" + nomM + "'";
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        Mascota res = new Mascota();
+
+        while (c.isAfterLast() == false) {
+            String nombreM = c.getString(c.getColumnIndex("_nomM"));
+            String tipoM = c.getString(c.getColumnIndex("_tipoM"));
+            String fechaNac = c.getString(c.getColumnIndex("_fechaNac"));
+            String nxip = c.getString(c.getColumnIndex("_nxip"));
+            String med = c.getString(c.getColumnIndex("_medicacion"));
+            String aler = c.getString(c.getColumnIndex("_alergia"));
+            String path = c.getString(c.getColumnIndex("_path"));
+
+            res.setNombre(nombreM);
+            res.setTipo(tipoM);
+            res.setFechaNac(fechaNac);
+            res.setNXip(nxip);
+            res.setMedicamento(med);
+            res.setAlergia(aler);
+            res.setPath(path);
+
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    public int updatePathM(String nomM, String newPathM) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_Path,newPathM);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        return i;
+    }
+
+    public int updateTipoM(String nomM, String newTipoM) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_TipoM,newTipoM);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        return i;
+    }
+
+    public int updateFechaM(String nomM, String newFechaM) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_FechaNac,newFechaM);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        return i;
+    }
+
+    public int updateNXipM(String nomM, String newNxipM) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_NXip,newNxipM);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        return i;
+    }
+
+    public int updateMedM(String nomM, String newMedM) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_Med,newMedM);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        return i;
+    }
+
+    public int updateAlerM(String nomM, String newAlerM) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_Aler,newAlerM);
+        int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_NomM + "='" + nomM + "'",null);
+        return i;
+    }
 }

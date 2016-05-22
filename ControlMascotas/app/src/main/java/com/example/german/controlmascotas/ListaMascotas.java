@@ -54,7 +54,7 @@ public class ListaMascotas extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
                             String nomC = adapter.getItemName(position);
-                            dbconeccion.eliminarMascota(nomC);
+                            dbconeccion.eliminarMascotaYCitas(nomC);
                             Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
                             adapter.updateAdapter(dbconeccion.listarMascotas());
                         }

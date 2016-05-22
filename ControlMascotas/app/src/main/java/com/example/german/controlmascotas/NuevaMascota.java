@@ -135,9 +135,13 @@ public class NuevaMascota extends Fragment {
     public void addMascotaDB() {
         //Comprobar si el tipo de animal se ha seleccionado de una lista o se ha añadido manualmente
         if (!nombre.getText().toString().isEmpty() && !tipo.getText().toString().isEmpty() && !fecha.getText().toString().isEmpty() && !nchip.getText().toString().isEmpty()) {
-            if (medicamento.getText().toString().isEmpty()) medicamento.setText("No");
-            if (alergia.getText().toString().isEmpty()) alergia.setText("No");
-            Mascota m = new Mascota(nombre.getText().toString(), tipo.getText().toString(), fecha.getText().toString(), nchip.getText().toString(), medicamento.getText().toString(), alergia.getText().toString(), Path);
+
+            String med = "No";
+            String aler = "No";
+            if (!medicamento.getText().toString().equals("")) med = medicamento.getText().toString();
+            if (!alergia.getText().toString().equals("")) aler = alergia.getText().toString();
+
+            Mascota m = new Mascota(nombre.getText().toString(), tipo.getText().toString(), fecha.getText().toString(), nchip.getText().toString(), med, aler, Path);
 
             if (dbconeccion.insertarDatos(m)) {
                 //dbconeccion.cerrar();

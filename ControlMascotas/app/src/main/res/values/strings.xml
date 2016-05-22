@@ -21,6 +21,7 @@
 
     //Layout Consultar Mascota
     <string name="activity_consultar_mascota">Consultar mascota</string>
+    <string name="butGuardarModCM">Guardar cambios</string>
 
 
     //Agenda
