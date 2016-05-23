@@ -1,5 +1,6 @@
 package com.example.german.controlmascotas;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -28,6 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
+import android.widget.Toolbar;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -77,6 +79,13 @@ public class ConsultarMascota extends FragmentActivity {
 
         dbconeccion = new SQLControlador(this);
         dbconeccion.abrirBaseDatos();
+
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getActionBar();
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+        getFragmentManager().popBackStack();
 
         //Obtenemos los parametros de la mascota con identificador idMascota
         mascotaOrg = dbconeccion.consultarMascota(Integer.parseInt(idMascota));

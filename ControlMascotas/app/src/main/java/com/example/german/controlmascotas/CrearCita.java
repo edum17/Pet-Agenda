@@ -1,5 +1,6 @@
 package com.example.german.controlmascotas;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -14,6 +15,9 @@ import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -48,8 +52,6 @@ public class CrearCita extends FragmentActivity{
     ImageButton nombresM,fecha, horaI, horaF, tiposC;
     Button butCrear,butCancelCrea;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,6 @@ public class CrearCita extends FragmentActivity{
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
 
-        //System.out.println("*************************** listaDia: " + R.id.listViewAgenda);
 
         //TextView
         nombre = (TextView) findViewById(R.id.textViewNombreM);
@@ -128,6 +129,38 @@ public class CrearCita extends FragmentActivity{
             }
         });
 
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_crear_cita, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        else if (item.getItemId() == R.id.action_settings_CrearCita) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
+            builder.setMessage("Para listar una receta determinada, es necesario seleccionar una de las tres opciones disponible, escribir la palabra a buscar y clicar en el boton de buscar. Una vez obtenidas las recetas deseadas, podemos acceder a una receta clicando sobre ella.");
+            builder.setNeutralButton("Aceptar",null);
+            builder.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void shouldDisplayHomeUp(){
+        //Enable Up button only  if there are entries in the back stack
+        boolean canback = getSupportFragmentManager().getBackStackEntryCount()>0;
+        getActionBar().setDisplayHomeAsUpEnabled(canback);
     }
 
     public void listarAnimales() {

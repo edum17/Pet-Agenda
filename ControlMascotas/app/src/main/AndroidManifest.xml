@@ -19,12 +19,12 @@
 
         <activity
             android:name=".ConsultarMascota"
-            android:label="@string/activity_consultar_mascota" >
+            android:label="@string/activity_consultar_mascota">
         </activity>
 
         <activity
             android:name=".CrearCita"
-            android:label="@string/activity_crear_cita" >
+            android:label="@string/activity_crear_cita">
         </activity>
 
         <activity

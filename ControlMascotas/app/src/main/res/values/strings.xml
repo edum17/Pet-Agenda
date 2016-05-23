@@ -31,6 +31,7 @@
     <string name="activity_crear_cita">Crear cita</string>
     <string name="butCrea">Crea cita</string>
     <string name="butCancelaCrea">Canelar</string>
+    <string name="butAtras"></string>
 
 
     //Consultar cita
