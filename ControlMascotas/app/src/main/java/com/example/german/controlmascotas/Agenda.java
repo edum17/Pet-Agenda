@@ -1,19 +1,25 @@
 package com.example.german.controlmascotas;
 
+import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import java.util.logging.Handler;
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by German on 01/04/2016.
@@ -23,8 +29,9 @@ public class Agenda extends Fragment {
     Context context;
     SQLControlador dbconeccion;
     ListView listaDia;
-    Button crearcita;
     View rootView;
+    TextView mensaje;
+    private CharSequence mTitle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,25 +40,63 @@ public class Agenda extends Fragment {
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
         rootView = inflater.inflate(R.layout.lay_agenda, container, false);
+        mTitle = "Agenda";
 
+        mensaje = (TextView) rootView.findViewById(R.id.textViewMensajeAgenda);
         listaDia = (ListView) rootView.findViewById(R.id.listViewAgenda);
-        crearcita = (Button) rootView.findViewById(R.id.butCrearCita);
-        crearcita.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                crearCita();
-            }
-        });
 
         listarCitas();
 
+        setHasOptionsMenu(true);
+
         return rootView;
+    }
+    public void restoreActionBar() {
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        //Eliminamos el titulo de la app en todos los fragments
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        restoreActionBar();
+        inflater.inflate(R.menu.menu_agenda,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings_AyudaAgenda) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
+            builder.setMessage("Agenda");
+            builder.setNeutralButton("Aceptar",null);
+            builder.show();
+            return true;
+        }
+        if (id == R.id.addCita) {
+            crearCita();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void listarCitas() {
-        final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, dbconeccion.listarDiasAgenda());
-        adapterDiaFecha.notifyDataSetChanged();
-        listaDia.setAdapter(adapterDiaFecha);
+        ArrayList<Cita> citas = dbconeccion.listarDiasAgenda();
+        if (citas.size() == 0) mensaje.setText("No existen citas en el sistema.");
+        else {
+            final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, citas);
+            adapterDiaFecha.notifyDataSetChanged();
+            listaDia.setAdapter(adapterDiaFecha);
+        }
     }
 
     private void crearCita() {

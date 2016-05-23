@@ -3,12 +3,16 @@ package com.example.german.controlmascotas;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,6 +33,8 @@ import java.util.GregorianCalendar;
  */
 public class ConsultarCita extends FragmentActivity {
 
+    Context context;
+
     SQLControlador dbconeccion;
     String nombreM;
     String fechaCita;
@@ -42,10 +48,12 @@ public class ConsultarCita extends FragmentActivity {
     Cita cita;
     String idMascota;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lay_consultar_cita);
 
+        context = this;
         dbconeccion = new SQLControlador(this);
         dbconeccion.abrirBaseDatos();
         //Obtenemos el id de la mascota
@@ -187,6 +195,32 @@ public class ConsultarCita extends FragmentActivity {
                 }
             }
         });
+
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_consular_cita, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        else if (item.getItemId() == R.id.action_settings_ConsultarCita) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
+            builder.setMessage("ConsultarCita");
+            builder.setNeutralButton("Aceptar",null);
+            builder.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private String getDia(String fecha) {

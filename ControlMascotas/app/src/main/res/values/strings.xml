@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Control de Mascotas</string>
+    <string name="app_name">MascotApps</string>
+    <string name="app_second_name">Control de mascotas</string>
 
     <string name="title_section1">Mascotas</string>
     <string name="title_section2">Nueva mascota</string>
@@ -11,6 +12,10 @@
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
 
+    //Ayuda
+    <string name="action_settings_AyudaAgenda">Ayuda</string>
+    <string name="action_settings_AyudaNuevaMascota">Ayuda</string>
+    <string name="action_settings_AyudaListaMascotas">Ayuda</string>
 
     //Nueva Mascota
     <string name="txtMascotas">Mascotas</string>
@@ -22,6 +27,7 @@
     //Layout Consultar Mascota
     <string name="activity_consultar_mascota">Consultar mascota</string>
     <string name="butGuardarModCM">Guardar cambios</string>
+    <string name="action_settings_ConsultarMascota">Ayuda</string>
 
 
     //Agenda
@@ -31,11 +37,13 @@
     <string name="activity_crear_cita">Crear cita</string>
     <string name="butCrea">Crea cita</string>
     <string name="butCancelaCrea">Canelar</string>
-    <string name="butAtras"></string>
+    <string name="butNotificacion"></string>
+    <string name="action_settings_CrearCita">Ayuda</string>
 
 
     //Consultar cita
     <string name="activity_consultar_cita">Cita</string>
     <string name="butGuardarMod">Guardar cambios</string>
+    <string name="action_settings_ConsultarCita">Ayuda</string>
 
 </resources>

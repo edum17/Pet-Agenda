@@ -17,6 +17,9 @@ import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -76,7 +79,7 @@ public class ConsultarMascota extends FragmentActivity {
         context = this;
 
         idMascota = getIntent().getStringExtra("idMascota");
-
+        Path = "";
         dbconeccion = new SQLControlador(this);
         dbconeccion.abrirBaseDatos();
 
@@ -195,8 +198,31 @@ public class ConsultarMascota extends FragmentActivity {
         });
 
         citasMascota();
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_consultar_mascota, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        else if (item.getItemId() == R.id.action_settings_ConsultarMascota) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
+            builder.setMessage("ConsultarMascota");
+            builder.setNeutralButton("Aceptar",null);
+            builder.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void citasMascota() {
@@ -241,6 +267,9 @@ public class ConsultarMascota extends FragmentActivity {
         }
         if (!alergiaMCM.getText().toString().equals(mascotaOrg.getAlergia())){
             dbconeccion.updateAlerM(Integer.parseInt(idMascota), alergiaMCM.getText().toString());
+        }
+        if (!mascotaOrg.getPath().equals(Path) && !Path.equals(null)) {
+            dbconeccion.updatePathM(Integer.parseInt(idMascota),Path);
         }
 
         Intent main = new Intent(this,MainActivity.class);

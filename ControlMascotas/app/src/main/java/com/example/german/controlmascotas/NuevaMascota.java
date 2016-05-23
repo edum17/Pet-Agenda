@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.app.DialogFragment;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -57,6 +61,8 @@ public class NuevaMascota extends Fragment {
 
     EditText nombre,tipo,fecha,nchip,medicamento,alergia;
 
+    private CharSequence mTitle;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,7 +71,7 @@ public class NuevaMascota extends Fragment {
         context = container.getContext();
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
-
+        mTitle = "Nueva mascota";
         img = (ImageView) rootView.findViewById(R.id.image);
         img.setBackgroundResource(R.mipmap.img_def_01);
 
@@ -110,8 +116,44 @@ public class NuevaMascota extends Fragment {
         });
 
         Path = "default";
+        setHasOptionsMenu(true);
 
         return rootView;
+    }
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        //Eliminamos el titulo de la app en todos los fragments
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        restoreActionBar();
+        inflater.inflate(R.menu.menu_nueva_mascota,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings_AyudaNuevaMascota) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
+            builder.setMessage("NuevaMascota");
+            builder.setNeutralButton("Aceptar",null);
+            builder.show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void addDate() {

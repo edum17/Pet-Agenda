@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ConsultarMascota">
+    <item android:id="@+id/action_settings_ConsultarMascota"
+        android:title="@string/action_settings_ConsultarMascota"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        />
+
+</menu>

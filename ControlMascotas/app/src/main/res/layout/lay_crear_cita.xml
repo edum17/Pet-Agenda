@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Blanco"
-    tools:context="com.example.german.controlmascotas.CrearCita">
+    tools:context=".CrearCita">
 
     <!--Mostramos el nombre de la mascota -->
     <LinearLayout
