@@ -273,7 +273,7 @@ public class NuevaCita extends Fragment{
         alertDialogObject.show();
     }
 
-    private String getDia(String fecha) {
+    private int getDia(String fecha) {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaActual = null;
         try {
@@ -285,10 +285,10 @@ public class NuevaCita extends Fragment{
         GregorianCalendar fechaCalendario = new GregorianCalendar();
         fechaCalendario.setTime(fechaActual);
         int dia = fechaCalendario.get(Calendar.DAY_OF_MONTH);
-        return Integer.toString(dia);
+        return dia;
     }
 
-    private String getMes(String fecha) {
+    private int getMes(String fecha) {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaActual = null;
         try {
@@ -300,21 +300,10 @@ public class NuevaCita extends Fragment{
         GregorianCalendar fechaCalendario = new GregorianCalendar();
         fechaCalendario.setTime(fechaActual);
         int mes = fechaCalendario.get(Calendar.MONTH);
-        if (mes == 0) return "1";
-        else if (mes == 1) return "2";
-        else if (mes == 2) return "3";
-        else if (mes == 3) return "4";
-        else if (mes == 4) return "5";
-        else if (mes == 5) return "6";
-        else if (mes == 6) return "7";
-        else if (mes == 7) return "8";
-        else if (mes == 8) return "9";
-        else if (mes == 9) return "10";
-        else if (mes == 10) return "11";
-        else return "12";
+        return mes+1;
     }
 
-    private String getAny(String fecha) {
+    private int getAny(String fecha) {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaActual = null;
         try {
@@ -326,7 +315,7 @@ public class NuevaCita extends Fragment{
         GregorianCalendar fechaCalendario = new GregorianCalendar();
         fechaCalendario.setTime(fechaActual);
         int year = fechaCalendario.get(Calendar.YEAR);
-        return Integer.toString(year);
+        return year;
     }
 
     public void addCita() {

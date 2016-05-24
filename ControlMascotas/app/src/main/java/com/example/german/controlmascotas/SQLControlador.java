@@ -103,6 +103,20 @@ public class SQLControlador {
         return res;
     }
 
+    public ArrayList<String> listarTratamientoAnimales() {
+        String query = "SELECT DISTINCT " + dbhelper.CN_Med + " FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_Med + "<>'No' ORDER BY " + dbhelper.CN_Med;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<String> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            String medM;
+            medM = c.getString(c.getColumnIndex("_medicacion"));
+            res.add(medM);
+            c.moveToNext();
+        }
+        return res;
+    }
+
     private String getDiaSemana(String fecha) {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaActual = null;
@@ -178,7 +192,7 @@ public class SQLControlador {
     }
 
     public ArrayList<Cita> listarDiasAgenda() {
-        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA + " ORDER BY " + dbhelper.CN_DiaC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_AnyC;
+        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA + " ORDER BY " + dbhelper.CN_AnyC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_DiaC + " ASC";
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
@@ -330,7 +344,7 @@ public class SQLControlador {
     }
 
     public ArrayList<Cita> listarCitaMascota(int idMC) {
-        String query = "SELECT " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_idMC + " = " + idMC + " ORDER BY " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC;
+        String query = "SELECT " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_idMC + " = " + idMC + " ORDER BY " + dbhelper.CN_AnyC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_DiaC + "," + dbhelper.CN_HoraIniC +  " ASC";
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
@@ -398,6 +412,83 @@ public class SQLControlador {
 
     public ArrayList<Mascota> listarMascotasPorTipo(String tipo) {
         String query = "SELECT " + dbhelper.CN_idM + "," + dbhelper.CN_NomM + "," + dbhelper.CN_TipoM + "," + dbhelper.CN_FechaNac + "," + dbhelper.CN_Path + "," + dbhelper.CN_NXip + " FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_TipoM + "='" + tipo + "' ORDER BY " + dbhelper.CN_NomM;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<Mascota> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            Mascota m = new Mascota();
+            m.setId(Integer.parseInt(c.getString(c.getColumnIndex("_idM"))));
+            m.setNombre(c.getString(c.getColumnIndex("_nomM")));
+            m.setTipo(c.getString(c.getColumnIndex("_tipoM")));
+            m.setFechaNac(c.getString(c.getColumnIndex("_fechaNac")));
+            m.setPath(c.getString(c.getColumnIndex("_path")));
+            m.setNXip(c.getString(c.getColumnIndex("_nxip")));
+            res.add(m);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    public ArrayList<Mascota> listarMascotasPorTratamiento(String tratamiento) {
+        String query = "SELECT " + dbhelper.CN_idM + "," + dbhelper.CN_NomM + "," + dbhelper.CN_TipoM + "," + dbhelper.CN_FechaNac + "," + dbhelper.CN_Path + "," + dbhelper.CN_NXip + " FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_Med + "='" + tratamiento + "' ORDER BY " + dbhelper.CN_NomM;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<Mascota> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            Mascota m = new Mascota();
+            m.setId(Integer.parseInt(c.getString(c.getColumnIndex("_idM"))));
+            m.setNombre(c.getString(c.getColumnIndex("_nomM")));
+            m.setTipo(c.getString(c.getColumnIndex("_tipoM")));
+            m.setFechaNac(c.getString(c.getColumnIndex("_fechaNac")));
+            m.setPath(c.getString(c.getColumnIndex("_path")));
+            m.setNXip(c.getString(c.getColumnIndex("_nxip")));
+            res.add(m);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    public ArrayList<Mascota> listarMascotasSinTratamiento() {
+        String query = "SELECT " + dbhelper.CN_idM + "," + dbhelper.CN_NomM + "," + dbhelper.CN_TipoM + "," + dbhelper.CN_FechaNac + "," + dbhelper.CN_Path + "," + dbhelper.CN_NXip + " FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_Med + "='No' ORDER BY " + dbhelper.CN_NomM;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<Mascota> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            Mascota m = new Mascota();
+            m.setId(Integer.parseInt(c.getString(c.getColumnIndex("_idM"))));
+            m.setNombre(c.getString(c.getColumnIndex("_nomM")));
+            m.setTipo(c.getString(c.getColumnIndex("_tipoM")));
+            m.setFechaNac(c.getString(c.getColumnIndex("_fechaNac")));
+            m.setPath(c.getString(c.getColumnIndex("_path")));
+            m.setNXip(c.getString(c.getColumnIndex("_nxip")));
+            res.add(m);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    public ArrayList<Mascota> listarMascotasEnElIntervalo(int np1dia, int np2dia, int np1mes, int np2mes, int np1ano, int np2ano) {
+        System.out.println("*************************** SQLCONTROLADOR");
+        System.out.println("*************************** np1dia: " + np1dia);
+        System.out.println("*************************** np2dia: " + np2dia);
+        System.out.println("*************************** np1mes: " + np1mes);
+        System.out.println("*************************** np2mes: " + np2mes);
+        System.out.println("*************************** np1ano: " + np1ano);
+        System.out.println("*************************** np2ano: " + np2ano);
+
+        String fechaNp1 = np1dia + "/" + np1mes + "/" + np1ano;
+        String fechaNp2 = np2dia + "/" + np2mes + "/" + np2ano;
+
+        System.out.println("*************************** fechaNp1: " + fechaNp1);
+        System.out.println("*************************** fechaNp2: " + fechaNp2);
+
+        String query = "SELECT DISTINCT * FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_idM + " IN (SELECT " + dbhelper.CN_idMC + " FROM " + dbhelper.TABLA_CITA +
+                " WHERE " + dbhelper.CN_TipoC + "='Vacunación' and " +
+                np1dia + "<=" + dbhelper.CN_DiaC + "<=" + np2dia + " and " +
+                np1mes + "<=" + dbhelper.CN_MesC + "<=" + np2mes + " and " +
+                np1ano + "<=" + dbhelper.CN_AnyC + "<=" + np2ano + " and ('" +
+                fechaNp1 + "'=" + dbhelper.CN_FechaC + " or '" + fechaNp2 + "'=" +
+                dbhelper.CN_FechaC + "))";
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Mascota> res = new ArrayList<>();

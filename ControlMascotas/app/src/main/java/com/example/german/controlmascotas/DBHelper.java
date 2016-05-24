@@ -61,9 +61,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CREA_TABLA_EVENTOS = "CREATE TABLE " + TABLA_CITA + "(" +
             CN_idMC + " INTEGER NOT NULL, " +
             CN_FechaC + " TEXT NOT NULL, " +
-            CN_DiaC + " TEXT NOT NULL, " +
-            CN_MesC + " TEXT NOT NULL, " +
-            CN_AnyC + " TEXT NOT NULL, " +
+            CN_DiaC + " INTEGER NOT NULL, " +
+            CN_MesC + " INTEGER NOT NULL, " +
+            CN_AnyC + " INTEGER NOT NULL, " +
             CN_HoraIniC + " TEXT NOT NULL, " +
             CN_HoraFinC + " TEXT NOT NULL, " +
             CN_TipoC + " TEXT NOT NULL, " +
@@ -154,10 +154,10 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 1
         ContentValues cita = new ContentValues();
         cita.put(CN_idMC, 1);
-        cita.put(CN_FechaC, "11/11/1111");
-        cita.put(CN_DiaC, "11");
-        cita.put(CN_MesC, "11");
-        cita.put(CN_AnyC, "1111");
+        cita.put(CN_FechaC, "6/6/2016");
+        cita.put(CN_DiaC, 6);
+        cita.put(CN_MesC, 6);
+        cita.put(CN_AnyC, 2016);
         cita.put(CN_HoraIniC, "08:00");
         cita.put(CN_HoraFinC, "09:00");
         cita.put(CN_TipoC, "Vacunación");
@@ -166,10 +166,10 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 2
         cita = new ContentValues();
         cita.put(CN_idMC, 1);
-        cita.put(CN_FechaC, "11/11/1111");
-        cita.put(CN_DiaC,"11");
-        cita.put(CN_MesC, "11");
-        cita.put(CN_AnyC, "1111");
+        cita.put(CN_FechaC, "9/6/2016");
+        cita.put(CN_DiaC,9);
+        cita.put(CN_MesC, 6);
+        cita.put(CN_AnyC, 2016);
         cita.put(CN_HoraIniC, "09:00");
         cita.put(CN_HoraFinC, "09:30");
         cita.put(CN_TipoC, "Desparacitación");
@@ -178,10 +178,10 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 3
         cita = new ContentValues();
         cita.put(CN_idMC, 1);
-        cita.put(CN_FechaC, "12/11/1111");
-        cita.put(CN_DiaC,"12");
-        cita.put(CN_MesC,"11");
-        cita.put(CN_AnyC, "1111");
+        cita.put(CN_FechaC, "12/6/2016");
+        cita.put(CN_DiaC,12);
+        cita.put(CN_MesC,6);
+        cita.put(CN_AnyC, 2016);
         cita.put(CN_HoraIniC, "09:00");
         cita.put(CN_HoraFinC, "09:30");
         cita.put(CN_TipoC,"Veterinario");
@@ -190,10 +190,10 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 4
         cita = new ContentValues();
         cita.put(CN_idMC, 2);
-        cita.put(CN_FechaC, "12/11/1111");
-        cita.put(CN_DiaC,"12");
-        cita.put(CN_MesC,"11");
-        cita.put(CN_AnyC,"1111");
+        cita.put(CN_FechaC, "12/6/2016");
+        cita.put(CN_DiaC,12);
+        cita.put(CN_MesC,6);
+        cita.put(CN_AnyC,2016);
         cita.put(CN_HoraIniC, "09:30");
         cita.put(CN_HoraFinC, "10:00");
         cita.put(CN_TipoC,"Peluquería");
@@ -202,10 +202,10 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 5
         cita = new ContentValues();
         cita.put(CN_idMC, 1);
-        cita.put(CN_FechaC, "13/11/1111");
-        cita.put(CN_DiaC,"13");
-        cita.put(CN_MesC,"11");
-        cita.put(CN_AnyC,"1111");
+        cita.put(CN_FechaC, "13/11/2016");
+        cita.put(CN_DiaC,13);
+        cita.put(CN_MesC,11);
+        cita.put(CN_AnyC,2016);
         cita.put(CN_HoraIniC, "09:30");
         cita.put(CN_HoraFinC, "10:00");
         cita.put(CN_TipoC,"Adiestrador");
@@ -214,10 +214,10 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 6
         cita = new ContentValues();
         cita.put(CN_idMC, 2);
-        cita.put(CN_FechaC, "11/11/1111");
-        cita.put(CN_DiaC,"11");
-        cita.put(CN_MesC,"11");
-        cita.put(CN_AnyC,"1111");
+        cita.put(CN_FechaC, "15/6/2016");
+        cita.put(CN_DiaC,15);
+        cita.put(CN_MesC,6);
+        cita.put(CN_AnyC,2016);
         cita.put(CN_HoraIniC, "07:00");
         cita.put(CN_HoraFinC, "08:00");
         cita.put(CN_TipoC,"Adiestrador");
