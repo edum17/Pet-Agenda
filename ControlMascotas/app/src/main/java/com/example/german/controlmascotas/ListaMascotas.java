@@ -413,16 +413,7 @@ public class ListaMascotas extends Fragment {
     }
 
     private void listarMascotasEnlasFechas(final int np1dia, final int np2dia, final int np1mes, final int np2mes, final int np1ano, final int np2ano) {
-        System.out.println("*************************** np1dia: " + np1dia);
-        System.out.println("*************************** np2dia: " + np2dia);
-        System.out.println("*************************** np1mes: " + np1mes);
-        System.out.println("*************************** np2mes: " + np2mes);
-        System.out.println("*************************** np1ano: " + np1ano);
-        System.out.println("*************************** np2ano: " + np2ano);
-
         ArrayList<Mascota> Mascotas = dbconeccion.listarMascotasEnElIntervalo(np1dia, np2dia, np1mes, np2mes, np1ano, np2ano);
-
-        System.out.println("*************************** Mascotas.size(): " + Mascotas.size());
         final ListViewAdapterMascotas adapter = new ListViewAdapterMascotas(context, Mascotas);
         adapter.notifyDataSetChanged();
         lista.setAdapter(adapter);

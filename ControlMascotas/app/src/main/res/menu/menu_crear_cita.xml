@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".NuevaCita">
-    <item android:id="@+id/action_settings_CrearCita"
+    <item android:id="@+id/action_settings_NuevaCita"
         android:title="@string/action_settings_CrearCita"
         android:orderInCategory="100"
         android:showAsAction="never"

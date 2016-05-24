@@ -6,14 +6,18 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NotificationCompat;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -54,6 +58,7 @@ public class NuevaCita extends Fragment{
     ImageButton nombresM,fecha, horaI, horaF, tiposC;
     Button butCrear,butCancelCrea;
     private CharSequence mTitle;
+    private static final int NOTIF_ALERTA_ID = 1;
 
     @Nullable
     @Override
@@ -153,13 +158,40 @@ public class NuevaCita extends Fragment{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings_CrearCita) {
+        if (id == R.id.action_settings_NuevaCita) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
             builder.setMessage("NuevaCita");
             builder.setNeutralButton("Aceptar",null);
             builder.show();
             return true;
+        }
+        else if (id == R.id.action_settings_NuevaCita) {
+            /*
+            Toast.makeText(getActivity(), "NOTIFICATIONS", Toast.LENGTH_SHORT).show();
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                            .setSmallIcon(android.R.drawable.stat_sys_warning)
+                            .setLargeIcon((((BitmapDrawable)getResources()
+                                    .getDrawable(R.drawable.ic_notifications)).getBitmap()))
+                            .setContentTitle("Mensaje de Alerta")
+                            .setContentText("Ejemplo de notificación.")
+                            .setContentInfo("4")
+                            .setTicker("Alerta!");
+
+            Intent notIntent =
+                    new Intent(context, MainActivity.class);
+
+            PendingIntent contIntent = PendingIntent.getActivity(
+                    context, 0, notIntent, 0);
+
+            mBuilder.setContentIntent(contIntent);
+
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+            mNotificationManager.notify(NOTIF_ALERTA_ID, mBuilder.build());
+            */
         }
         return super.onOptionsItemSelected(item);
     }

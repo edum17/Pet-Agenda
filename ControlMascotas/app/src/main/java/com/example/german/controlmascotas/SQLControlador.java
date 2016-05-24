@@ -468,19 +468,8 @@ public class SQLControlador {
     }
 
     public ArrayList<Mascota> listarMascotasEnElIntervalo(int np1dia, int np2dia, int np1mes, int np2mes, int np1ano, int np2ano) {
-        System.out.println("*************************** SQLCONTROLADOR");
-        System.out.println("*************************** np1dia: " + np1dia);
-        System.out.println("*************************** np2dia: " + np2dia);
-        System.out.println("*************************** np1mes: " + np1mes);
-        System.out.println("*************************** np2mes: " + np2mes);
-        System.out.println("*************************** np1ano: " + np1ano);
-        System.out.println("*************************** np2ano: " + np2ano);
-
         String fechaNp1 = np1dia + "/" + np1mes + "/" + np1ano;
         String fechaNp2 = np2dia + "/" + np2mes + "/" + np2ano;
-
-        System.out.println("*************************** fechaNp1: " + fechaNp1);
-        System.out.println("*************************** fechaNp2: " + fechaNp2);
 
         String query = "SELECT DISTINCT * FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_idM + " IN (SELECT " + dbhelper.CN_idMC + " FROM " + dbhelper.TABLA_CITA +
                 " WHERE " + dbhelper.CN_TipoC + "='Vacunación' and " +
