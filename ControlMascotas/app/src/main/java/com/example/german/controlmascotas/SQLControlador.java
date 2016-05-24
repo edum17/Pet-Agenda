@@ -395,4 +395,23 @@ public class SQLControlador {
         int i = database.update(DBHelper.TABLA_MASCOTAS,res, DBHelper.CN_idM + "=" + idMascota,null);
         return i;
     }
+
+    public ArrayList<Mascota> listarMascotasPorTipo(String tipo) {
+        String query = "SELECT " + dbhelper.CN_idM + "," + dbhelper.CN_NomM + "," + dbhelper.CN_TipoM + "," + dbhelper.CN_FechaNac + "," + dbhelper.CN_Path + "," + dbhelper.CN_NXip + " FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_TipoM + "='" + tipo + "' ORDER BY " + dbhelper.CN_NomM;
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        ArrayList<Mascota> res = new ArrayList<>();
+        while (c.isAfterLast() == false) {
+            Mascota m = new Mascota();
+            m.setId(Integer.parseInt(c.getString(c.getColumnIndex("_idM"))));
+            m.setNombre(c.getString(c.getColumnIndex("_nomM")));
+            m.setTipo(c.getString(c.getColumnIndex("_tipoM")));
+            m.setFechaNac(c.getString(c.getColumnIndex("_fechaNac")));
+            m.setPath(c.getString(c.getColumnIndex("_path")));
+            m.setNXip(c.getString(c.getColumnIndex("_nxip")));
+            res.add(m);
+            c.moveToNext();
+        }
+        return res;
+    }
 }

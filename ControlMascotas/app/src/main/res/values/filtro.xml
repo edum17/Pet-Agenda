@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lista_filtro">
+        <item>Todas</item>
+        <item>Tipos de animal</item>
+        <item>Tratamiento especial</item>
+        <item>Sin tratamiento</item>
+        <item>Vacunación</item>
+    </string-array>
+</resources>

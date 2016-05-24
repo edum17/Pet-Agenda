@@ -79,7 +79,6 @@ public class ConsultarMascota extends FragmentActivity {
         context = this;
 
         idMascota = getIntent().getStringExtra("idMascota");
-        Path = "";
         dbconeccion = new SQLControlador(this);
         dbconeccion.abrirBaseDatos();
 
@@ -92,7 +91,7 @@ public class ConsultarMascota extends FragmentActivity {
 
         //Obtenemos los parametros de la mascota con identificador idMascota
         mascotaOrg = dbconeccion.consultarMascota(Integer.parseInt(idMascota));
-
+        Path = mascotaOrg.getPath();
         imagenMascotaCM = (ImageView) findViewById(R.id.imageCM);
         anadirFoto = (ImageButton) findViewById(R.id.butImagenCM);
         anadirFoto.setOnClickListener(new View.OnClickListener() {
@@ -171,17 +170,11 @@ public class ConsultarMascota extends FragmentActivity {
 
         //System.out.println("*************************** Path: " + mascotaOrg.getPath());
 
-        System.out.println("*************************** mascotaOrg.getid(): " + mascotaOrg.getId());
-        System.out.println("*************************** mascotaOrg.getnom(): " + mascotaOrg.getNombre());
 
-
-        System.out.println("*************************** mascotaOrg.getPath(): " + mascotaOrg.getPath());
-        String dir = mascotaOrg.getPath();
-        System.out.println("*************************** dir: " + dir);
-        if(dir.equals("default")) imagenMascotaCM.setBackgroundResource(R.mipmap.img_def_00);
+        if(Path.equals("default")) imagenMascotaCM.setBackgroundResource(R.mipmap.img_def_00);
         else {
             Bitmap bitmap;
-            bitmap = BitmapFactory.decodeFile(dir);
+            bitmap = BitmapFactory.decodeFile(Path);
             imagenMascotaCM.setImageBitmap(bitmap);
         }
 
@@ -268,7 +261,7 @@ public class ConsultarMascota extends FragmentActivity {
         if (!alergiaMCM.getText().toString().equals(mascotaOrg.getAlergia())){
             dbconeccion.updateAlerM(Integer.parseInt(idMascota), alergiaMCM.getText().toString());
         }
-        if (!mascotaOrg.getPath().equals(Path) && !Path.equals(null)) {
+        if (!mascotaOrg.getPath().equals(Path)) {
             dbconeccion.updatePathM(Integer.parseInt(idMascota),Path);
         }
 
@@ -306,7 +299,11 @@ public class ConsultarMascota extends FragmentActivity {
                     openCamera();
                     guardar.setEnabled(true);
                     guardar.setFocusable(true);
-                    if(!mascotaOrg.getPath().equals(Path)) dbconeccion.updatePathM(mascotaOrg.getId(),Path);
+                    if(!mascotaOrg.getPath().equals(Path)) {
+                        System.out.println("*************************** mascotaOrg.getPath(): " + mascotaOrg.getPath());
+                        System.out.println("*************************** Path(): " + Path);
+                        dbconeccion.updatePathM(mascotaOrg.getId(),Path);
+                    }
                 } else if (items[which].equals("Galería")) {
                     guardar.setEnabled(true);
                     guardar.setFocusable(true);
