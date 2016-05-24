@@ -24,11 +24,6 @@
         </activity>
 
         <activity
-            android:name=".CrearCita"
-            android:label="@string/activity_crear_cita">
-        </activity>
-
-        <activity
             android:name=".ConsultarCita"
             android:label="@string/activity_consultar_cita" >
         </activity>

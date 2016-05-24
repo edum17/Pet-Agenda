@@ -12,9 +12,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,34 +43,38 @@ import java.util.List;
 /**
  * Created by German on 10/05/2016.
  */
-public class CrearCita extends FragmentActivity{
+public class NuevaCita extends Fragment{
 
     Context context;
     SQLControlador dbconeccion;
 
+    View rootView;
 
     TextView nombre, fechaC, horaIni, horaFin, tipoC;
     ImageButton nombresM,fecha, horaI, horaF, tiposC;
     Button butCrear,butCancelCrea;
+    private CharSequence mTitle;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.lay_crear_cita);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.lay_crear_cita, container, false);
+        context = container.getContext();
 
-        context = this;
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
 
+        mTitle = "Nueva cita";
+
         //TextView
-        nombre = (TextView) findViewById(R.id.textViewNombreM);
-        fechaC = (TextView) findViewById(R.id.textViewFechaCita);
-        horaIni = (TextView) findViewById(R.id.textViewHoraIni);
-        horaFin = (TextView) findViewById(R.id.textViewHoraFin);
-        tipoC = (TextView) findViewById(R.id.textViewTipoE);
+        nombre = (TextView) rootView.findViewById(R.id.textViewNombreM);
+        fechaC = (TextView) rootView.findViewById(R.id.textViewFechaCita);
+        horaIni = (TextView) rootView.findViewById(R.id.textViewHoraIni);
+        horaFin = (TextView) rootView.findViewById(R.id.textViewHoraFin);
+        tipoC = (TextView) rootView.findViewById(R.id.textViewTipoE);
 
         //Buttons
-        nombresM = (ImageButton) findViewById(R.id.butNombreM);
+        nombresM = (ImageButton) rootView.findViewById(R.id.butNombreM);
         nombresM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +82,7 @@ public class CrearCita extends FragmentActivity{
             }
         });
 
-        fecha = (ImageButton) findViewById(R.id.butFechaCita);
+        fecha = (ImageButton) rootView.findViewById(R.id.butFechaCita);
         fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +90,7 @@ public class CrearCita extends FragmentActivity{
             }
         });
 
-        horaI = (ImageButton) findViewById(R.id.butHoraIni);
+        horaI = (ImageButton) rootView.findViewById(R.id.butHoraIni);
         horaI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +98,7 @@ public class CrearCita extends FragmentActivity{
             }
         });
 
-        horaF = (ImageButton) findViewById(R.id.butHoraFin);
+        horaF = (ImageButton) rootView.findViewById(R.id.butHoraFin);
         horaF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +106,7 @@ public class CrearCita extends FragmentActivity{
             }
         });
 
-        tiposC = (ImageButton) findViewById(R.id.butTipoC);
+        tiposC = (ImageButton) rootView.findViewById(R.id.butTipoC);
         tiposC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,46 +114,49 @@ public class CrearCita extends FragmentActivity{
             }
         });
 
-        butCrear = (Button) findViewById(R.id.butCrea);
+        butCrear = (Button) rootView.findViewById(R.id.butCrea);
         butCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addCita();
-                Intent main = new Intent(context,MainActivity.class);
-                startActivity(main);
-                dbconeccion.cerrar();
-            }
-        });
-        butCancelCrea = (Button) findViewById(R.id.butCancelaCrea);
-        butCancelCrea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Fragment agenda = new Agenda();
+                fragmentTransaction.replace(R.id.container, agenda);
+                //fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
                 dbconeccion.cerrar();
             }
         });
 
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        setHasOptionsMenu(true);
 
+        return rootView;
+    }
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        //Eliminamos el titulo de la app en todos los fragments
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        restoreActionBar();
         inflater.inflate(R.menu.menu_crear_cita, menu);
-        return true;
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
-            finish();
-        }
-        else if (item.getItemId() == R.id.action_settings_CrearCita) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings_CrearCita) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
-            builder.setMessage("CrearCita");
+            builder.setMessage("NuevaCita");
             builder.setNeutralButton("Aceptar",null);
             builder.show();
             return true;
@@ -188,11 +197,11 @@ public class CrearCita extends FragmentActivity{
         int mMonth=mcurrentDate.get(Calendar.MONTH);
         int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog mDatePicker=new DatePickerDialog(CrearCita.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog mDatePicker=new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                 // TODO Auto-generated method stub
                 String date = selectedday + "/" + (selectedmonth+1) + "/" + selectedyear;
-                TextView textViewFechaC = (TextView) findViewById(R.id.textViewFechaCita);
+                TextView textViewFechaC = (TextView) rootView.findViewById(R.id.textViewFechaCita);
                 textViewFechaC.setText(date);
             }
         },mYear, mMonth, mDay);
@@ -204,7 +213,7 @@ public class CrearCita extends FragmentActivity{
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
-        TimePickerDialog mTimePicker = new TimePickerDialog(CrearCita.this, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String hora = "";
@@ -212,7 +221,7 @@ public class CrearCita extends FragmentActivity{
                 else hora += hourOfDay + ":";
                 if (minute < 10) hora += "0" + minute;
                 else hora += minute;
-                TextView textViewHoraI = (TextView) findViewById(R.id.textViewHoraIni);
+                TextView textViewHoraI = (TextView) rootView.findViewById(R.id.textViewHoraIni);
                 textViewHoraI.setText(hora);
             }
         },hour,minute,false);
@@ -224,7 +233,7 @@ public class CrearCita extends FragmentActivity{
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
-        TimePickerDialog mTimePicker = new TimePickerDialog(CrearCita.this, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String hora = "";
@@ -232,7 +241,7 @@ public class CrearCita extends FragmentActivity{
                 else hora += hourOfDay + ":";
                 if (minute < 10) hora += "0" + minute;
                 else hora += minute;
-                TextView textViewHoraI = (TextView) findViewById(R.id.textViewHoraFin);
+                TextView textViewHoraI = (TextView) rootView.findViewById(R.id.textViewHoraFin);
                 textViewHoraI.setText(hora);
             }
         },hour,minute,false);
@@ -333,11 +342,11 @@ public class CrearCita extends FragmentActivity{
         e.setTipo(tipoC.getText().toString());
         if (dbconeccion.insertarCita(e)) {
             //dbconeccion.cerrar();
-            Toast.makeText(this, "Cita creada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Cita creada", Toast.LENGTH_SHORT).show();
 
         } else {
             String res = "La mascota " + nombre.getText().toString() + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
-            Toast.makeText(this, res , Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, res , Toast.LENGTH_SHORT).show();
 
         }
     }

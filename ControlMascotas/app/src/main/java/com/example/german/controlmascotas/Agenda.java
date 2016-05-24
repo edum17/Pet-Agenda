@@ -12,14 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Created by German on 01/04/2016.
@@ -82,9 +78,6 @@ public class Agenda extends Fragment {
             builder.show();
             return true;
         }
-        if (id == R.id.addCita) {
-            crearCita();
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -103,7 +96,7 @@ public class Agenda extends Fragment {
         //Singleton.getInstance().setContext(context);
         //Singleton.getInstance().setContainerId(((ViewGroup)getView().getParent()).getId());
         //System.out.println("*************************** ((ViewGroup)getView().getParent()).getId(): " + ((ViewGroup)getView().getParent()).getId());
-        Intent creaCita = new Intent(context,CrearCita.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent creaCita = new Intent(context,NuevaCita.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         getActivity().startActivity(creaCita);
     }
 }

@@ -3,9 +3,9 @@ package com.example.german.controlmascotas;
 import android.app.Activity;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,12 +34,19 @@ public class MainActivity extends Activity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = "Mascotas";
+        mTitle = "";
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment listaM = new ListaMascotas();
+        fragmentTransaction.replace(R.id.container, listaM);
+        //fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -52,17 +59,24 @@ public class MainActivity extends Activity
 
         switch (position) {
             case 0:
+                //Agenda
+                fragment = new Agenda();
+                break;
+
+            case 1:
+                //Crear Cita
+                fragment = new NuevaCita();
+                break;
+
+            case 2:
                 //ListaMascotas
                 fragment = new ListaMascotas();
 
                 break;
-            case 1:
+
+            case 3:
                 //Nueva mascota
                 fragment = new NuevaMascota();
-                break;
-            case 2:
-                //Agenda
-                fragment = new Agenda();
                 break;
         }
 

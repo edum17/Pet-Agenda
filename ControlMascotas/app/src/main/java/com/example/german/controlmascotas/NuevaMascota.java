@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,6 +45,9 @@ public class NuevaMascota extends Fragment {
 
     Context context;
 
+    private DrawerLayout mDrawerLayout;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+
     private final int SELECT_PICTURE = 200;
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
@@ -69,6 +74,7 @@ public class NuevaMascota extends Fragment {
         rootView = inflater.inflate(R.layout.lay_nueva_mascota, container, false);
 
         context = container.getContext();
+
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
         mTitle = "Nueva mascota";
@@ -132,7 +138,7 @@ public class NuevaMascota extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         restoreActionBar();
-        inflater.inflate(R.menu.menu_nueva_mascota,menu);
+        inflater.inflate(R.menu.menu_nueva_mascota, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -308,13 +314,11 @@ public class NuevaMascota extends Fragment {
     }
 
     public void clear() {
-        img = (ImageView) rootView.findViewById(R.id.image);
-        img.setBackgroundResource(R.mipmap.img_def_01);
-        nombre.setText(null);
-        tipo.setText(null);
-        fecha.setText(null);
-        nchip.setText(null);
-        medicamento.setText(null);
-        alergia.setText(null);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment listaM = new ListaMascotas();
+        fragmentTransaction.replace(R.id.container, listaM);
+        //fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
