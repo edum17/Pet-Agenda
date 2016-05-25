@@ -117,27 +117,6 @@ public class NuevaCita extends Fragment{
             @Override
             public void onClick(View v) {
                 addCita();
-                Intent intent= new Intent(context, MainActivity.class);
-                PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
-
-                //Construccion de la notificacion;
-                NotificationCompat.Builder builder= new NotificationCompat.Builder(context);
-                builder.setSmallIcon(R.drawable.ic_notifications);
-                builder.setContentIntent(pendingIntent);
-                builder.setAutoCancel(true);
-                //Imagen de la app
-                builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.img_def_00));
-                //Titulo de la notificacion
-                builder.setContentTitle("Notificacion Basica");
-                //Contenido de la app
-                builder.setContentText("Momento para aprender mas sobre Android!");
-                //Subcontenido de la app
-                builder.setSubText("Toca para ver la documentacion acerca de Anndroid.");
-
-                //Enviar la notificacion
-                NotificationManager notificationManager= (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(NOTIFICACION_ID,builder.build());
-
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 Fragment agenda = new Agenda();
@@ -357,6 +336,32 @@ public class NuevaCita extends Fragment{
         e.setHoraIni(horaIni.getText().toString());
         e.setHoraFin(horaFin.getText().toString());
         e.setTipo(tipoC.getText().toString());
+
+        //Generamos la notificacion
+        Intent intent= new Intent(context, ConsultarCita.class);
+        intent.putExtra("idMC", String.valueOf(e.getIdMascota()));
+        intent.putExtra("fecha", e.getFecha());
+        intent.putExtra("horaIni", e.getHoraIni());
+        PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
+
+        //Construccion de la notificacion;
+        NotificationCompat.Builder builder= new NotificationCompat.Builder(context);
+        builder.setSmallIcon(R.drawable.ic_notifications);
+        builder.setContentIntent(pendingIntent);
+        builder.setAutoCancel(true);
+        //Imagen de la app
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.img_def_00));
+        //Titulo de la notificacion
+        builder.setContentTitle("Cita programada");
+        //Contenido de la app
+        builder.setContentText("Momento para aprender mas sobre Android!");
+        //Subcontenido de la app
+        builder.setSubText("Toca para ver la documentacion acerca de Anndroid.");
+
+        //Enviar la notificacion
+        NotificationManager notificationManager= (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICACION_ID,builder.build());
+
         if (dbconeccion.insertarCita(e)) {
             //dbconeccion.cerrar();
             Toast.makeText(context, "Cita creada", Toast.LENGTH_SHORT).show();
