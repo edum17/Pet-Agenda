@@ -7,10 +7,4 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         />
-
-    <item android:id="@+id/notificacion"
-        android:icon="@android:drawable/ic_popup_reminder"
-        android:title="@string/butNotificacion"
-        android:orderInCategory="2"
-        android:showAsAction="ifRoom"/>
 </menu>

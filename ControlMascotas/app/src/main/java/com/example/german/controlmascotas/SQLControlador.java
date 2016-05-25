@@ -287,6 +287,7 @@ public class SQLControlador {
         res.put(DBHelper.CN_DiaC,c.getDiaC());
         res.put(DBHelper.CN_MesC,c.getMesC());
         res.put(DBHelper.CN_AnyC,c.getAnyC());
+        res.put(DBHelper.CN_FechaFiltro,c.getFechaFiltro());
         res.put(DBHelper.CN_HoraIniC,c.getHoraIni());
         res.put(DBHelper.CN_HoraFinC,c.getHoraFin());
         res.put(DBHelper.CN_TipoC,c.getTipo());
@@ -467,17 +468,8 @@ public class SQLControlador {
         return res;
     }
 
-    public ArrayList<Mascota> listarMascotasEnElIntervalo(int np1dia, int np2dia, int np1mes, int np2mes, int np1ano, int np2ano) {
-        String fechaNp1 = np1dia + "/" + np1mes + "/" + np1ano;
-        String fechaNp2 = np2dia + "/" + np2mes + "/" + np2ano;
-
-        String query = "SELECT DISTINCT * FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_idM + " IN (SELECT " + dbhelper.CN_idMC + " FROM " + dbhelper.TABLA_CITA +
-                " WHERE " + dbhelper.CN_TipoC + "='Vacunación' and " +
-                np1dia + "<=" + dbhelper.CN_DiaC + "<=" + np2dia + " and " +
-                np1mes + "<=" + dbhelper.CN_MesC + "<=" + np2mes + " and " +
-                np1ano + "<=" + dbhelper.CN_AnyC + "<=" + np2ano + " and ('" +
-                fechaNp1 + "'=" + dbhelper.CN_FechaC + " or '" + fechaNp2 + "'=" +
-                dbhelper.CN_FechaC + "))";
+    public ArrayList<Mascota> listarMascotasEnElIntervalo(String fechaIni, String fechaFin) {
+        String query = "SELECT DISTINCT * FROM " + dbhelper.TABLA_MASCOTAS + " WHERE " + dbhelper.CN_idM + " IN (SELECT " + dbhelper.CN_idMC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_TipoC + "='Vacunación' and " + dbhelper.CN_FechaFiltro + " BETWEEN '" + fechaIni + "' and '" + fechaFin + "')";
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Mascota> res = new ArrayList<>();

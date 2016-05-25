@@ -150,24 +150,12 @@
             android:text="@string/butGuardarMod"
             android:textColor="@color/Blanco"
             android:id="@+id/butGuardarMod"
-            android:layout_marginLeft="55dp"
+            android:layout_marginLeft="100dp"
             android:onClick="updateCita()"
             android:textAllCaps="false"
             android:background="@drawable/btn_style"
             android:layout_gravity="center_horizontal" />
 
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/butCancelaCrea"
-            android:textColor="@color/Blanco"
-            android:id="@+id/butCancelaConsulta"
-            android:layout_marginLeft="20dp"
-            android:onClick=""
-            android:textAllCaps="false"
-            android:background="@drawable/btn_style"
-            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 </LinearLayout>

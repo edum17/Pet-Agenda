@@ -2,6 +2,7 @@ package com.example.german.controlmascotas;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,7 +44,7 @@ public class ConsultarCita extends FragmentActivity {
     EditText nombreMC, fechaC, horaIniC, horaFinC, tipoC;
 
     ImageButton fecha, horaI, horaF, tiposC;
-    Button guardarMod, cancel;
+    Button guardarMod;
 
     Cita cita;
     String idMascota;
@@ -74,14 +75,6 @@ public class ConsultarCita extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 updateCita();
-            }
-        });
-        cancel = (Button) findViewById(R.id.butCancelaConsulta);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                dbconeccion.cerrar();
             }
         });
 
@@ -195,6 +188,7 @@ public class ConsultarCita extends FragmentActivity {
                 }
             }
         });
+
 
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);

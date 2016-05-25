@@ -398,7 +398,21 @@ public class ListaMascotas extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                listarMascotasEnlasFechas(np1dia.getValue(),np2dia.getValue(),np1mes.getValue(),np2mes.getValue(),np1ano.getValue(),np2ano.getValue());
+                String fechaIni = String.valueOf(np1ano.getValue()) + "-";
+                if (np1mes.getValue() < 10) fechaIni += "0" + String.valueOf(np1mes.getValue()) + "-";
+                else fechaIni += String.valueOf(np1mes.getValue()) + "-";
+                if (np1dia.getValue() < 10) fechaIni += "0" + String.valueOf(np1dia.getValue());
+                else fechaIni += String.valueOf(np1dia.getValue());
+
+                String fechaFin = String.valueOf(np2ano.getValue()) + "-";
+                if (np2mes.getValue() < 10) fechaFin += "0" + String.valueOf(np2mes.getValue()) + "-";
+                else fechaFin += String.valueOf(np2mes.getValue()) + "-";
+                if (np2dia.getValue() < 10) fechaFin += "0" + String.valueOf(np2dia.getValue());
+                else fechaFin += String.valueOf(np2dia.getValue());
+
+                final String finalFechaIni = fechaIni;
+                final String finalFechaFin = fechaFin;
+                listarMascotasEnlasFechas(finalFechaIni, finalFechaFin);
                 d.dismiss();
             }
         });
@@ -412,8 +426,8 @@ public class ListaMascotas extends Fragment {
         d.show();
     }
 
-    private void listarMascotasEnlasFechas(final int np1dia, final int np2dia, final int np1mes, final int np2mes, final int np1ano, final int np2ano) {
-        ArrayList<Mascota> Mascotas = dbconeccion.listarMascotasEnElIntervalo(np1dia, np2dia, np1mes, np2mes, np1ano, np2ano);
+    private void listarMascotasEnlasFechas(final String fechaIni, final String fechaFin) {
+        ArrayList<Mascota> Mascotas = dbconeccion.listarMascotasEnElIntervalo(fechaIni,fechaFin);
         final ListViewAdapterMascotas adapter = new ListViewAdapterMascotas(context, Mascotas);
         adapter.notifyDataSetChanged();
         lista.setAdapter(adapter);
@@ -431,7 +445,7 @@ public class ListaMascotas extends Fragment {
                             String identficador = Long.toString(adapter.getItemId(position));
                             dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
                             Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
-                            ArrayList<Mascota> actualizada = dbconeccion.listarMascotasEnElIntervalo(np1dia, np2dia, np1mes, np2mes, np1ano, np2ano);
+                            ArrayList<Mascota> actualizada = dbconeccion.listarMascotasEnElIntervalo(fechaIni,fechaFin);
                             if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
                             else {
                                 spinFiltro.setSelection(0);

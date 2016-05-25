@@ -159,24 +159,12 @@
             android:text="@string/butCrea"
             android:textColor="@color/Blanco"
             android:id="@+id/butCrea"
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="130dp"
             android:onClick="addCita()"
             android:textAllCaps="false"
             android:background="@drawable/btn_style"
             android:layout_gravity="center_horizontal" />
 
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/butCancelaCrea"
-            android:textColor="@color/Blanco"
-            android:id="@+id/butCancelaCrea"
-            android:layout_marginLeft="20dp"
-            android:onClick=""
-            android:textAllCaps="false"
-            android:background="@drawable/btn_style"
-            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 </LinearLayout>

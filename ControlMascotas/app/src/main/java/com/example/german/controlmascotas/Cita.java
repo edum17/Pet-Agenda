@@ -9,6 +9,7 @@ public class Cita {
     private String nombreM;
     private String diaSemana;
     private String fecha;
+    private String fechaFiltro;
     private int diaC;
     private int mesC;
     private int anyC;
@@ -116,6 +117,15 @@ public class Cita {
 
     public void setAnyC(int anyC) {
         this.anyC = anyC;
+    }
+
+
+    public String getFechaFiltro() {
+        return fechaFiltro;
+    }
+
+    public void setFechaFiltro(String fechaFiltro) {
+        this.fechaFiltro = fechaFiltro;
     }
 
 }

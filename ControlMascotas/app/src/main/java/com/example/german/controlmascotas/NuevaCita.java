@@ -12,26 +12,19 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
-import android.view.ContextThemeWrapper;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -42,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * Created by German on 10/05/2016.
@@ -56,14 +48,15 @@ public class NuevaCita extends Fragment{
 
     TextView nombre, fechaC, horaIni, horaFin, tipoC;
     ImageButton nombresM,fecha, horaI, horaF, tiposC;
-    Button butCrear,butCancelCrea;
+    Button butCrear;
+    String fechaFiltro;
     private CharSequence mTitle;
-    private static final int NOTIF_ALERTA_ID = 1;
+    public static final int NOTIFICACION_ID=1;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.lay_crear_cita, container, false);
+        rootView = inflater.inflate(R.layout.lay_nueva_cita, container, false);
         context = container.getContext();
 
         dbconeccion = new SQLControlador(context);
@@ -124,6 +117,27 @@ public class NuevaCita extends Fragment{
             @Override
             public void onClick(View v) {
                 addCita();
+                Intent intent= new Intent(context, MainActivity.class);
+                PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
+
+                //Construccion de la notificacion;
+                NotificationCompat.Builder builder= new NotificationCompat.Builder(context);
+                builder.setSmallIcon(R.drawable.ic_notifications);
+                builder.setContentIntent(pendingIntent);
+                builder.setAutoCancel(true);
+                //Imagen de la app
+                builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.img_def_00));
+                //Titulo de la notificacion
+                builder.setContentTitle("Notificacion Basica");
+                //Contenido de la app
+                builder.setContentText("Momento para aprender mas sobre Android!");
+                //Subcontenido de la app
+                builder.setSubText("Toca para ver la documentacion acerca de Anndroid.");
+
+                //Enviar la notificacion
+                NotificationManager notificationManager= (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(NOTIFICACION_ID,builder.build());
+
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 Fragment agenda = new Agenda();
@@ -150,7 +164,7 @@ public class NuevaCita extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         restoreActionBar();
-        inflater.inflate(R.menu.menu_crear_cita, menu);
+        inflater.inflate(R.menu.menu_nueva_cita, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -167,31 +181,7 @@ public class NuevaCita extends Fragment{
             return true;
         }
         else if (id == R.id.action_settings_NuevaCita) {
-            /*
-            Toast.makeText(getActivity(), "NOTIFICATIONS", Toast.LENGTH_SHORT).show();
-            NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(context)
-                            .setSmallIcon(android.R.drawable.stat_sys_warning)
-                            .setLargeIcon((((BitmapDrawable)getResources()
-                                    .getDrawable(R.drawable.ic_notifications)).getBitmap()))
-                            .setContentTitle("Mensaje de Alerta")
-                            .setContentText("Ejemplo de notificación.")
-                            .setContentInfo("4")
-                            .setTicker("Alerta!");
-
-            Intent notIntent =
-                    new Intent(context, MainActivity.class);
-
-            PendingIntent contIntent = PendingIntent.getActivity(
-                    context, 0, notIntent, 0);
-
-            mBuilder.setContentIntent(contIntent);
-
-            NotificationManager mNotificationManager =
-                    (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-            mNotificationManager.notify(NOTIF_ALERTA_ID, mBuilder.build());
-            */
+            NotificationActivity nn = new NotificationActivity();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -232,6 +222,11 @@ public class NuevaCita extends Fragment{
         DatePickerDialog mDatePicker=new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                 // TODO Auto-generated method stub
+                fechaFiltro = selectedyear + "-";
+                if ((selectedmonth+1) < 10) fechaFiltro += "0" + (selectedmonth+1) + "-";
+                else fechaFiltro += (selectedmonth+1) + "-";
+                if (selectedday < 10) fechaFiltro += "0" + selectedday;
+                else fechaFiltro += selectedday;
                 String date = selectedday + "/" + (selectedmonth+1) + "/" + selectedyear;
                 TextView textViewFechaC = (TextView) rootView.findViewById(R.id.textViewFechaCita);
                 textViewFechaC.setText(date);
@@ -358,6 +353,7 @@ public class NuevaCita extends Fragment{
         e.setDiaC(getDia(fechaC.getText().toString()));
         e.setMesC(getMes(fechaC.getText().toString()));
         e.setAnyC(getAny(fechaC.getText().toString()));
+        e.setFechaFiltro(fechaFiltro);
         e.setHoraIni(horaIni.getText().toString());
         e.setHoraFin(horaFin.getText().toString());
         e.setTipo(tipoC.getText().toString());

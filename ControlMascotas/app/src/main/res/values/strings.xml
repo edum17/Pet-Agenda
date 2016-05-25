@@ -34,11 +34,10 @@
     //Agenda
     <string name="butCrearCita">Crear cita</string>
 
-    //Crear cita
-    <string name="activity_crear_cita">Crear cita</string>
+    //Nueva cita
+    <string name="activity_crear_cita">Nueva cita</string>
     <string name="butCrea">Crea cita</string>
-    <string name="butCancelaCrea">Canelar</string>
-    <string name="butNotificacion"></string>
+    <string name="butNotificaCita">Notifica cita</string>
     <string name="action_settings_CrearCita">Ayuda</string>
 
 
