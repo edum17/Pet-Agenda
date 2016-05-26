@@ -4,6 +4,7 @@ package com.example.german.controlmascotas;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -79,6 +80,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Azul)));
     }
 
     @Override
@@ -120,7 +122,7 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_1, android.R.id.text1, siteNames));
 
         //ListViewAdapterNavDrawer adapter = new ListViewAdapterNavDrawer(getActionBar().getThemedContext(),siteNames,images);
-        //mDrawerListView.setAdapter(adapter);
+       // mDrawerListView.setAdapter(adapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }

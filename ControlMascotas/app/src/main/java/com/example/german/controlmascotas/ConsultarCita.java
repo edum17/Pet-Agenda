@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -178,9 +179,13 @@ public class ConsultarCita extends FragmentActivity {
         tipoC.setText(cita.getTipo());
         tipoC.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 if (!tipoC.getText().toString().equals(cita.getTipo())) {
@@ -192,6 +197,8 @@ public class ConsultarCita extends FragmentActivity {
 
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Verde)));
+
     }
 
     @Override
