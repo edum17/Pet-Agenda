@@ -6,9 +6,18 @@
     <string name="title_section2">Nueva cita</string>
     <string name="title_section3">Mascotas</string>
     <string name="title_section4">Nueva mascota</string>
+    <string name="title_section5">About</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <array name="nav_drawer_icons">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </array>
+
+
+    <string name="navigation_drawer_open">Abrir navigation drawer</string>
+    <string name="navigation_drawer_close">Cerrar navigation drawer</string>
 
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>

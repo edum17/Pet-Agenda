@@ -78,6 +78,11 @@ public class MainActivity extends Activity
                 //Nueva mascota
                 fragment = new NuevaMascota();
                 break;
+
+            case 4:
+                //About
+                fragment = new About();
+                break;
         }
 
         fragmentManager.beginTransaction()
