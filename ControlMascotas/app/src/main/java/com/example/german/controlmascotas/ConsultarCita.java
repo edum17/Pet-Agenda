@@ -48,6 +48,7 @@ public class ConsultarCita extends FragmentActivity {
 
     Cita cita;
     String idMascota;
+    String fechaFiltro;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +190,6 @@ public class ConsultarCita extends FragmentActivity {
             }
         });
 
-
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -270,6 +270,7 @@ public class ConsultarCita extends FragmentActivity {
         e.setDiaC(getDia(fechaC.getText().toString()));
         e.setMesC(getMes(fechaC.getText().toString()));
         e.setAnyC(getAny(fechaC.getText().toString()));
+        e.setFechaFiltro(fechaFiltro);
         e.setHoraIni(horaIniC.getText().toString());
         e.setHoraFin(horaFinC.getText().toString());
         e.setTipo(tipoC.getText().toString());
@@ -295,6 +296,11 @@ public class ConsultarCita extends FragmentActivity {
         DatePickerDialog mDatePicker=new DatePickerDialog(ConsultarCita.this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                 // TODO Auto-generated method stub
+                fechaFiltro = selectedyear + "-";
+                if ((selectedmonth+1) < 10) fechaFiltro += "0" + (selectedmonth+1) + "-";
+                else fechaFiltro += (selectedmonth+1) + "-";
+                if (selectedday < 10) fechaFiltro += "0" + selectedday;
+                else fechaFiltro += selectedday;
                 String date = selectedday + "/" + (selectedmonth+1) + "/" + selectedyear;
                 fechaC.setText(date);
             }

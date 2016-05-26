@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,12 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -64,10 +58,8 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mUserLearnedDrawer;
 
 
-    private ImageView mDrawerImage;
-    private TextView mDrawerText;
     private String[] siteNames;
-    private static final String TAG = "NavDrawerFrag";
+    private int[] images;
 
     public NavigationDrawerFragment() {
     }
@@ -100,62 +92,37 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // need site names for list
-        siteNames = new String[]{
+        mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItem(position);
+            }
+        });
+
+
+        siteNames = new String[] {
                 getString(R.string.title_section1),
                 getString(R.string.title_section2),
                 getString(R.string.title_section3),
                 getString(R.string.title_section4),
                 getString(R.string.title_section5)
         };
-        Log.d(TAG, "number of sites loaded: " + siteNames.length);
+        images = new int[] {
+                R.drawable.icono_agenda,
+                R.drawable.icono_nueva_cita,
+                R.drawable.icono_mascotas,
+                R.drawable.icono_nueva_mascota,
+                R.drawable.icono_about
+            };
 
-        // inflate the parent view (the entire layout)
-        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        // now grab the separate child views from inside it
-        mDrawerListView = (ListView) view.findViewById(R.id.nav_listView);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
-            }
-        });
         mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, siteNames));
+
+        //ListViewAdapterNavDrawer adapter = new ListViewAdapterNavDrawer(getActionBar().getThemedContext(),siteNames,images);
+        //mDrawerListView.setAdapter(adapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-
-        // and return the inflated view up the stack
-        return view;
-
-        /* Funciona
-
-        mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
-            }
-        });
-
-
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section4),
-                        getString(R.string.title_section5);
-                }));
-
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-
         return mDrawerListView;
-
-        */
     }
 
     public boolean isDrawerOpen() {

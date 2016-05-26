@@ -28,7 +28,7 @@ public class About extends Fragment {
                              Bundle savedInstanceState) {
         context = container.getContext();
         rootView = inflater.inflate(R.layout.lay_about, container, false);
-        mTitle = "Agenda";
+        mTitle = "About";
         mensaje = (TextView) rootView.findViewById(R.id.textViewAbout);
         mensaje.setText("Mensaje de about");
         setHasOptionsMenu(true);
@@ -47,7 +47,7 @@ public class About extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         restoreActionBar();
-        inflater.inflate(R.menu.menu_agenda, menu);
+        inflater.inflate(R.menu.menu_about, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }

@@ -1,8 +1,7 @@
 package com.example.german.controlmascotas;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +16,18 @@ import java.util.ArrayList;
  */
 public class ListViewAdapterNavDrawer extends BaseAdapter {
 
-    Context context;
-    ArrayList<itemNavDrawer> items;
-    LayoutInflater inflater;
+    private Context context;
+    private String[] siteNames;
+    private int[] images;
+    private LayoutInflater inflater;
 
 
-    public ListViewAdapterNavDrawer(Context context, ArrayList<itemNavDrawer> items) {
+
+    public ListViewAdapterNavDrawer(Context context, String[] siteNames, int[] images) {
         this.context = context;
-        this.items = items;
+        this.siteNames = siteNames;
+        this.images = images;
+        inflater = LayoutInflater.from(this.context);
     }
 
     @Override
@@ -44,20 +47,26 @@ public class ListViewAdapterNavDrawer extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView section_text;
-        ImageView section_image;
+        ViewHolder mViewHolder;
 
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.formato_fila_nav_draw_item, null);
+            mViewHolder = new ViewHolder();
+            convertView.setTag(mViewHolder);
+        } else {
+            mViewHolder = (ViewHolder) convertView.getTag();
+        }
 
-        View itemView = inflater.inflate(R.layout.formato_fila_nav_draw_item,parent,false);
+        mViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.text_section);
+        mViewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.image_section);
+        mViewHolder.tvTitle.setText(siteNames[position]);
+        mViewHolder.ivIcon.setImageResource(images[position]);
 
-        section_image = (ImageView) itemView.findViewById(R.id.image_section);
-        section_text = (TextView) itemView.findViewById(R.id.text_section);
+        return convertView;
+    }
 
-        section_image.setBackgroundResource(items.get(position).getIcon());
-
-        section_text.setText(items.get(position).getTitle());
-
-        return itemView;
+    private class ViewHolder {
+        TextView tvTitle;
+        ImageView ivIcon;
     }
 }
