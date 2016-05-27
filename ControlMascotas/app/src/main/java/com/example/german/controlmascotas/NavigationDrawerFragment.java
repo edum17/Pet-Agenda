@@ -4,7 +4,9 @@ package com.example.german.controlmascotas;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,7 +22,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -118,11 +122,25 @@ public class NavigationDrawerFragment extends Fragment {
                 R.drawable.icono_about
             };
 
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, siteNames));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActionBar().getThemedContext(),
+                R.layout.formato_fila_nav_draw_item,R.id.text_section, siteNames) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
 
-        //ListViewAdapterNavDrawer adapter = new ListViewAdapterNavDrawer(getActionBar().getThemedContext(),siteNames,images);
-       // mDrawerListView.setAdapter(adapter);
+                TextView textView=(TextView) view.findViewById(R.id.text_section);
+                ImageView imageView =(ImageView) view.findViewById(R.id.image_section);
+
+
+                textView.setTextColor(Color.WHITE);
+                imageView.setImageResource(images[position]);
+
+                return view;
+            }
+        };
+
+        mDrawerListView.setAdapter(adapter);
+
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }

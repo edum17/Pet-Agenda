@@ -1,18 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context="com.example.german.controlmascotas.NavigationDrawerFragment">
 
     <ImageView
         android:id="@+id/image_section"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/text_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Opcion a elegir"
-        android:layout_gravity="center"/>
+        android:layout_marginLeft="15dp"
+        android:layout_gravity="center"
+        android:textColor="@color/Blanco"/>
 </LinearLayout>

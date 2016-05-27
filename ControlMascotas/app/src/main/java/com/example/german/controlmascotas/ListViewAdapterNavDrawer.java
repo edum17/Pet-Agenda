@@ -50,15 +50,15 @@ public class ListViewAdapterNavDrawer extends BaseAdapter {
         ViewHolder mViewHolder;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.formato_fila_nav_draw_item, null);
+            convertView = inflater.inflate(R.layout.fragment_main, null);
             mViewHolder = new ViewHolder();
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
 
-        mViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.text_section);
-        mViewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.image_section);
+        mViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.section_label);
+        mViewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.section_icono);
         mViewHolder.tvTitle.setText(siteNames[position]);
         mViewHolder.ivIcon.setImageResource(images[position]);
 
