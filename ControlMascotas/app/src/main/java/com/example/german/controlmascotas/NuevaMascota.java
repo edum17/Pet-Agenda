@@ -78,8 +78,11 @@ public class NuevaMascota extends Fragment {
         dbconeccion = new SQLControlador(context);
         dbconeccion.abrirBaseDatos();
         mTitle = "Nueva mascota";
+
+
         img = (ImageView) rootView.findViewById(R.id.image);
         img.setBackgroundResource(R.mipmap.img_def_01);
+
 
         textVFecha = (TextView) rootView.findViewById(R.id.textVFechaNac);
         nombre = (EditText) rootView.findViewById(R.id.editTNombreM);

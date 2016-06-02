@@ -116,20 +116,40 @@ public class NuevaCita extends Fragment{
         butCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addCita();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment agenda = new Agenda();
-                fragmentTransaction.replace(R.id.container, agenda);
-                //fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                dbconeccion.cerrar();
+                if (esCorrectaLaFecha()) {
+                    addCita();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Fragment agenda = new Agenda();
+                    fragmentTransaction.replace(R.id.container, agenda);
+                    //fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    dbconeccion.cerrar();
+                }
+                else {
+                    //Creamos el AlertDialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Error");
+                    builder.setMessage("La fecha de la cita tiene que ser posterior o igual a la fecha actual.");
+                    builder.setNeutralButton("Aceptar",null);
+                    builder.show();
+                    fechaC.setText(null);
+                }
             }
         });
 
         setHasOptionsMenu(true);
 
         return rootView;
+    }
+
+    private boolean esCorrectaLaFecha() {
+        Calendar mcurrentDate=Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+        int mMonth=mcurrentDate.get(Calendar.MONTH);
+        int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+        if (mYear <= getAny(fechaC.getText().toString()) && mMonth <= getMes(fechaC.getText().toString()) && mDay <= getDia(fechaC.getText().toString())) return true;
+        else return false;
     }
 
     public void restoreActionBar() {

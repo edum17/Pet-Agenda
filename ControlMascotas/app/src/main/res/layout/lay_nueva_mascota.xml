@@ -23,12 +23,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="104dp"
-                    android:id="@+id/image" />
+                    android:id="@+id/image"
+                    />
 
                 <ImageButton
                     android:layout_width="wrap_content"

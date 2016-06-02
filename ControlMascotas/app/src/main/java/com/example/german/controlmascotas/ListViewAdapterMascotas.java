@@ -84,7 +84,12 @@ public class ListViewAdapterMascotas extends BaseAdapter {
 
         //System.out.println("*************************** dir: " + dir);
         //System.out.println("*************************** dir.equals(default): " + dir.equals("default"));
-        if(dir.equals("default")) imgImagen.setBackgroundResource(R.mipmap.img_def_00);
+        if(dir.equals("default")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
+                    R.mipmap.img_def_00);
+            //imgImagen.setBackgroundResource(R.mipmap.img_def_00);
+            imgImagen.setImageBitmap(bitmap);
+        }
         else {
             Bitmap bitmap;
             bitmap = BitmapFactory.decodeFile(dir);
