@@ -110,6 +110,8 @@ public class ConsultarCita extends FragmentActivity {
         guardarMod.setFocusable(false);
 
         cita = dbconeccion.consultarCita(Integer.parseInt(idMascota),fechaCita,horaIni);
+        fechaFiltro = cita.getFechaFiltro();
+
 
         nombreMC.setText(nombreM);
         nombreMC.setEnabled(false);
@@ -169,6 +171,7 @@ public class ConsultarCita extends FragmentActivity {
             }
         });
 
+        //Boton de atras y modificación del fondo de
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Verde)));
@@ -208,7 +211,7 @@ public class ConsultarCita extends FragmentActivity {
             e.printStackTrace();
         }
         GregorianCalendar fechaCalendario = new GregorianCalendar();
-        fechaCalendario.setTime(fechaActual);
+        if (!fechaActual.equals(null)) fechaCalendario.setTime(fechaActual);
         int dia = fechaCalendario.get(Calendar.DAY_OF_MONTH);
         return dia;
     }
@@ -223,7 +226,7 @@ public class ConsultarCita extends FragmentActivity {
             e.printStackTrace();
         }
         GregorianCalendar fechaCalendario = new GregorianCalendar();
-        fechaCalendario.setTime(fechaActual);
+        if (!fechaActual.equals(null))  fechaCalendario.setTime(fechaActual);
         int mes = fechaCalendario.get(Calendar.MONTH);
         return mes+1;
     }
@@ -238,31 +241,80 @@ public class ConsultarCita extends FragmentActivity {
             e.printStackTrace();
         }
         GregorianCalendar fechaCalendario = new GregorianCalendar();
-        fechaCalendario.setTime(fechaActual);
+        if (fechaActual != null)  fechaCalendario.setTime(fechaActual);
         int year = fechaCalendario.get(Calendar.YEAR);
         return year;
     }
 
+    private boolean esCorrectaLaFecha() {
+        SimpleDateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
+
+        Calendar mcurrentDate=Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+        int mMonth=mcurrentDate.get(Calendar.MONTH);
+        int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+        String startDate = mDay + "/" + (mMonth+1) + "/" + mYear;
+        String endDate = fechaC.getText().toString();
+
+        boolean b = false;
+
+        try {
+            if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
+                b = true;  // If start date is before end date.
+            } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
+                b = true;  // If two dates are equal.
+            } else {
+                b = false; // If start date is after the end date.
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return b;
+    }
+
     public void updateCita() {
-        dbconeccion.eliminarCita(Integer.parseInt(idMascota), fechaCita, horaIni);
-        Cita e = new Cita();
-        e.setIdMascota(Integer.parseInt(idMascota));
-        e.setFecha(fechaC.getText().toString());
-        e.setDiaC(getDia(fechaC.getText().toString()));
-        e.setMesC(getMes(fechaC.getText().toString()));
-        e.setAnyC(getAny(fechaC.getText().toString()));
-        e.setFechaFiltro(fechaFiltro);
-        e.setHoraIni(horaIniC.getText().toString());
-        e.setTipo(tipoC.getText().toString());
-        if (dbconeccion.insertarCita(e)) {
-            dbconeccion.cerrar();
-            Intent main = new Intent(this,MainActivity.class);
-            startActivity(main);
 
-        } else {
-            String res = "La mascota " + nombreM + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
-            Toast.makeText(this, res , Toast.LENGTH_SHORT).show();
+        if (esCorrectaLaFecha()) {
+            boolean existeixCita = dbconeccion.existeixCita(Integer.parseInt(idMascota),fechaC.getText().toString(),horaIniC.getText().toString());
+            if (!existeixCita || (existeixCita && !tipoC.getText().toString().equals(cita.getTipo()))) {
+                dbconeccion.eliminarCita(Integer.parseInt(idMascota), fechaCita, horaIni);
 
+                Cita e = new Cita();
+                e.setIdMascota(Integer.parseInt(idMascota));
+                e.setFecha(fechaC.getText().toString());
+                e.setDiaC(getDia(fechaC.getText().toString()));
+                e.setMesC(getMes(fechaC.getText().toString()));
+                e.setAnyC(getAny(fechaC.getText().toString()));
+                e.setFechaFiltro(fechaFiltro);
+                e.setHoraIni(horaIniC.getText().toString());
+                e.setTipo(tipoC.getText().toString());
+                dbconeccion.insertarCita(e);
+
+                dbconeccion.cerrar();
+                Intent main = new Intent(this,MainActivity.class);
+                startActivity(main);
+                Toast.makeText(this, "Cita actualizada" , Toast.LENGTH_SHORT).show();
+            }
+            else {
+
+                String res = "La mascota " + nombreM + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
+                Toast.makeText(this, res , Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            Calendar mcurrentDate=Calendar.getInstance();
+            int mYear = mcurrentDate.get(Calendar.YEAR);
+            int mMonth=mcurrentDate.get(Calendar.MONTH);
+            int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+            String fechaAct = mDay + "/" + mMonth + "/" + mYear;
+            //Creamos el AlertDialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Error");
+            builder.setMessage("La fecha de la cita tiene que ser posterior o igual a la fecha " + fechaAct + ".");
+            builder.setNeutralButton("Aceptar", null);
+            builder.show();
         }
     }
 

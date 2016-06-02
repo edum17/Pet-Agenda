@@ -229,7 +229,7 @@ public class ConsultarMascota extends FragmentActivity {
         listaCitasMascota.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                final CharSequence[] items = {"Eliminar cita", "Modificar cita"};
+                final CharSequence[] items = {"Eliminar cita"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Cita");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -270,7 +270,7 @@ public class ConsultarMascota extends FragmentActivity {
 
         Intent main = new Intent(this,MainActivity.class);
         startActivity(main);
-
+        Toast.makeText(this, "Mascota actualizada" , Toast.LENGTH_SHORT).show();
     }
 
     public void addDate() {

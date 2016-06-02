@@ -107,24 +107,43 @@ public class NuevaCita extends Fragment{
         butCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (esCorrectaLaFecha()) {
-                    addCita();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    Fragment agenda = new Agenda();
-                    fragmentTransaction.replace(R.id.container, agenda);
-                    //fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                    dbconeccion.cerrar();
+                if (!fechaC.getText().toString().isEmpty() && !horaIni.getText().toString().isEmpty() && !tipoC.getText().toString().isEmpty()) {
+                    if (esCorrectaLaFecha()) {
+                        addCita();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        Fragment agenda = new Agenda();
+                        fragmentTransaction.replace(R.id.container, agenda);
+                        //fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        dbconeccion.cerrar();
+                    } else {
+                        Calendar mcurrentDate=Calendar.getInstance();
+                        int mYear = mcurrentDate.get(Calendar.YEAR);
+                        int mMonth=mcurrentDate.get(Calendar.MONTH);
+                        int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                        String fechaAct = mDay + "/" + mMonth + "/" + mYear;
+                        //Creamos el AlertDialog
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Error");
+                        builder.setMessage("La fecha de la cita tiene que ser posterior o igual a la fecha " + fechaAct + ".");
+                        builder.setNeutralButton("Aceptar", null);
+                        builder.show();
+                        fechaC.setText(null);
+                    }
                 }
-                else {
-                    //Creamos el AlertDialog
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Error");
-                    builder.setMessage("La fecha de la cita tiene que ser posterior o igual a la fecha actual.");
-                    builder.setNeutralButton("Aceptar",null);
-                    builder.show();
-                    fechaC.setText(null);
+                else{
+                    AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
+                    Adialog.setTitle("Crear cita");
+                    Adialog.setMessage("Es necesario rellenar todos los campos para registrar una nueva cita de la mascota " + nombre.getText().toString() + ".");
+                    Adialog.setPositiveButton("Entiendo", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog Alertdialog = Adialog.create();
+                    Alertdialog.show();
                 }
             }
         });
@@ -135,12 +154,31 @@ public class NuevaCita extends Fragment{
     }
 
     private boolean esCorrectaLaFecha() {
+        SimpleDateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
+
         Calendar mcurrentDate=Calendar.getInstance();
         int mYear = mcurrentDate.get(Calendar.YEAR);
         int mMonth=mcurrentDate.get(Calendar.MONTH);
         int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
-        if (mYear <= getAny(fechaC.getText().toString()) && mMonth <= getMes(fechaC.getText().toString()) && mDay <= getDia(fechaC.getText().toString())) return true;
-        else return false;
+
+        String startDate = mDay + "/" + (mMonth+1) + "/" + mYear;
+        String endDate = fechaC.getText().toString();
+
+        boolean b = false;
+
+        try {
+            if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
+                b = true;  // If start date is before end date.
+            } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
+                b = true;  // If two dates are equal.
+            } else {
+                b = false; // If start date is after the end date.
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return b;
     }
 
     public void restoreActionBar() {
@@ -280,7 +318,7 @@ public class NuevaCita extends Fragment{
             e.printStackTrace();
         }
         GregorianCalendar fechaCalendario = new GregorianCalendar();
-        fechaCalendario.setTime(fechaActual);
+        if (!fechaActual.equals(null)) fechaCalendario.setTime(fechaActual);
         int dia = fechaCalendario.get(Calendar.DAY_OF_MONTH);
         return dia;
     }
@@ -295,7 +333,7 @@ public class NuevaCita extends Fragment{
             e.printStackTrace();
         }
         GregorianCalendar fechaCalendario = new GregorianCalendar();
-        fechaCalendario.setTime(fechaActual);
+        if (!fechaActual.equals(null))  fechaCalendario.setTime(fechaActual);
         int mes = fechaCalendario.get(Calendar.MONTH);
         return mes+1;
     }
@@ -310,7 +348,7 @@ public class NuevaCita extends Fragment{
             e.printStackTrace();
         }
         GregorianCalendar fechaCalendario = new GregorianCalendar();
-        fechaCalendario.setTime(fechaActual);
+        if (fechaActual != null)  fechaCalendario.setTime(fechaActual);
         int year = fechaCalendario.get(Calendar.YEAR);
         return year;
     }
@@ -328,14 +366,14 @@ public class NuevaCita extends Fragment{
         e.setTipo(tipoC.getText().toString());
 
         //Generamos la notificacion
-        Intent intent= new Intent(context, ConsultarCita.class);
+        Intent intent = new Intent(context, ConsultarCita.class);
         intent.putExtra("idMC", String.valueOf(e.getIdMascota()));
         intent.putExtra("fecha", e.getFecha());
         intent.putExtra("horaIni", e.getHoraIni());
-        PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         //Construccion de la notificacion;
-        NotificationCompat.Builder builder= new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.ic_notifications);
         builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
@@ -349,8 +387,8 @@ public class NuevaCita extends Fragment{
         builder.setSubText("Toca para ver la documentacion acerca de Anndroid.");
 
         //Enviar la notificacion
-        NotificationManager notificationManager= (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICACION_ID,builder.build());
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICACION_ID, builder.build());
 
         if (dbconeccion.insertarCita(e)) {
             //dbconeccion.cerrar();
@@ -358,19 +396,9 @@ public class NuevaCita extends Fragment{
 
         } else {
             String res = "La mascota " + nombre.getText().toString() + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
-            Toast.makeText(context, res , Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, res, Toast.LENGTH_SHORT).show();
 
         }
     }
+
 }
-
-/*
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Agenda agenda = new Agenda();
-        fragmentTransaction.add(android.R.id.content, agenda);
-        fragmentTransaction.commit();
-        finish();
-        http://www.mzan.com/article/6925941-get-fragments-container-view-id.shtml#sthash.JJPNm8VD.dpuf
-
- */

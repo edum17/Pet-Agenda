@@ -48,6 +48,7 @@ public class Agenda extends Fragment {
 
         return rootView;
     }
+
     public void restoreActionBar() {
         ActionBar actionBar = getActivity().getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);

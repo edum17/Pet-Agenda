@@ -192,7 +192,7 @@ public class SQLControlador {
     }
 
     public ArrayList<Cita> listarDiasAgenda() {
-        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA + " ORDER BY " + dbhelper.CN_AnyC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_DiaC + " ASC";
+        String query = "SELECT DISTINCT " + dbhelper.CN_FechaC + " FROM " + dbhelper.TABLA_CITA + " ORDER BY " + dbhelper.CN_FechaFiltro;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
@@ -318,7 +318,7 @@ public class SQLControlador {
     }
 
     public Cita consultarCita(int idMC,String fecha, String horaIni) {
-        String query = "SELECT " + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA +
+        String query = "SELECT " + dbhelper.CN_FechaFiltro + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA +
                 " WHERE " + dbhelper.CN_idMC + "=" + idMC + " and " + dbhelper.CN_FechaC + "='" + fecha + "' and " +
                 dbhelper.CN_HoraIniC + "='" + horaIni + "'";
         Cursor c = database.rawQuery(query,null);
@@ -328,7 +328,9 @@ public class SQLControlador {
         res.setFecha(fecha);
         res.setHoraIni(horaIni);
         while (c.isAfterLast() == false) {
+            String fechaF = c.getString(c.getColumnIndex("_fechaFil"));
             String tipoC = c.getString(c.getColumnIndex("_tipoC"));
+            res.setFechaFiltro(fechaF);
             res.setTipo(tipoC);
             c.moveToNext();
         }
@@ -480,5 +482,37 @@ public class SQLControlador {
             c.moveToNext();
         }
         return res;
+    }
+
+    public int updateFechaC(int idMascota, String fechaC, String horaIni, String newFechaC) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_FechaC, newFechaC);
+        String where = DBHelper.CN_idMC + "=" + idMascota + " and " + DBHelper.CN_FechaC + "='" + fechaC + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'";
+        int i = database.update(DBHelper.TABLA_CITA,res, where ,null);
+        return i;
+    }
+
+    public int updateFechaFiltro(int idMascota, String fechaC, String horaIni, String newFechafiltro) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_FechaFiltro, newFechafiltro);
+        String where = DBHelper.CN_idMC + "=" + idMascota + " and " + DBHelper.CN_FechaC + "='" + fechaC + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'";
+        int i = database.update(DBHelper.TABLA_CITA,res, where ,null);
+        return i;
+    }
+
+    public int updateHoraIniC(int idMascota, String fechaC, String horaIni, String newHoraIni) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_HoraIniC, newHoraIni);
+        String where = DBHelper.CN_idMC + "=" + idMascota + " and " + DBHelper.CN_FechaC + "='" + fechaC + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'";
+        int i = database.update(DBHelper.TABLA_CITA,res, where ,null);
+        return i;
+    }
+
+    public int updateTipoC(int idMascota, String fechaC, String horaIni, String newTipoC) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_TipoC, newTipoC);
+        String where = DBHelper.CN_idMC + "=" + idMascota + " and " + DBHelper.CN_FechaC + "='" + fechaC + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'";
+        int i = database.update(DBHelper.TABLA_CITA,res, where ,null);
+        return i;
     }
 }
