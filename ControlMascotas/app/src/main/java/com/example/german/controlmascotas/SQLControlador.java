@@ -219,7 +219,7 @@ public class SQLControlador {
     }
 
     public ArrayList<Cita> listarCitasDia(String fecha) {
-        String query = "SELECT " + dbhelper.CN_idMC+ "," + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_FechaC + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniC;
+        String query = "SELECT " + dbhelper.CN_idMC+ "," + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_FechaC + " = '" + fecha + "' ORDER BY " + dbhelper.CN_HoraIniC;
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
@@ -231,7 +231,6 @@ public class SQLControlador {
             dfa.setIdMascota(Integer.parseInt(c.getString(c.getColumnIndex("_idMC"))));
             dfa.setNombreM(nombreMascota);
             dfa.setHoraIni(c.getString(c.getColumnIndex("_horaIni")));
-            dfa.setHoraFin(c.getString(c.getColumnIndex("_horaFin")));
             dfa.setNomMascotaTipoE(s);
             res.add(dfa);
             c.moveToNext();
@@ -289,7 +288,6 @@ public class SQLControlador {
         res.put(DBHelper.CN_AnyC,c.getAnyC());
         res.put(DBHelper.CN_FechaFiltro,c.getFechaFiltro());
         res.put(DBHelper.CN_HoraIniC,c.getHoraIni());
-        res.put(DBHelper.CN_HoraFinC,c.getHoraFin());
         res.put(DBHelper.CN_TipoC,c.getTipo());
         return res;
     }
@@ -320,7 +318,7 @@ public class SQLControlador {
     }
 
     public Cita consultarCita(int idMC,String fecha, String horaIni) {
-        String query = "SELECT " + dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA +
+        String query = "SELECT " + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA +
                 " WHERE " + dbhelper.CN_idMC + "=" + idMC + " and " + dbhelper.CN_FechaC + "='" + fecha + "' and " +
                 dbhelper.CN_HoraIniC + "='" + horaIni + "'";
         Cursor c = database.rawQuery(query,null);
@@ -330,9 +328,7 @@ public class SQLControlador {
         res.setFecha(fecha);
         res.setHoraIni(horaIni);
         while (c.isAfterLast() == false) {
-            String horaFin = c.getString(c.getColumnIndex("_horaFin"));
             String tipoC = c.getString(c.getColumnIndex("_tipoC"));
-            res.setHoraFin(horaFin);
             res.setTipo(tipoC);
             c.moveToNext();
         }
@@ -345,7 +341,7 @@ public class SQLControlador {
     }
 
     public ArrayList<Cita> listarCitaMascota(int idMC) {
-        String query = "SELECT " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," +dbhelper.CN_HoraFinC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_idMC + " = " + idMC + " ORDER BY " + dbhelper.CN_AnyC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_DiaC + "," + dbhelper.CN_HoraIniC +  " ASC";
+        String query = "SELECT " + dbhelper.CN_FechaC + "," + dbhelper.CN_HoraIniC + "," + dbhelper.CN_TipoC + " FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_idMC + " = " + idMC + " ORDER BY " + dbhelper.CN_AnyC + "," + dbhelper.CN_MesC + "," + dbhelper.CN_DiaC + "," + dbhelper.CN_HoraIniC +  " ASC";
         Cursor c = database.rawQuery(query,null);
         if (c != null) c.moveToFirst();
         ArrayList<Cita> res = new ArrayList<>();
@@ -353,7 +349,6 @@ public class SQLControlador {
             Cita dfa = new Cita();
             dfa.setFecha(c.getString(c.getColumnIndex("_fechaC")));
             dfa.setHoraIni(c.getString(c.getColumnIndex("_horaIni")));
-            dfa.setHoraFin(c.getString(c.getColumnIndex("_horaFin")));
             dfa.setTipo(c.getString(c.getColumnIndex("_tipoC")));
             res.add(dfa);
             c.moveToNext();

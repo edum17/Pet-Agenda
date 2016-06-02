@@ -171,7 +171,10 @@ public class ConsultarMascota extends FragmentActivity {
         //System.out.println("*************************** Path: " + mascotaOrg.getPath());
 
 
-        if(Path.equals("default")) imagenMascotaCM.setBackgroundResource(R.mipmap.img_def_00);
+        if(Path.equals("default")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.img_def_00);
+            imagenMascotaCM.setImageBitmap(bitmap);
+        }
         else {
             Bitmap bitmap;
             bitmap = BitmapFactory.decodeFile(Path);

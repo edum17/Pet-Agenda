@@ -54,7 +54,7 @@ public class ListViewAdapterCitasMascota extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView fechaNac, txtHoraIni, txtSepadorCM,txtHoraFin, txtTipoCitaCM;
+        TextView fechaNac, txtHoraIni, txtTipoCitaCM;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -62,14 +62,10 @@ public class ListViewAdapterCitasMascota extends BaseAdapter {
 
         fechaNac = (TextView) itemView.findViewById(R.id.fila_cita_fechaCM);
         txtHoraIni = (TextView) itemView.findViewById(R.id.fila_cita_horaIniCM);
-        txtSepadorCM = (TextView) itemView.findViewById(R.id.fila_cita_separadorCM);
-        txtHoraFin = (TextView) itemView.findViewById(R.id.fila_cita_horaFinCM);
         txtTipoCitaCM = (TextView) itemView.findViewById(R.id.fila_cita_tipoCitaCM);
 
         fechaNac.setText(citas.get(position).getFecha());
         txtHoraIni.setText(citas.get(position).getHoraIni());
-        txtSepadorCM.setText("-");
-        txtHoraFin.setText(citas.get(position).getHoraFin());
         txtTipoCitaCM.setText(citas.get(position).getTipo());
 
         return itemView;

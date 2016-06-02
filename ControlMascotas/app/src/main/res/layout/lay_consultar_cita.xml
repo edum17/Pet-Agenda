@@ -82,33 +82,6 @@
             android:onClick=""/>
     </LinearLayout>
 
-    <!--Mostramos la hora de finalizacion de la cita -->
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <EditText
-            android:layout_width="255dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextHoraFinC"
-            android:hint="Hora de finalización de la cita"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="35dp"
-            android:textColor="@color/Negro"
-            android:inputType="time"
-            android:layout_weight="0.2" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/butHoraFin"
-            android:layout_marginTop="23dp"
-            android:background="@android:drawable/ic_menu_day"
-            android:onClick=""/>
-    </LinearLayout>
-
     <!--Mostramos el tipo de cita de la cita -->
     <LinearLayout
         android:layout_width="fill_parent"

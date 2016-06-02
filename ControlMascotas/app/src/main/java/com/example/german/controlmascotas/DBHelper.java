@@ -36,7 +36,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CN_AnyC = "_anyC";
     public static final String CN_FechaFiltro = "_fechaFil";
     public static final String CN_HoraIniC = "_horaIni";
-    public static final String CN_HoraFinC = "_horaFin";
     public static final String CN_TipoC = "_tipoC";
 
     //Tabla TipoCita
@@ -67,7 +66,6 @@ public class DBHelper extends SQLiteOpenHelper {
             CN_AnyC + " INTEGER NOT NULL, " +
             CN_FechaFiltro + " TEXT NOT NULL, " +
             CN_HoraIniC + " TEXT NOT NULL, " +
-            CN_HoraFinC + " TEXT NOT NULL, " +
             CN_TipoC + " TEXT NOT NULL, " +
             "PRIMARY KEY (" + CN_idMC + "," + CN_FechaC + "," + CN_HoraIniC + "), " +
             "FOREIGN KEY (" + CN_idMC + ") REFERENCES " + TABLA_MASCOTAS + " (" + CN_idMC + "), " +
@@ -162,7 +160,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cita.put(CN_AnyC, 2016);
         cita.put(CN_FechaFiltro, "2016-06-06");
         cita.put(CN_HoraIniC, "08:00");
-        cita.put(CN_HoraFinC, "09:00");
         cita.put(CN_TipoC, "Vacunación");
         db.insert(TABLA_CITA, null, cita);
 
@@ -175,7 +172,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cita.put(CN_AnyC, 2016);
         cita.put(CN_FechaFiltro, "2016-06-09");
         cita.put(CN_HoraIniC, "09:00");
-        cita.put(CN_HoraFinC, "09:30");
         cita.put(CN_TipoC, "Desparacitación");
         db.insert(TABLA_CITA, null, cita);
 
@@ -188,7 +184,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cita.put(CN_AnyC, 2016);
         cita.put(CN_FechaFiltro, "2016-06-12");
         cita.put(CN_HoraIniC, "09:00");
-        cita.put(CN_HoraFinC, "09:30");
         cita.put(CN_TipoC,"Veterinario");
         db.insert(TABLA_CITA, null, cita);
 
@@ -201,7 +196,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cita.put(CN_AnyC,2016);
         cita.put(CN_FechaFiltro, "2016-06-12");
         cita.put(CN_HoraIniC, "09:30");
-        cita.put(CN_HoraFinC, "10:00");
         cita.put(CN_TipoC,"Peluquería");
         db.insert(TABLA_CITA, null, cita);
 
@@ -214,7 +208,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cita.put(CN_AnyC,2016);
         cita.put(CN_FechaFiltro, "2016-11-13");
         cita.put(CN_HoraIniC, "09:30");
-        cita.put(CN_HoraFinC, "10:00");
         cita.put(CN_TipoC,"Adiestrador");
         db.insert(TABLA_CITA, null, cita);
 
@@ -227,7 +220,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cita.put(CN_AnyC,2016);
         cita.put(CN_FechaFiltro, "2016-06-15");
         cita.put(CN_HoraIniC, "07:00");
-        cita.put(CN_HoraFinC, "08:00");
         cita.put(CN_TipoC,"Adiestrador");
         db.insert(TABLA_CITA, null, cita);
     }

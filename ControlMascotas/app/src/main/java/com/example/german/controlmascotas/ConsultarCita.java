@@ -42,9 +42,9 @@ public class ConsultarCita extends FragmentActivity {
     String fechaCita;
     String horaIni;
 
-    EditText nombreMC, fechaC, horaIniC, horaFinC, tipoC;
+    EditText nombreMC, fechaC, horaIniC, tipoC;
 
-    ImageButton fecha, horaI, horaF, tiposC;
+    ImageButton fecha, horaI, tiposC;
     Button guardarMod;
 
     Cita cita;
@@ -69,7 +69,6 @@ public class ConsultarCita extends FragmentActivity {
         nombreMC = (EditText) findViewById(R.id.editTextNombreMC);
         fechaC = (EditText) findViewById(R.id.editTextFechaCita);
         horaIniC = (EditText) findViewById(R.id.editTextHoraIniC);
-        horaFinC = (EditText) findViewById(R.id.editTextHoraFinC);
         tipoC = (EditText) findViewById(R.id.editTextTipoC);
 
         guardarMod = (Button) findViewById(R.id.butGuardarMod);
@@ -95,14 +94,6 @@ public class ConsultarCita extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 anadirHoraIni();
-            }
-        });
-
-        horaF = (ImageButton) findViewById(R.id.butHoraFin);
-        horaF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                anadirHoraFin();
             }
         });
 
@@ -158,24 +149,7 @@ public class ConsultarCita extends FragmentActivity {
                 }
             }
         });
-        horaFinC.setText(cita.getHoraFin());
-        horaFinC.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!horaFinC.getText().toString().equals(cita.getHoraFin())) {
-                    guardarMod.setEnabled(true);
-                    guardarMod.setFocusable(true);
-                }
-            }
-        });
         tipoC.setText(cita.getTipo());
         tipoC.addTextChangedListener(new TextWatcher() {
             @Override
@@ -279,7 +253,6 @@ public class ConsultarCita extends FragmentActivity {
         e.setAnyC(getAny(fechaC.getText().toString()));
         e.setFechaFiltro(fechaFiltro);
         e.setHoraIni(horaIniC.getText().toString());
-        e.setHoraFin(horaFinC.getText().toString());
         e.setTipo(tipoC.getText().toString());
         if (dbconeccion.insertarCita(e)) {
             dbconeccion.cerrar();
@@ -329,25 +302,6 @@ public class ConsultarCita extends FragmentActivity {
                 if (minute < 10) hora += "0" + minute;
                 else hora += minute;
                 horaIniC.setText(hora);
-            }
-        },hour,minute,false);
-        mTimePicker.show();
-    }
-
-    public void anadirHoraFin() {
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-
-        TimePickerDialog mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String hora = "";
-                if (hourOfDay < 10) hora += "0" + hourOfDay + ":";
-                else hora += hourOfDay + ":";
-                if (minute < 10) hora += "0" + minute;
-                else hora += minute;
-                horaFinC.setText(hora);
             }
         },hour,minute,false);
         mTimePicker.show();

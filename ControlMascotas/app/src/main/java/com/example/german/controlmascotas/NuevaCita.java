@@ -46,8 +46,8 @@ public class NuevaCita extends Fragment{
 
     View rootView;
 
-    TextView nombre, fechaC, horaIni, horaFin, tipoC;
-    ImageButton nombresM,fecha, horaI, horaF, tiposC;
+    TextView nombre, fechaC, horaIni, tipoC;
+    ImageButton nombresM,fecha, horaI, tiposC;
     Button butCrear;
     String fechaFiltro;
     private CharSequence mTitle;
@@ -68,7 +68,6 @@ public class NuevaCita extends Fragment{
         nombre = (TextView) rootView.findViewById(R.id.textViewNombreM);
         fechaC = (TextView) rootView.findViewById(R.id.textViewFechaCita);
         horaIni = (TextView) rootView.findViewById(R.id.textViewHoraIni);
-        horaFin = (TextView) rootView.findViewById(R.id.textViewHoraFin);
         tipoC = (TextView) rootView.findViewById(R.id.textViewTipoE);
 
         //Buttons
@@ -93,14 +92,6 @@ public class NuevaCita extends Fragment{
             @Override
             public void onClick(View v) {
                 anadirHoraIni();
-            }
-        });
-
-        horaF = (ImageButton) rootView.findViewById(R.id.butHoraFin);
-        horaF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                anadirHoraFin();
             }
         });
 
@@ -254,26 +245,6 @@ public class NuevaCita extends Fragment{
         mTimePicker.show();
     }
 
-    public void anadirHoraFin() {
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-
-        TimePickerDialog mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String hora = "";
-                if (hourOfDay < 10) hora += "0" + hourOfDay + ":";
-                else hora += hourOfDay + ":";
-                if (minute < 10) hora += "0" + minute;
-                else hora += minute;
-                TextView textViewHoraI = (TextView) rootView.findViewById(R.id.textViewHoraFin);
-                textViewHoraI.setText(hora);
-            }
-        },hour,minute,false);
-        mTimePicker.show();
-    }
-
     public void anadirTipoCita() {
         final ArrayList<String> tipoM = dbconeccion.listarTiposCitas();
 
@@ -354,7 +325,6 @@ public class NuevaCita extends Fragment{
         e.setAnyC(getAny(fechaC.getText().toString()));
         e.setFechaFiltro(fechaFiltro);
         e.setHoraIni(horaIni.getText().toString());
-        e.setHoraFin(horaFin.getText().toString());
         e.setTipo(tipoC.getText().toString());
 
         //Generamos la notificacion

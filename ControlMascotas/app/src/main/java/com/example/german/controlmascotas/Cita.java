@@ -14,7 +14,6 @@ public class Cita {
     private int mesC;
     private int anyC;
     private String horaIni;
-    private String horaFin;
     private String tipo;
     private String nomDiaFecha;
     private String nomMascotaTipoE;
@@ -60,14 +59,6 @@ public class Cita {
 
     public void setHoraIni(String hora) {
         this.horaIni = hora;
-    }
-
-    public String getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(String horaFin) {
-        this.horaFin = horaFin;
     }
 
     public String getTipo() {
