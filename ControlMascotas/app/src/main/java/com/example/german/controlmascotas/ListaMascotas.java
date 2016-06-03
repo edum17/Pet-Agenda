@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.content.Intent;
 import android.widget.NumberPicker;
@@ -38,10 +39,9 @@ public class ListaMascotas extends Fragment {
 
     SQLControlador dbconeccion;
     ListView lista;
-    ExpandableListView listaFiltro;
     Context context;
+    Button iBTodas, iBTipos, iBTratEsp, iBSinTrast, iBVacu;
     private CharSequence mTitle;
-    Spinner spinFiltro;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,33 +57,44 @@ public class ListaMascotas extends Fragment {
 
         lista = (ListView) rootView.findViewById(R.id.listViewMascotas);
         listarMascotas();
-        spinFiltro = (Spinner) rootView.findViewById(R.id.spinnerFiltro);
-        filtrar();
+        iBTodas = (Button) rootView.findViewById(R.id.imageButTodas);
+        iBTodas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listarMascotas();
+            }
+        });
+        iBTipos = (Button) rootView.findViewById(R.id.imageButTipos);
+        iBTipos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listarTipoAnimales();
+            }
+        });
+        iBTratEsp = (Button) rootView.findViewById(R.id.imageButTratEsp);
+        iBTratEsp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listarTratamientoAnimales();
+            }
+        });
+        iBSinTrast = (Button) rootView.findViewById(R.id.imageButSinTratEsp);
+        iBSinTrast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listarMascotasSinTratamiento();
+            }
+        });
+        iBVacu = (Button) rootView.findViewById(R.id.imageButVacu);
+        iBVacu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listarMascotasPorIntervalo();
+            }
+        });
         setHasOptionsMenu(true);
 
         return rootView;
-    }
-
-    private void filtrar() {
-        ArrayAdapter<CharSequence> adapter;
-        adapter = ArrayAdapter.createFromResource(context,R.array.lista_filtro,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinFiltro.setAdapter(adapter);
-        spinFiltro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) listarMascotas();
-                else if (position == 1) listarTipoAnimales();
-                else if (position == 2) listarTratamientoAnimales();
-                else if (position == 3) listarMascotasSinTratamiento();
-                else if (position == 4) listarMascotasPorIntervalo();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     public void listarTipoAnimales() {
@@ -232,7 +243,6 @@ public class ListaMascotas extends Fragment {
                             ArrayList<Mascota> actualizada = dbconeccion.listarMascotasPorTipo(tipo);
                             if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
                             else {
-                                spinFiltro.setSelection(0);
                                 listarMascotas();
                             }
                         } else if (items[which].equals("Modificar mascota")) {
@@ -275,7 +285,6 @@ public class ListaMascotas extends Fragment {
                             ArrayList<Mascota> actualizada = dbconeccion.listarMascotasPorTratamiento(tratamiento);
                             if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
                             else {
-                                spinFiltro.setSelection(0);
                                 listarMascotas();
                             }
                         } else if (items[which].equals("Modificar mascota")) {
@@ -318,7 +327,6 @@ public class ListaMascotas extends Fragment {
                             ArrayList<Mascota> actualizada = dbconeccion.listarMascotasSinTratamiento();
                             if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
                             else {
-                                spinFiltro.setSelection(0);
                                 listarMascotas();
                             }
                         } else if (items[which].equals("Modificar mascota")) {
@@ -448,7 +456,6 @@ public class ListaMascotas extends Fragment {
                             ArrayList<Mascota> actualizada = dbconeccion.listarMascotasEnElIntervalo(fechaIni,fechaFin);
                             if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
                             else {
-                                spinFiltro.setSelection(0);
                                 listarMascotas();
                             }
                         } else if (items[which].equals("Modificar mascota")) {

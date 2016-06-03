@@ -303,8 +303,8 @@ public class ConsultarMascota extends FragmentActivity {
                     guardar.setEnabled(true);
                     guardar.setFocusable(true);
                     if(!mascotaOrg.getPath().equals(Path)) {
-                        System.out.println("*************************** mascotaOrg.getPath(): " + mascotaOrg.getPath());
-                        System.out.println("*************************** Path(): " + Path);
+                        //System.out.println("*************************** mascotaOrg.getPath(): " + mascotaOrg.getPath());
+                        //System.out.println("*************************** Path(): " + Path);
                         dbconeccion.updatePathM(mascotaOrg.getId(),Path);
                     }
                 } else if (items[which].equals("Galería")) {
@@ -319,7 +319,8 @@ public class ConsultarMascota extends FragmentActivity {
                     guardar.setEnabled(true);
                     guardar.setFocusable(true);
                     Path = "default";
-                    imagenMascotaCM.setBackgroundResource(R.mipmap.img_def_01);
+                    Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.img_def_01);
+                    imagenMascotaCM.setImageBitmap(bitmap);
                     if(!mascotaOrg.getPath().equals(Path)) dbconeccion.updatePathM(mascotaOrg.getId(),Path);
                 }
             }

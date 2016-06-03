@@ -10,12 +10,101 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Mascotas"
         android:id="@+id/textViewMascotas" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerFiltro"
-        android:layout_gravity="center_horizontal" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageButton
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:id="@+id/imageButTodas"
+                android:background="@color/Blanco"
+                android:src="@drawable/icono_app_todas"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Todas"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:id="@+id/imageButTipos"
+                android:background="@color/Blanco"
+                android:src="@drawable/icono_mascotas_todas"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tipos"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:id="@+id/imageButTratEsp"
+                android:background="@color/Blanco"
+                android:src="@drawable/icono_tratamiento_especial" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tratemiento"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageButton
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:id="@+id/imageButSinTratEsp"
+                android:background="@color/Blanco"
+                android:src="@drawable/icono_perro_con_gafas"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tratemiento"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageButton
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:id="@+id/imageButVacu"
+                android:background="@color/Blanco"
+                android:src="@drawable/icono_vacunas"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tratemiento"
+                android:gravity="center"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <ListView
         android:layout_width="fill_parent"
