@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -46,7 +47,8 @@ public class NuevaCita extends Fragment{
 
     View rootView;
 
-    TextView nombre, fechaC, horaIni, tipoC;
+    TextView nombre, fechaC, horaIni;
+    EditText tipoC;
     ImageButton nombresM,fecha, horaI, tiposC;
     Button butCrear;
     String fechaFiltro;
@@ -68,7 +70,7 @@ public class NuevaCita extends Fragment{
         nombre = (TextView) rootView.findViewById(R.id.textViewNombreM);
         fechaC = (TextView) rootView.findViewById(R.id.textViewFechaCita);
         horaIni = (TextView) rootView.findViewById(R.id.textViewHoraIni);
-        tipoC = (TextView) rootView.findViewById(R.id.textViewTipoE);
+        tipoC = (EditText) rootView.findViewById(R.id.eTextTipoE);
 
         //Buttons
         nombresM = (ImageButton) rootView.findViewById(R.id.butNombreM);
@@ -390,8 +392,10 @@ public class NuevaCita extends Fragment{
         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICACION_ID, builder.build());
 
-        if (dbconeccion.insertarCita(e)) {
+        if (!dbconeccion.existeixCita(e.getIdMascota(),e.getFecha(),e.getHoraIni())) {
             //dbconeccion.cerrar();
+            if (!dbconeccion.existeixTipoC(tipoC.getText().toString())) dbconeccion.insertTipoC(e.getTipo());
+            dbconeccion.insertarCita(e);
             Toast.makeText(context, "Cita creada", Toast.LENGTH_SHORT).show();
 
         } else {

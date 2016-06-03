@@ -305,16 +305,55 @@ public class SQLControlador {
         else return true;
     }
 
-    public boolean insertarCita(Cita c) {
-        if (!existeixCita(c.getIdMascota(), c.getFecha(), c.getHoraIni())) {
-            database.insert(DBHelper.TABLA_CITA,null,valoresCita(c));
-            return true;
+    public void insertarCita(Cita c) {
+        database.insert(DBHelper.TABLA_CITA,null,valoresCita(c));
+    }
+
+    private ContentValues valoresTipoC(String tipo) {
+        ContentValues res = new ContentValues();
+        res.put(DBHelper.CN_NomTC, tipo);
+        return res;
+    }
+
+    public void insertTipoC(String tipo) {
+        database.insert(DBHelper.TABLA_TIPO_CITA, null, valoresTipoC(tipo));
+    }
+
+    /*
+    Eliminar tipo de cita
+
+    public void eliminarTipoCita(String tipo) {
+        database.delete(DBHelper.TABLA_TIPO_CITA, DBHelper.CN_NomTC + "='" + tipo + "'", null);
+    }
+
+    public int numeroDeTipoCEnCitas(String tipo) {
+        ArrayList<String> res = new ArrayList<>();
+        String query = "SELECT * FROM " + dbhelper.TABLA_CITA + " WHERE " + dbhelper.CN_TipoC + "='" + tipo +"'";
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        while (c.isAfterLast() == false) {
+            res.add(c.getString(c.getColumnIndex("_tipoC")));
+            c.moveToNext();
         }
-        else return false;
+        return res.size();
+    }
+    */
+
+    public boolean existeixTipoC(String tipo) {
+        ArrayList<String> res = new ArrayList<>();
+        String query = "SELECT * FROM " + dbhelper.TABLA_TIPO_CITA + " WHERE " + dbhelper.CN_NomTC + "='" + tipo +"'";
+        Cursor c = database.rawQuery(query,null);
+        if (c != null) c.moveToFirst();
+        while (c.isAfterLast() == false) {
+            res.add(c.getString(c.getColumnIndex("_nomTC")));
+            c.moveToNext();
+        }
+        if (res.size() == 0) return false;
+        else return true;
     }
 
     public void eliminarCita(int idMC, String fecha, String horaIni) {
-        database.delete(DBHelper.TABLA_CITA, DBHelper.CN_idMC + "=" + idMC + " and " + DBHelper.CN_FechaC + "='" + fecha + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'" ,null);
+        database.delete(DBHelper.TABLA_CITA, DBHelper.CN_idMC + "=" + idMC + " and " + DBHelper.CN_FechaC + "='" + fecha + "' and " + DBHelper.CN_HoraIniC + "='" + horaIni + "'", null);
     }
 
     public Cita consultarCita(int idMC,String fecha, String horaIni) {

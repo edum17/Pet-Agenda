@@ -33,6 +33,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -187,19 +188,38 @@ public class NuevaMascota extends Fragment {
         //Comprobar si el tipo de animal se ha seleccionado de una lista o se ha añadido manualmente
         if (!nombre.getText().toString().isEmpty() && !tipo.getText().toString().isEmpty() && !fecha.getText().toString().isEmpty() && !nchip.getText().toString().isEmpty()) {
 
-            String med = "No";
-            String aler = "No";
-            if (!medicamento.getText().toString().equals("")) med = medicamento.getText().toString();
-            if (!alergia.getText().toString().equals("")) aler = alergia.getText().toString();
+            if(esCorrectaLaFecha()) {
+                String med = "No";
+                String aler = "No";
+                if (!medicamento.getText().toString().equals(""))
+                    med = medicamento.getText().toString();
+                if (!alergia.getText().toString().equals("")) aler = alergia.getText().toString();
 
-            Mascota m = new Mascota(nombre.getText().toString(), tipo.getText().toString(), fecha.getText().toString(), nchip.getText().toString(), med, aler, Path);
+                Mascota m = new Mascota(nombre.getText().toString(), tipo.getText().toString(), fecha.getText().toString(), nchip.getText().toString(), med, aler, Path);
 
-            if (dbconeccion.insertarDatos(m)) {
-                //dbconeccion.cerrar();
-                Toast.makeText(getActivity(), "Mascota guardada", Toast.LENGTH_SHORT).show();
-                clear();
-            } else
-                Toast.makeText(getActivity(), "Existe una mascota con ese nombre", Toast.LENGTH_SHORT).show();
+                if (dbconeccion.insertarDatos(m)) {
+                    //dbconeccion.cerrar();
+                    Toast.makeText(getActivity(), "Mascota guardada", Toast.LENGTH_SHORT).show();
+                    clear();
+                } else
+                    Toast.makeText(getActivity(), "Existe una mascota con ese nombre", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                //fecha incorrecta
+                Calendar mcurrentDate=Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth=mcurrentDate.get(Calendar.MONTH);
+                int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                String endDate = mDay + "/" + (mMonth+1) + "/" + mYear;
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Error");
+                builder.setMessage("La fecha es incorrecta, debe de estar estar entre 1/1/1900 y " + endDate + ".");
+                builder.setNeutralButton("Aceptar", null);
+                builder.show();
+            }
+
         }
         else {
             AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
@@ -214,6 +234,35 @@ public class NuevaMascota extends Fragment {
             AlertDialog Alertdialog = Adialog.create();
             Alertdialog.show();
         }
+    }
+
+    private boolean esCorrectaLaFecha() {
+        SimpleDateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
+
+        Calendar mcurrentDate=Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+        int mMonth=mcurrentDate.get(Calendar.MONTH);
+        int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+        String endDate = mDay + "/" + (mMonth+1) + "/" + mYear;
+        String fStart = "1/1/1900";
+        String f = fecha.getText().toString();
+
+        boolean b = false;
+
+        try {
+            Date date = dfDate.parse(f);
+            if(date.getClass().equals(Date.class)) {
+                if (dfDate.parse(f).after(dfDate.parse(fStart)) && dfDate.parse(f).before(dfDate.parse(endDate))) b = true;
+                else if (dfDate.parse(f).equals(dfDate.parse(fStart)) || dfDate.parse(f).equals(dfDate.parse(endDate))) b = true;
+                else b = false;
+            }
+            else b = false;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return b;
     }
 
     public void anadirImagen() {

@@ -34,14 +34,13 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <EditText
+        <TextView
             android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:id="@+id/editTextFechaCita"
             android:hint="Fecha de la cita"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="35dp"
-            android:inputType="date"
             android:textColor="@color/Negro"
             android:layout_weight="0.2" />
 

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -42,7 +43,8 @@ public class ConsultarCita extends FragmentActivity {
     String fechaCita;
     String horaIni;
 
-    EditText nombreMC, fechaC, horaIniC, tipoC;
+    EditText nombreMC, horaIniC, tipoC;
+    TextView fechaC;
 
     ImageButton fecha, horaI, tiposC;
     Button guardarMod;
@@ -67,7 +69,7 @@ public class ConsultarCita extends FragmentActivity {
         nombreM = dbconeccion.getNomMascota(Integer.parseInt(idMascota));
 
         nombreMC = (EditText) findViewById(R.id.editTextNombreMC);
-        fechaC = (EditText) findViewById(R.id.editTextFechaCita);
+        fechaC = (TextView) findViewById(R.id.editTextFechaCita);
         horaIniC = (EditText) findViewById(R.id.editTextHoraIniC);
         tipoC = (EditText) findViewById(R.id.editTextTipoC);
 
@@ -279,6 +281,10 @@ public class ConsultarCita extends FragmentActivity {
         if (esCorrectaLaFecha()) {
             boolean existeixCita = dbconeccion.existeixCita(Integer.parseInt(idMascota),fechaC.getText().toString(),horaIniC.getText().toString());
             if (!existeixCita || (existeixCita && !tipoC.getText().toString().equals(cita.getTipo()))) {
+
+                //Eliminar tipo de cita
+                //if (dbconeccion.numeroDeTipoCEnCitas(cita.getTipo()) == 1)dbconeccion.eliminarTipoCita(cita.getTipo());
+
                 dbconeccion.eliminarCita(Integer.parseInt(idMascota), fechaCita, horaIni);
 
                 Cita e = new Cita();
@@ -291,6 +297,7 @@ public class ConsultarCita extends FragmentActivity {
                 e.setHoraIni(horaIniC.getText().toString());
                 e.setTipo(tipoC.getText().toString());
                 dbconeccion.insertarCita(e);
+                if (!dbconeccion.existeixTipoC(tipoC.getText().toString())) dbconeccion.insertTipoC(tipoC.getText().toString());
 
                 dbconeccion.cerrar();
                 Intent main = new Intent(this,MainActivity.class);

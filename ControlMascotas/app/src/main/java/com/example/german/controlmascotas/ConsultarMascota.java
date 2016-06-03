@@ -335,8 +335,8 @@ public class ConsultarMascota extends FragmentActivity {
 
 
     private void openCamera() {
-        File file = new File(Environment.getExternalStorageDirectory(), APP_DIRECTORY);
-        file.mkdirs();
+        //File file = new File(Environment.getExternalStorageDirectory(), APP_DIRECTORY);
+        //file.mkdirs();
         String timeStamp = new SimpleDateFormat("ddmmyyyy_HHmmss").format(new Date());
         PICTURE_NAME = "CM_" + timeStamp + ".jpg";
         String path = Environment.getExternalStorageDirectory() + File.separator + APP_DIRECTORY + File.separator + PICTURE_NAME;
