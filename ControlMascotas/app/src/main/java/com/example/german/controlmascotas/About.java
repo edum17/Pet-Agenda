@@ -32,7 +32,7 @@ public class About extends Fragment {
         mensaje = (TextView) rootView.findViewById(R.id.textViewAbout);
         mensaje.setText("MascotApps es una aplicación que sirve para gestionar todos los datos de nuestros animales de compañía, ya sean sus datos personales como sus próximas citas.\n" +
                 "\n" +
-                "Creador de la aplicación: German Eduardo Mora Macias.\n" +
+                "Creador de la aplicación: German Eduardo Mora Macias.\n" + "\n" +
                 "Versión de la aplicación: v.1.0.\n");
         setHasOptionsMenu(true);
 

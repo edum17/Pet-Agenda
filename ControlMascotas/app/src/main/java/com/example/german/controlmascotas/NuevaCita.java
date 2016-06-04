@@ -125,10 +125,14 @@ public class NuevaCita extends Fragment{
                                 final Calendar c = Calendar.getInstance();
                                 int hour = c.get(Calendar.HOUR_OF_DAY);
                                 int minute = c.get(Calendar.MINUTE);
-                                String horaAct = hour + ":" + minute;
+                                String hora = "";
+                                if (hour < 10) hora += "0" + hour + ":";
+                                else hora += hour + ":";
+                                if (minute < 10) hora += "0" + minute;
+                                else hora += minute;;
                                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                                 builder.setTitle("Error");
-                                builder.setMessage("La hora de la cita tiene que ser posterior a " + horaAct + ".");
+                                builder.setMessage("La hora de la cita tiene que ser posterior a " + hora + ".");
                                 builder.setNeutralButton("Aceptar", null);
                                 builder.show();
                                 horaIni.setText(null);
