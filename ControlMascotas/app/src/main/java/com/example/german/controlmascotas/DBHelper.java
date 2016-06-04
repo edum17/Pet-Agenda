@@ -105,7 +105,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private void insertarMascota1(SQLiteDatabase db) {
         ContentValues mascota1 = new ContentValues();
         mascota1.put(CN_idM,1);
-        mascota1.put(CN_NomM,"Axo");
+        mascota1.put(CN_NomM,"Acho");
         mascota1.put(CN_TipoM,"Gato");
         mascota1.put(CN_FechaNac,"02/04/2003");
         mascota1.put(CN_NXip,"6234569513542397");
@@ -121,7 +121,7 @@ public class DBHelper extends SQLiteOpenHelper {
         mascota2.put(CN_idM,2);
         mascota2.put(CN_NomM,"Pixie");
         mascota2.put(CN_TipoM,"Perro");
-        mascota2.put(CN_FechaNac,"22/22/2222");
+        mascota2.put(CN_FechaNac,"30/03/2007");
         mascota2.put(CN_NXip,"852500015632195");
         mascota2.put(CN_Med,"Gelocatil");
         mascota2.put(CN_Aler,"No");
