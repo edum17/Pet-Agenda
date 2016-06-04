@@ -106,9 +106,6 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        //View header = inflater.inflate(R.layout.header_navigation_drawer,mDrawerListView,false);
-        //mDrawerListView.addHeaderView(header);
-
         siteNames = new String[] {
                 getString(R.string.title_section1),
                 getString(R.string.title_section2),

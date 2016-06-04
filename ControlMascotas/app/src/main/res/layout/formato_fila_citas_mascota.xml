@@ -6,28 +6,34 @@
     <TextView
         android:id="@+id/fila_cita_fechaCM"
         android:text="fecha"
+        android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="75dp"
+        android:layout_marginLeft="15dp"
+        android:padding="5dp"
+        android:layout_gravity="left"
         android:textColor="@color/Negro"/>
 
     <TextView
         android:id="@+id/fila_cita_horaIniCM"
         android:text="horaIni"
+        android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
         android:textColor="@color/Negro"/>
 
     <TextView
         android:id="@+id/fila_cita_tipoCitaCM"
         android:text="tipoCita"
+        android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:layout_gravity="right"
+        android:layout_marginLeft="25dp"
         android:textColor="@color/Negro"/>
 
 

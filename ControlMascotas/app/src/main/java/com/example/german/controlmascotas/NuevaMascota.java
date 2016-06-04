@@ -177,7 +177,12 @@ public class NuevaMascota extends Fragment {
         DatePickerDialog mDatePicker=new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                 // TODO Auto-generated method stub
-                String date = selectedday + "/" + (selectedmonth+1) + "/" + selectedyear;
+                String date = "";
+                if (selectedday < 10) date += "0" + selectedday + "/";
+                else date += selectedday + "/";
+                if ((selectedmonth+1) < 10) date += "0" + (selectedmonth+1) + "/";
+                else date += selectedmonth + "/";
+                date += selectedyear;
                 TextView textVFecha = (TextView) getActivity().findViewById(R.id.editTextFechaN);
                 textVFecha.setText(date);
             }

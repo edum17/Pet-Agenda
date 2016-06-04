@@ -27,7 +27,6 @@ public class Agenda extends Fragment {
     SQLControlador dbconeccion;
     ListView listaDia;
     View rootView;
-    TextView mensaje;
     private CharSequence mTitle;
 
     @Override
@@ -39,7 +38,6 @@ public class Agenda extends Fragment {
         rootView = inflater.inflate(R.layout.lay_agenda, container, false);
         mTitle = "Agenda";
 
-        mensaje = (TextView) rootView.findViewById(R.id.textViewMensajeAgenda);
         listaDia = (ListView) rootView.findViewById(R.id.listViewAgenda);
 
         listarCitas();
@@ -87,12 +85,9 @@ public class Agenda extends Fragment {
 
     public void listarCitas() {
         ArrayList<Cita> citas = dbconeccion.listarDiasAgenda();
-        if (citas.size() == 0) mensaje.setText("No existen citas en el sistema.");
-        else {
-            final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, citas);
-            adapterDiaFecha.notifyDataSetChanged();
-            listaDia.setAdapter(adapterDiaFecha);
-        }
+        final ListViewAdapterDiasAgenda adapterDiaFecha = new ListViewAdapterDiasAgenda(context, citas);
+        adapterDiaFecha.notifyDataSetChanged();
+        listaDia.setAdapter(adapterDiaFecha);
     }
 
     private void crearCita() {

@@ -89,6 +89,21 @@ public class ListViewAdapterMascotas extends BaseAdapter {
             //imgImagen.setBackgroundResource(R.mipmap.img_def_00);
             imgImagen.setImageBitmap(bitmap);
         }
+        else if (dir.equals("axo")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.axo);
+            //imgImagen.setBackgroundResource(R.mipmap.img_def_00);
+            imgImagen.setImageBitmap(bitmap);
+        }
+        else if (dir.equals("pixie")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.pixie);
+            //imgImagen.setBackgroundResource(R.mipmap.img_def_00);
+            imgImagen.setImageBitmap(bitmap);
+        }
+        else if (dir.equals("pupete")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.pupete);
+            //imgImagen.setBackgroundResource(R.mipmap.img_def_00);
+            imgImagen.setImageBitmap(bitmap);
+        }
         else {
             Bitmap bitmap;
             bitmap = BitmapFactory.decodeFile(dir);

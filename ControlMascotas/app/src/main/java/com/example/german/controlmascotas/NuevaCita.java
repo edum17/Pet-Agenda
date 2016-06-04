@@ -111,14 +111,40 @@ public class NuevaCita extends Fragment{
             public void onClick(View v) {
                 if (!fechaC.getText().toString().isEmpty() && !horaIni.getText().toString().isEmpty() && !tipoC.getText().toString().isEmpty()) {
                     if (esCorrectaLaFecha()) {
-                        addCita();
-                        FragmentManager fragmentManager = getFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        Fragment agenda = new Agenda();
-                        fragmentTransaction.replace(R.id.container, agenda);
-                        //fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        dbconeccion.cerrar();
+                        if (esDelMismoDiaLaCita()) {
+                            if (esCorrectaLaHora()) {
+                                addCita();
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                Fragment agenda = new Agenda();
+                                fragmentTransaction.replace(R.id.container, agenda);
+                                //fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                                dbconeccion.cerrar();
+                            } else {
+                                final Calendar c = Calendar.getInstance();
+                                int hour = c.get(Calendar.HOUR_OF_DAY);
+                                int minute = c.get(Calendar.MINUTE);
+                                String horaAct = hour + ":" + minute;
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setTitle("Error");
+                                builder.setMessage("La hora de la cita tiene que ser posterior a " + horaAct + ".");
+                                builder.setNeutralButton("Aceptar", null);
+                                builder.show();
+                                horaIni.setText(null);
+                            }
+                        }
+                        else {
+                            addCita();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Fragment agenda = new Agenda();
+                            fragmentTransaction.replace(R.id.container, agenda);
+                            //fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                            dbconeccion.cerrar();
+                        }
+
                     } else {
                         Calendar mcurrentDate=Calendar.getInstance();
                         int mYear = mcurrentDate.get(Calendar.YEAR);
@@ -155,6 +181,71 @@ public class NuevaCita extends Fragment{
         return rootView;
     }
 
+    private boolean esDelMismoDiaLaCita() {
+        SimpleDateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
+
+        Calendar mcurrentDate=Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+        int mMonth=mcurrentDate.get(Calendar.MONTH);
+        int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+        String startDate = "";
+        if (mDay < 10) startDate += "0" + mDay + "/";
+        else startDate += mDay + "/";
+        if ((mMonth+1) < 10) startDate += "0" + (mMonth+1) + "/";
+        else startDate += mMonth + "/";
+        startDate += mYear;
+
+
+        String endDate = fechaC.getText().toString();
+
+        boolean b = false;
+
+        try {
+            if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
+                b = true;
+            } else {
+                b = false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return b;
+    }
+
+    private boolean esCorrectaLaHora() {
+        SimpleDateFormat dfHour = new SimpleDateFormat("hh:mm");
+        final Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        String startHour = "";
+        if (hour < 10) startHour += "0" + hour + ":";
+        else startHour += hour + ":";
+        if (minute < 10) startHour += "0" + minute;
+        else startHour += minute;
+
+        String endHour = horaIni.getText().toString();
+
+        boolean b = false;
+
+        try {
+            if (dfHour.parse(startHour).before(dfHour.parse(endHour))) {
+                b = true;  // If start date is before end date.
+            } else if (dfHour.parse(startHour).equals(dfHour.parse(endHour))) {
+                b = true;  // If two dates are equal.
+            } else {
+                b = false; // If start date is after the end date.
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return b;
+
+    }
+
     private boolean esCorrectaLaFecha() {
         SimpleDateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -163,7 +254,14 @@ public class NuevaCita extends Fragment{
         int mMonth=mcurrentDate.get(Calendar.MONTH);
         int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-        String startDate = mDay + "/" + (mMonth+1) + "/" + mYear;
+        String startDate = "";
+        if (mDay < 10) startDate += "0" + mDay + "/";
+        else startDate += mDay + "/";
+        if ((mMonth+1) < 10) startDate += "0" + (mMonth+1) + "/";
+        else startDate += mMonth + "/";
+        startDate += mYear;
+
+
         String endDate = fechaC.getText().toString();
 
         boolean b = false;
@@ -258,7 +356,13 @@ public class NuevaCita extends Fragment{
                 else fechaFiltro += (selectedmonth+1) + "-";
                 if (selectedday < 10) fechaFiltro += "0" + selectedday;
                 else fechaFiltro += selectedday;
-                String date = selectedday + "/" + (selectedmonth+1) + "/" + selectedyear;
+
+                String date = "";
+                if (selectedday < 10) date += "0" + selectedday + "/";
+                else date += selectedday + "/";
+                if ((selectedmonth+1) < 10) date += "0" + (selectedmonth+1) + "/";
+                else date += selectedmonth + "/";
+                date += selectedyear;
                 TextView textViewFechaC = (TextView) rootView.findViewById(R.id.textViewFechaCita);
                 textViewFechaC.setText(date);
             }
@@ -368,6 +472,7 @@ public class NuevaCita extends Fragment{
         e.setHoraIni(horaIni.getText().toString());
         e.setTipo(tipoC.getText().toString());
 
+        /*
         //Generamos la notificacion
         Intent intent = new Intent(context, ConsultarCita.class);
         intent.putExtra("idMC", String.valueOf(e.getIdMascota()));
@@ -392,6 +497,7 @@ public class NuevaCita extends Fragment{
         //Enviar la notificacion
         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICACION_ID, builder.build());
+        */
 
         if (!dbconeccion.existeixCita(e.getIdMascota(),e.getFecha(),e.getHoraIni())) {
             //dbconeccion.cerrar();

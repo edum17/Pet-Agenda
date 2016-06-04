@@ -10,6 +10,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Filtrar las mascotas por:"
         android:id="@+id/textViewMascotas"
+        android:textSize="17sp"
         android:padding="5dp"/>
 
     <LinearLayout
@@ -22,6 +23,7 @@
             android:layout_height="55dip"
             android:id="@+id/imageButTodas"
             android:text="Todas"
+            android:textSize="15sp"
             android:layout_marginLeft="15dp"
             android:textAllCaps="false"
             android:background="@color/Blanco"
@@ -32,6 +34,7 @@
             android:layout_height="55dip"
             android:id="@+id/imageButTipos"
             android:text="Tipos"
+            android:textSize="15sp"
             android:layout_marginLeft="10dp"
             android:textAllCaps="false"
             android:background="@color/Blanco"
@@ -42,6 +45,7 @@
             android:layout_height="55dip"
             android:id="@+id/imageButTratEsp"
             android:text="Trat."
+            android:textSize="15sp"
             android:layout_marginLeft="10dp"
             android:textAllCaps="false"
             android:background="@color/Blanco"
@@ -54,6 +58,7 @@
             android:text="Sin trat."
             android:layout_marginLeft="10dp"
             android:textAllCaps="false"
+            android:textSize="15sp"
             android:background="@color/Blanco"
             android:drawableTop="@drawable/icono_perro_con_gafas"/>
 
@@ -62,6 +67,7 @@
             android:layout_height="55dip"
             android:id="@+id/imageButVacu"
             android:text="Vacuna"
+            android:textSize="15sp"
             android:layout_marginLeft="10dp"
             android:textAllCaps="false"
             android:background="@color/Blanco"

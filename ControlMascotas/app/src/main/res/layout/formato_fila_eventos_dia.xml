@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="30dp">
 
     <TextView
         android:id="@+id/fila_evento_horaIni"
         android:text="HoraIni"
-        android:layout_width="60dp"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="10dp"
+        android:padding="5dp"
         android:textColor="@color/Negro"/>
 
     <TextView
         android:id="@+id/fila_evento_evento"
         android:text="Evento"
+        android:textSize="15sp"
+        android:gravity="left"
+        android:padding="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:textColor="@color/Negro"/>
 
 

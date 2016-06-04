@@ -87,6 +87,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREA_TABLA_CITAS);
         insertarMascota1(db);
         insertarMascota2(db);
+        insertarMascota3(db);
         insertarTiposCita(db);
         insertarCitas(db);
     }
@@ -104,13 +105,13 @@ public class DBHelper extends SQLiteOpenHelper {
     private void insertarMascota1(SQLiteDatabase db) {
         ContentValues mascota1 = new ContentValues();
         mascota1.put(CN_idM,1);
-        mascota1.put(CN_NomM,"A");
-        mascota1.put(CN_TipoM,"A");
-        mascota1.put(CN_FechaNac,"11/11/1111");
-        mascota1.put(CN_NXip,"1");
-        mascota1.put(CN_Med,"No");
-        mascota1.put(CN_Aler,"Paracetamol");
-        mascota1.put(CN_Path,"default");
+        mascota1.put(CN_NomM,"Axo");
+        mascota1.put(CN_TipoM,"Gato");
+        mascota1.put(CN_FechaNac,"02/04/2003");
+        mascota1.put(CN_NXip,"6234569513542397");
+        mascota1.put(CN_Med,"Antibiótico");
+        mascota1.put(CN_Aler,"No");
+        mascota1.put(CN_Path,"axo");
         db.insert(TABLA_MASCOTAS,null,mascota1);
     }
 
@@ -118,14 +119,27 @@ public class DBHelper extends SQLiteOpenHelper {
     private void insertarMascota2(SQLiteDatabase db) {
         ContentValues mascota2 = new ContentValues();
         mascota2.put(CN_idM,2);
-        mascota2.put(CN_NomM,"B");
-        mascota2.put(CN_TipoM,"B");
+        mascota2.put(CN_NomM,"Pixie");
+        mascota2.put(CN_TipoM,"Perro");
         mascota2.put(CN_FechaNac,"22/22/2222");
-        mascota2.put(CN_NXip,"2");
+        mascota2.put(CN_NXip,"852500015632195");
         mascota2.put(CN_Med,"Gelocatil");
-        mascota2.put(CN_Aler,"Paracetamol");
-        mascota2.put(CN_Path,"default");
+        mascota2.put(CN_Aler,"No");
+        mascota2.put(CN_Path,"pixie");
         db.insert(TABLA_MASCOTAS,null,mascota2);
+    }
+
+    private void insertarMascota3(SQLiteDatabase db) {
+        ContentValues mascota3 = new ContentValues();
+        mascota3.put(CN_idM, 3);
+        mascota3.put(CN_NomM, "Pupete");
+        mascota3.put(CN_TipoM, "Perro");
+        mascota3.put(CN_FechaNac, "12/10/2013");
+        mascota3.put(CN_NXip, "977200008513592");
+        mascota3.put(CN_Med, "No");
+        mascota3.put(CN_Aler, "Antibiótico");
+        mascota3.put(CN_Path, "pupete");
+        db.insert(TABLA_MASCOTAS,null,mascota3);
     }
 
     private void insertarTiposCita(SQLiteDatabase db) {
@@ -154,7 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 1
         ContentValues cita = new ContentValues();
         cita.put(CN_idMC, 1);
-        cita.put(CN_FechaC, "6/6/2016");
+        cita.put(CN_FechaC, "06/06/2016");
         cita.put(CN_DiaC, 6);
         cita.put(CN_MesC, 6);
         cita.put(CN_AnyC, 2016);
@@ -166,7 +180,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 2
         cita = new ContentValues();
         cita.put(CN_idMC, 1);
-        cita.put(CN_FechaC, "9/6/2016");
+        cita.put(CN_FechaC, "09/06/2016");
         cita.put(CN_DiaC,9);
         cita.put(CN_MesC, 6);
         cita.put(CN_AnyC, 2016);
@@ -178,7 +192,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 3
         cita = new ContentValues();
         cita.put(CN_idMC, 1);
-        cita.put(CN_FechaC, "12/6/2016");
+        cita.put(CN_FechaC, "12/06/2016");
         cita.put(CN_DiaC,12);
         cita.put(CN_MesC,6);
         cita.put(CN_AnyC, 2016);
@@ -190,7 +204,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 4
         cita = new ContentValues();
         cita.put(CN_idMC, 2);
-        cita.put(CN_FechaC, "12/6/2016");
+        cita.put(CN_FechaC, "12/06/2016");
         cita.put(CN_DiaC,12);
         cita.put(CN_MesC,6);
         cita.put(CN_AnyC,2016);
@@ -214,13 +228,25 @@ public class DBHelper extends SQLiteOpenHelper {
         //Cita 6
         cita = new ContentValues();
         cita.put(CN_idMC, 2);
-        cita.put(CN_FechaC, "15/6/2016");
+        cita.put(CN_FechaC, "15/06/2016");
         cita.put(CN_DiaC,15);
         cita.put(CN_MesC,6);
         cita.put(CN_AnyC,2016);
         cita.put(CN_FechaFiltro, "2016-06-15");
         cita.put(CN_HoraIniC, "07:00");
         cita.put(CN_TipoC,"Adiestrador");
+        db.insert(TABLA_CITA, null, cita);
+
+        //Cita 7
+        cita = new ContentValues();
+        cita.put(CN_idMC, 3);
+        cita.put(CN_FechaC, "06/06/2016");
+        cita.put(CN_DiaC, 6);
+        cita.put(CN_MesC, 6);
+        cita.put(CN_AnyC, 2016);
+        cita.put(CN_FechaFiltro, "2016-06-06");
+        cita.put(CN_HoraIniC, "15:30");
+        cita.put(CN_TipoC, "Peluquería");
         db.insert(TABLA_CITA, null, cita);
     }
 }

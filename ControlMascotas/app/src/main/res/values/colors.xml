@@ -9,10 +9,6 @@
     <color name="Verde">#03c04a</color>
     <color name="Azul_claro">#3F51B5</color>
     <color name="Azul_medio">#303F9F</color>
-
-    <color name="color_primary">#303f9f</color>
-    <color name="color_primary_dark">#ffffff</color>
-    <color name="color_accent">#03c04a</color>
-
+    <color name="Gris">#989898</color>
 
 </resources>

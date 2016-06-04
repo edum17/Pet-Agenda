@@ -5,15 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/Blanco">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textViewMensajeAgenda" />
-
     <ListView
         android:layout_width="fill_parent"
-        android:divider="@android:color/transparent"
         android:layout_height="wrap_content"
         android:id="@+id/listViewAgenda"
         android:layout_gravity="center_horizontal"/>

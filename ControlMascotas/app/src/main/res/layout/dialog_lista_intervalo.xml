@@ -10,7 +10,7 @@
         android:text="Fecha de inicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="25dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -44,10 +44,10 @@
 
     <TextView
         android:id="@+id/fechaFinalizacion"
-        android:text="Fecha de finalizacion"
+        android:text="Fecha de finalización"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="25dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Filtrar"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="25dp"
             />
 
         <Button
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancelar"
-            android:layout_marginLeft="65dp"/>
+            android:layout_marginLeft="60dp"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -3,12 +3,12 @@ package com.example.german.controlmascotas;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,15 +16,12 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -32,15 +29,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
-import android.widget.Toolbar;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -59,9 +53,10 @@ public class ConsultarMascota extends FragmentActivity {
     SQLControlador dbconeccion;
 
     ImageView imagenMascotaCM;
-    ImageButton anadirFoto, anadirTipo, anadirFecha;
+    ImageButton anadirFoto;
 
-    EditText nombreMCM, tipoMCM, fechaMCM, nxipMCM, medicacionMCM, alergiaMCM;
+    TextView nombreMCM, tipoMCM, fechaMCM, nxipMCM;
+    EditText medicacionMCM, alergiaMCM;
     ListView listaCitasMascota;
 
     Button guardar;
@@ -100,25 +95,11 @@ public class ConsultarMascota extends FragmentActivity {
                 anadirImagen();
             }
         });
-        anadirTipo = (ImageButton) findViewById(R.id.butListaTipoCM);
-        anadirTipo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listarTipoAnimales();
-            }
-        });
-        anadirFecha = (ImageButton) findViewById(R.id.butFechaCM);
-        anadirFecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addDate();
-            }
-        });
 
-        nombreMCM = (EditText) findViewById(R.id.editTNombreCM);
-        tipoMCM = (EditText) findViewById(R.id.editTTipoCM);
-        fechaMCM = (EditText) findViewById(R.id.editTextFechaNCM);
-        nxipMCM = (EditText) findViewById(R.id.editTNumChipCM);
+        nombreMCM = (TextView) findViewById(R.id.editTNombreCM);
+        tipoMCM = (TextView) findViewById(R.id.editTTipoCM);
+        fechaMCM = (TextView) findViewById(R.id.editTextFechaNCM);
+        nxipMCM = (TextView) findViewById(R.id.editTNumChipCM);
         medicacionMCM  = (EditText) findViewById(R.id.editTMedicacionCM);
         alergiaMCM = (EditText) findViewById(R.id.editTAlergiaCM);
 
@@ -175,6 +156,21 @@ public class ConsultarMascota extends FragmentActivity {
             Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.img_def_00);
             imagenMascotaCM.setImageBitmap(bitmap);
         }
+        else if (Path.equals("axo")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.axo);
+            //imgImagen.setBackgroundResource(R.mipmap.img_def_00);
+            imagenMascotaCM.setImageBitmap(bitmap);
+        }
+        else if (Path.equals("pixie")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.pixie);
+            //imgImagen.setBackgroundResource(R.mipmap.img_def_00);
+            imagenMascotaCM.setImageBitmap(bitmap);
+        }
+        else if (Path.equals("pupete")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.pupete);
+            //imgImagen.setBackgroundResource(R.mipmap.img_def_00);
+            imagenMascotaCM.setImageBitmap(bitmap);
+        }
         else {
             Bitmap bitmap;
             bitmap = BitmapFactory.decodeFile(Path);
@@ -193,9 +189,14 @@ public class ConsultarMascota extends FragmentActivity {
             }
         });
 
+        //Añadimos el header a la lista de citas que tiene esa mascota
+        View header = getLayoutInflater().inflate(R.layout.header_listview_citas_mascota,listaCitasMascota,false);
+        listaCitasMascota.addHeaderView(header);
+
         citasMascota();
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Gris)));
     }
 
     @Override
@@ -230,22 +231,21 @@ public class ConsultarMascota extends FragmentActivity {
         listaCitasMascota.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                final CharSequence[] items = {"Eliminar cita"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Cita");
-                builder.setItems(items, new DialogInterface.OnClickListener() {
+                builder.setTitle("Eliminar cita");
+                builder.setMessage("¿Desea eliminar ésta cita?");
+                builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (items[which].equals("Eliminar cita")) {
-                            String fecha = adapter.getItemFechaC(position);
-                            String horaIni = adapter.getItemHoraIni(position);
-                            dbconeccion.eliminarCita(Integer.parseInt(idMascota), fecha, horaIni);
-                            adapter.updateAdapter(dbconeccion.listarCitaMascota(Integer.parseInt(idMascota)));
-                            Toast.makeText(getApplicationContext(), "La cita ha sido eliminada", Toast.LENGTH_SHORT).show();
-                        }
+                        //Tiene que ser menos 1 porque se ha añadido el header al listview
+                        String fecha = adapter.getItemFechaC(position-1);
+                        String horaIni = adapter.getItemHoraIni(position-1);
+                        dbconeccion.eliminarCita(Integer.parseInt(idMascota), fecha, horaIni);
+                        adapter.updateAdapter(dbconeccion.listarCitaMascota(Integer.parseInt(idMascota)));
+                        Toast.makeText(getApplicationContext(), "La cita ha sido eliminada", Toast.LENGTH_SHORT).show();
                     }
                 });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -272,23 +272,6 @@ public class ConsultarMascota extends FragmentActivity {
         Intent main = new Intent(this,MainActivity.class);
         startActivity(main);
         Toast.makeText(this, "Mascota actualizada" , Toast.LENGTH_SHORT).show();
-    }
-
-    public void addDate() {
-        //Toast.makeText(getActivity(), "Funciona", Toast.LENGTH_SHORT).show();
-        Calendar mcurrentDate=Calendar.getInstance();
-        int mYear=mcurrentDate.get(Calendar.YEAR);
-        int mMonth=mcurrentDate.get(Calendar.MONTH);
-        int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog mDatePicker=new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                // TODO Auto-generated method stub
-                String date = selectedday + "/" + (selectedmonth+1) + "/" + selectedyear;
-                fechaMCM.setText(date);
-            }
-        },mYear, mMonth, mDay);
-        mDatePicker.show();
     }
 
     public void anadirImagen() {
@@ -380,32 +363,5 @@ public class ConsultarMascota extends FragmentActivity {
                 //System.out.println("*************************** Path: " + Path);
             }
         }
-    }
-
-
-    public void listarTipoAnimales() {
-        //Toast.makeText(getActivity(), "Listo todos los tipos de animales", Toast.LENGTH_SHORT).show();
-        final ArrayList<String> tipoM = dbconeccion.listarTiposAnimales();
-
-        //Creacion de sequencia de items
-        final CharSequence[] Animals = tipoM.toArray(new String[tipoM.size()]);
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-        dialogBuilder.setTitle("Animales");
-        dialogBuilder.setItems(Animals, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                String animalSel = Animals[item].toString();  //Selected item in listview
-                tipoMCM.setText(animalSel);
-            }
-        });
-        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        //Creacion del objeto alert dialog via builder
-        AlertDialog alertDialogObject = dialogBuilder.create();
-        //Mostramos el dialog
-        alertDialogObject.show();
     }
 }
