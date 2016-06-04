@@ -157,7 +157,8 @@ public class NuevaMascota extends Fragment {
         if (id == R.id.action_settings_AyudaNuevaMascota) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
-            builder.setMessage("NuevaMascota");
+            builder.setMessage("Para poder registrar una nueva mascota es imprescindible rellenar los campos nombre, tipo de mascota, fecha de nacimiento y número de chip.\n" +
+                    "Si un tipo de animal no figura en la lista, se deberá añadir.");
             builder.setNeutralButton("Aceptar",null);
             builder.show();
             return true;

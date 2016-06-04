@@ -195,7 +195,8 @@ public class ConsultarCita extends FragmentActivity {
         else if (item.getItemId() == R.id.action_settings_ConsultarCita) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
-            builder.setMessage("ConsultarCita");
+            builder.setMessage("Se puede modificar los paramentos fecha, hora de inicio y tipo de cita.\n" +
+                    "Si un tipo de cita no consta en la lista y se quiere modificar, se deberá añadir.");
             builder.setNeutralButton("Aceptar",null);
             builder.show();
             return true;

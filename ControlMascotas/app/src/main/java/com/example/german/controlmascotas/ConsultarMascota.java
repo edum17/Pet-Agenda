@@ -213,7 +213,8 @@ public class ConsultarMascota extends FragmentActivity {
         else if (item.getItemId() == R.id.action_settings_ConsultarMascota) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
-            builder.setMessage("ConsultarMascota");
+            builder.setMessage("Se puede añadir o eliminar los campos alergia y tratamiento especial, al igual que la imagen de la mascota.\n" +
+                    "En el caso de eliminar una cita del listado de citas de ésta mascota, no es necesario guardar los cambios.");
             builder.setNeutralButton("Aceptar",null);
             builder.show();
             return true;

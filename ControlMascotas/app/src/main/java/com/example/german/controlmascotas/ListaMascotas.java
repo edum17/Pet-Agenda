@@ -174,7 +174,8 @@ public class ListaMascotas extends Fragment {
         if (id == R.id.action_settings_AyudaListaMascotas) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
-            builder.setMessage("ListaMascota");
+            builder.setMessage("Si se desea eliminar o modificar (consultar) una cita, tan sólo se tiene que seleccionar y elegir una de las dos opciones.\n" +
+                    "Si se quiere filtrar el listado de las mascotas, se puede hacer por tipo, tratamiento especial, sin tratamiento y por vacunación.");
             builder.setNeutralButton("Aceptar",null);
             builder.show();
             return true;

@@ -205,7 +205,8 @@ public class NuevaCita extends Fragment{
         if (id == R.id.action_settings_NuevaCita) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Ayuda").setIcon(getResources().getDrawable(android.R.drawable.ic_menu_info_details));
-            builder.setMessage("NuevaCita");
+            builder.setMessage("Para registrar una nueva cita es necesario seleccionar la mascota, la fecha de la cita, la hora de inicio de la cita y el tipo de cita.\n" +
+                    "Si un tipo de cita no consta en la lista, se deberá añadir.");
             builder.setNeutralButton("Aceptar",null);
             builder.show();
             return true;
