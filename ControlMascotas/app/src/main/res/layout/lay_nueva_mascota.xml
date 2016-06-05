@@ -56,11 +56,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nombre:"
+                    android:text="*Nombre:"
                     android:layout_marginTop="15dp"
                     android:padding="5dp"
                     android:textSize="17sp"
-                    android:layout_marginLeft="35dp"/>
+                    android:layout_marginLeft="28dp"/>
 
                 <EditText
                     android:layout_width="225dp"
@@ -85,11 +85,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipo de animal:"
+                    android:text="*Tipo de animal:"
                     android:layout_marginTop="15dp"
                     android:padding="5dp"
                     android:textSize="17sp"
-                    android:layout_marginLeft="35dp"/>
+                    android:layout_marginLeft="28dp"/>
 
                 <EditText
                     android:layout_width="145dp"
@@ -124,11 +124,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fecha de nac.:"
+                    android:text="*Fecha de nac.:"
                     android:layout_marginTop="15dp"
                     android:padding="5dp"
                     android:textSize="17sp"
-                    android:layout_marginLeft="35dp"/>
+                    android:layout_marginLeft="28dp"/>
 
                 <EditText
                     android:layout_width="135dp"
@@ -166,14 +166,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipo de animal:"
+                    android:text="*Número de chip:"
                     android:layout_marginTop="15dp"
                     android:padding="5dp"
                     android:textSize="17sp"
-                    android:layout_marginLeft="35dp"/>
+                    android:layout_marginLeft="28dp"/>
 
                 <EditText
-                    android:layout_width="175dp"
+                    android:layout_width="165dp"
                     android:layout_height="wrap_content"
                     android:hint="Número de chip"
                     android:inputType="text"
@@ -270,6 +270,17 @@
                 android:textSize="17sp"
                 android:background="@drawable/btn_style"
                 android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="5dp"
+                android:textSize="17sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginLeft="35dp"
+                android:text="(*) Campos obligatorios."
+                android:textStyle="italic" />
 
         </LinearLayout>
     </ScrollView>

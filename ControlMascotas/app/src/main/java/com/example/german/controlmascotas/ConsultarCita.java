@@ -2,7 +2,6 @@ package com.example.german.controlmascotas;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,22 +35,23 @@ import java.util.GregorianCalendar;
  */
 public class ConsultarCita extends FragmentActivity {
 
-    Context context;
+    private Context context;
 
-    SQLControlador dbconeccion;
-    String nombreM;
-    String fechaCita;
-    String horaIni;
+    private SQLControlador dbconeccion;
+    private String nombreM;
+    private String fechaCita;
+    private String horaIni;
 
-    EditText tipoC;
-    TextView nombreMC, horaIniC, fechaC;
+    private EditText tipoC;
+    private TextView nombreMC, horaIniC, fechaC;
 
-    ImageButton fecha, horaI, tiposC;
-    Button guardarMod;
+    private ImageButton fecha, horaI, tiposC;
+    private Button guardarMod;
 
-    Cita cita;
-    String idMascota;
-    String fechaFiltro;
+    private Cita cita;
+    private String idMascota;
+    private String fechaFiltro;
+    private boolean cambiaHoraOrg, cambiaFechaOrg, cambiaTipoOrg;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +110,10 @@ public class ConsultarCita extends FragmentActivity {
         //Boton desactivado
         guardarMod.setEnabled(false);
         guardarMod.setFocusable(false);
+        //Fecha y hora originales
+        cambiaFechaOrg = false;
+        cambiaHoraOrg = false;
+        cambiaTipoOrg = false;
 
         cita = dbconeccion.consultarCita(Integer.parseInt(idMascota),fechaCita,horaIni);
         fechaFiltro = cita.getFechaFiltro();
@@ -132,6 +136,7 @@ public class ConsultarCita extends FragmentActivity {
                 if (!fechaC.getText().toString().equals(cita.getFecha())) {
                     guardarMod.setEnabled(true);
                     guardarMod.setFocusable(true);
+                    cambiaFechaOrg = true;
                 }
             }
         });
@@ -150,6 +155,7 @@ public class ConsultarCita extends FragmentActivity {
                 if (!horaIniC.getText().toString().equals(cita.getHoraIni())) {
                     guardarMod.setEnabled(true);
                     guardarMod.setFocusable(true);
+                    cambiaHoraOrg = true;
                 }
             }
         });
@@ -169,6 +175,7 @@ public class ConsultarCita extends FragmentActivity {
                 if (!tipoC.getText().toString().equals(cita.getTipo())) {
                     guardarMod.setEnabled(true);
                     guardarMod.setFocusable(true);
+                    cambiaTipoOrg = true;
                 }
             }
         });
@@ -263,11 +270,14 @@ public class ConsultarCita extends FragmentActivity {
         boolean b = false;
 
         try {
-            if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
+            if (!cambiaFechaOrg) b = true;
+            else if (dfDate.parse(startDate).before(dfDate.parse(endDate)) && cambiaFechaOrg) {
                 b = true;  // If start date is before end date.
-            } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
+            }
+            else if (dfDate.parse(startDate).equals(dfDate.parse(endDate)) && cambiaFechaOrg) {
                 b = true;  // If two dates are equal.
-            } else {
+            }
+            else {
                 b = false; // If start date is after the end date.
             }
         } catch (ParseException e) {
@@ -298,9 +308,11 @@ public class ConsultarCita extends FragmentActivity {
         boolean b = false;
 
         try {
-            if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
+            if (!cambiaFechaOrg) b = true;
+            else if (dfDate.parse(startDate).equals(dfDate.parse(endDate)) && cambiaFechaOrg) {
                 b = true;
-            } else {
+            }
+            else {
                 b = false;
             }
         } catch (ParseException e) {
@@ -327,11 +339,14 @@ public class ConsultarCita extends FragmentActivity {
         boolean b = false;
 
         try {
-            if (dfHour.parse(startHour).before(dfHour.parse(endHour))) {
+            if (!cambiaHoraOrg) b = true;
+            else if (dfHour.parse(startHour).before(dfHour.parse(endHour)) && cambiaHoraOrg) {
                 b = true;  // If start date is before end date.
-            } else if (dfHour.parse(startHour).equals(dfHour.parse(endHour))) {
+            }
+            else if (dfHour.parse(startHour).equals(dfHour.parse(endHour)) && cambiaHoraOrg) {
                 b = true;  // If two dates are equal.
-            } else {
+            }
+            else {
                 b = false; // If start date is after the end date.
             }
         } catch (ParseException e) {
@@ -361,7 +376,9 @@ public class ConsultarCita extends FragmentActivity {
             e.setFechaFiltro(fechaFiltro);
             e.setHoraIni(horaIniC.getText().toString());
             e.setTipo(tipoC.getText().toString());
+            //System.out.println("############################### tipoC.getText().toString(): " + tipoC.getText().toString());
             dbconeccion.insertarCita(e);
+            //Insertamos el nuevo tipo de cita
             if (!dbconeccion.existeixTipoC(tipoC.getText().toString()))
                 dbconeccion.insertTipoC(tipoC.getText().toString());
 
@@ -376,48 +393,72 @@ public class ConsultarCita extends FragmentActivity {
         }
     }
 
+    private boolean tipoCitaTieneApostrofe(String s) {
+        CharSequence cs = "'";
+        return s.contains(cs);
+    }
 
     public void updateCita() {
-
-        if (esCorrectaLaFecha()) {
-            if (esDelMismoDiaLaCita()) {
-                if (esCorrectaLaHora()) {
-                    update();
-                }
-                else {
-                    final Calendar c = Calendar.getInstance();
-                    int hour = c.get(Calendar.HOUR_OF_DAY);
-                    int minute = c.get(Calendar.MINUTE);
-                    String hora = "";
-                    if (hour < 10) hora += "0" + hour + ":";
-                    else hora += hour + ":";
-                    if (minute < 10) hora += "0" + minute;
-                    else hora += minute;;
+        if (!tipoCitaTieneApostrofe((tipoC.getText().toString()))) {
+            if (!fechaC.getText().toString().isEmpty() && !horaIniC.getText().toString().isEmpty() && !tipoC.getText().toString().isEmpty()) {
+                if (esCorrectaLaFecha()) {
+                    if (esDelMismoDiaLaCita()) {
+                        if (esCorrectaLaHora()) {
+                            update();
+                        } else {
+                            final Calendar c = Calendar.getInstance();
+                            int hour = c.get(Calendar.HOUR_OF_DAY);
+                            int minute = c.get(Calendar.MINUTE);
+                            String hora = "";
+                            if (hour < 10) hora += "0" + hour + ":";
+                            else hora += hour + ":";
+                            if (minute < 10) hora += "0" + minute;
+                            else hora += minute;
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Error");
+                            builder.setMessage("La hora de la cita tiene que ser posterior a " + hora + ".");
+                            builder.setNeutralButton("Aceptar", null);
+                            builder.show();
+                            horaIniC.setText(null);
+                        }
+                    } else {
+                        update();
+                    }
+                } else {
+                    Calendar mcurrentDate = Calendar.getInstance();
+                    int mYear = mcurrentDate.get(Calendar.YEAR);
+                    int mMonth = mcurrentDate.get(Calendar.MONTH);
+                    int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                    String fechaAct = mDay + "/" + mMonth + "/" + mYear;
+                    //Creamos el AlertDialog
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("Error");
-                    builder.setMessage("La hora de la cita tiene que ser posterior a " + hora + ".");
+                    builder.setMessage("La fecha de la cita tiene que ser posterior o igual a la fecha " + fechaAct + ".");
                     builder.setNeutralButton("Aceptar", null);
                     builder.show();
-                    horaIniC.setText(null);
+                    fechaC.setText(null);
                 }
-            }
-            else {
-                update();
+            } else {
+                AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
+                Adialog.setTitle("Crear cita");
+                Adialog.setMessage("Es necesario rellenar todos los campos para actualizar la cita de la mascota " + nombreMC.getText().toString() + ".");
+                Adialog.setPositiveButton("Entiendo", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog Alertdialog = Adialog.create();
+                Alertdialog.show();
             }
         }
         else {
-            Calendar mcurrentDate=Calendar.getInstance();
-            int mYear = mcurrentDate.get(Calendar.YEAR);
-            int mMonth=mcurrentDate.get(Calendar.MONTH);
-            int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
-            String fechaAct = mDay + "/" + mMonth + "/" + mYear;
-            //Creamos el AlertDialog
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Error");
-            builder.setMessage("La fecha de la cita tiene que ser posterior o igual a la fecha " + fechaAct + ".");
+            builder.setMessage("Tipo de cita incorrecto, no debe contener apóstrofes.");
             builder.setNeutralButton("Aceptar", null);
             builder.show();
-            fechaC.setText(null);
+            tipoC.setText(null);
         }
     }
 

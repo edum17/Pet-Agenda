@@ -109,18 +109,11 @@ public class NuevaCita extends Fragment{
         butCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!fechaC.getText().toString().isEmpty() && !horaIni.getText().toString().isEmpty() && !tipoC.getText().toString().isEmpty()) {
+                if (!nombre.getText().toString().isEmpty() && !fechaC.getText().toString().isEmpty() && !horaIni.getText().toString().isEmpty() && !tipoC.getText().toString().isEmpty()) {
                     if (esCorrectaLaFecha()) {
                         if (esDelMismoDiaLaCita()) {
                             if (esCorrectaLaHora()) {
                                 addCita();
-                                FragmentManager fragmentManager = getFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                Fragment agenda = new Agenda();
-                                fragmentTransaction.replace(R.id.container, agenda);
-                                //fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
-                                dbconeccion.cerrar();
                             } else {
                                 final Calendar c = Calendar.getInstance();
                                 int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -140,6 +133,7 @@ public class NuevaCita extends Fragment{
                         }
                         else {
                             addCita();
+                            /*
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             Fragment agenda = new Agenda();
@@ -147,6 +141,7 @@ public class NuevaCita extends Fragment{
                             //fragmentTransaction.addToBackStack(null);
                             fragmentTransaction.commit();
                             dbconeccion.cerrar();
+                            */
                         }
 
                     } else {
@@ -167,7 +162,7 @@ public class NuevaCita extends Fragment{
                 else{
                     AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
                     Adialog.setTitle("Crear cita");
-                    Adialog.setMessage("Es necesario rellenar todos los campos para registrar una nueva cita de la mascota " + nombre.getText().toString() + ".");
+                    Adialog.setMessage("Es necesario rellenar todos los campos para registrar una nueva cita de la mascota.");
                     Adialog.setPositiveButton("Entiendo", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -464,6 +459,11 @@ public class NuevaCita extends Fragment{
         return year;
     }
 
+    private boolean tipoCitaTieneApostrofe(String s) {
+        CharSequence cs = "'";
+        return s.contains(cs);
+    }
+
     public void addCita() {
         Cita e = new Cita();
         e.setIdMascota(dbconeccion.getIdMascota(nombre.getText().toString()));
@@ -475,6 +475,8 @@ public class NuevaCita extends Fragment{
         e.setFechaFiltro(fechaFiltro);
         e.setHoraIni(horaIni.getText().toString());
         e.setTipo(tipoC.getText().toString());
+        //System.out.println("*************************** tipoC.getText().toString(): " + tipoC.getText().toString());
+
 
         /*
         //Generamos la notificacion
@@ -502,17 +504,35 @@ public class NuevaCita extends Fragment{
         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICACION_ID, builder.build());
         */
+        if (!tipoCitaTieneApostrofe((tipoC.getText().toString()))) {
+            if (!dbconeccion.existeixCita(e.getIdMascota(), e.getFecha(), e.getHoraIni())) {
+                //dbconeccion.cerrar();
+                if (!dbconeccion.existeixTipoC(tipoC.getText().toString()))
+                    dbconeccion.insertTipoC(e.getTipo());
+                dbconeccion.insertarCita(e);
+                Toast.makeText(context, "Cita creada", Toast.LENGTH_SHORT).show();
+                //Accedemos a la agenda para comprobar la creacion de la cita
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Fragment agenda = new Agenda();
+                fragmentTransaction.replace(R.id.container, agenda);
+                //fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                dbconeccion.cerrar();
 
-        if (!dbconeccion.existeixCita(e.getIdMascota(),e.getFecha(),e.getHoraIni())) {
-            //dbconeccion.cerrar();
-            if (!dbconeccion.existeixTipoC(tipoC.getText().toString())) dbconeccion.insertTipoC(e.getTipo());
-            dbconeccion.insertarCita(e);
-            Toast.makeText(context, "Cita creada", Toast.LENGTH_SHORT).show();
+            } else {
+                String res = "La mascota " + nombre.getText().toString() + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
+                Toast.makeText(context, res, Toast.LENGTH_SHORT).show();
 
-        } else {
-            String res = "La mascota " + nombre.getText().toString() + " tiene una cita el día " + fechaC.getText().toString() + " a la misma hora";
-            Toast.makeText(context, res, Toast.LENGTH_SHORT).show();
-
+            }
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Error");
+            builder.setMessage("Tipo de cita incorrecto, no debe contener apóstrofes.");
+            builder.setNeutralButton("Aceptar", null);
+            builder.show();
+            tipoC.setText(null);
         }
     }
 
