@@ -44,28 +44,25 @@ import java.util.Date;
  */
 public class NuevaMascota extends Fragment {
 
-    Context context;
-
-    private DrawerLayout mDrawerLayout;
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private Context context;
 
     private final int SELECT_PICTURE = 200;
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
-    private String APP_DIRECTORY = "Control de ListaMascotas";
+    private String APP_DIRECTORY = "MascotApps";
     private String PICTURE_NAME;
 
-    String Path;
+    private String Path;
 
-    SQLControlador dbconeccion;
-    TextView textVFecha;
-    Button butGuardarM;
-    ImageButton butAnadirImg, butFechaN, butListaT;
-    View rootView;
+    private SQLControlador dbconeccion;
+    private TextView textVFecha;
+    private Button butGuardarM;
+    private ImageButton butAnadirImg, butFechaN, butListaT;
+    private View rootView;
 
-    ImageView img;
+    private ImageView img;
 
-    EditText nombre,tipo,fecha,nchip,medicamento,alergia;
+    private EditText nombre,tipo,fecha,nchip,medicamento,alergia;
 
     private CharSequence mTitle;
 

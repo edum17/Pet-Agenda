@@ -42,16 +42,16 @@ import java.util.GregorianCalendar;
  */
 public class NuevaCita extends Fragment{
 
-    Context context;
-    SQLControlador dbconeccion;
+    private Context context;
+    private SQLControlador dbconeccion;
 
-    View rootView;
+    private View rootView;
 
-    TextView nombre, fechaC, horaIni;
-    EditText tipoC;
-    ImageButton nombresM,fecha, horaI, tiposC;
-    Button butCrear;
-    String fechaFiltro;
+    private TextView nombre, fechaC, horaIni;
+    private EditText tipoC;
+    private ImageButton nombresM,fecha, horaI, tiposC;
+    private Button butCrear;
+    private String fechaFiltro;
     private CharSequence mTitle;
     public static final int NOTIFICACION_ID=1;
 

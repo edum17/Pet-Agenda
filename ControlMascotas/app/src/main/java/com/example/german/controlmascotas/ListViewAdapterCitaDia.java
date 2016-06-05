@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class ListViewAdapterCitaDia extends BaseAdapter {
 
-    Context context;
-    ArrayList<Cita> cita;
-    LayoutInflater inflater;
+    private Context context;
+    private ArrayList<Cita> cita;
+    private LayoutInflater inflater;
 
 
     public ListViewAdapterCitaDia(Context context, ArrayList<Cita> cita) {

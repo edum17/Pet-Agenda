@@ -25,10 +25,10 @@ import java.util.ArrayList;
  */
 public class ListViewAdapterDiasAgenda extends BaseAdapter{
 
-    Context context;
-    ArrayList<Cita> cita;
-    LayoutInflater inflater;
-    SQLControlador dbconeccion;
+    private Context context;
+    private ArrayList<Cita> cita;
+    private LayoutInflater inflater;
+    private SQLControlador dbconeccion;
 
 
     public ListViewAdapterDiasAgenda(Context context, ArrayList<Cita> cita) {

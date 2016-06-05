@@ -17,9 +17,9 @@ import java.util.ArrayList;
  */
 public class ListViewAdapterMascotas extends BaseAdapter {
 
-    Context context;
-    ArrayList<Mascota> mascotas;
-    LayoutInflater inflater;
+    private Context context;
+    private ArrayList<Mascota> mascotas;
+    private LayoutInflater inflater;
 
     public ListViewAdapterMascotas(Context context,ArrayList<Mascota> mascotas) {
         this.context = context;

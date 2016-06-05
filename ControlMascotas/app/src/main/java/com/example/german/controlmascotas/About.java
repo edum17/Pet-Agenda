@@ -17,10 +17,10 @@ import android.widget.TextView;
  */
 public class About extends Fragment {
 
-    Context context;
+    private Context context;
 
-    View rootView;
-    TextView mensaje;
+    private View rootView;
+    private TextView mensaje;
     private CharSequence mTitle;
 
     @Override

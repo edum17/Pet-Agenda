@@ -37,10 +37,10 @@ import java.util.Calendar;
  */
 public class ListaMascotas extends Fragment {
 
-    SQLControlador dbconeccion;
-    ListView lista;
-    Context context;
-    Button iBTodas, iBTipos, iBTratEsp, iBSinTrast, iBVacu;
+    private SQLControlador dbconeccion;
+    private ListView lista;
+    private Context context;
+    private Button iBTodas, iBTipos, iBTratEsp, iBSinTrast, iBVacu;
     private CharSequence mTitle;
 
     @Override

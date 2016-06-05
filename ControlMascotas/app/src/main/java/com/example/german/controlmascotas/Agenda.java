@@ -23,10 +23,10 @@ import java.util.ArrayList;
  */
 public class Agenda extends Fragment {
 
-    Context context;
-    SQLControlador dbconeccion;
-    ListView listaDia;
-    View rootView;
+    private Context context;
+    private SQLControlador dbconeccion;
+    private ListView listaDia;
+    private View rootView;
     private CharSequence mTitle;
 
     @Override

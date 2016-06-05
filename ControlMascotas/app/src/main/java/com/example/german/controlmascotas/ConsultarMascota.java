@@ -45,26 +45,26 @@ public class ConsultarMascota extends FragmentActivity {
     private final int SELECT_PICTURE = 200;
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
-    private String APP_DIRECTORY = "Control de ListaMascotas";
+    private String APP_DIRECTORY = "MascotApps";
     private String PICTURE_NAME;
 
-    String Path;
+    private String Path;
 
-    SQLControlador dbconeccion;
+    private SQLControlador dbconeccion;
 
-    ImageView imagenMascotaCM;
-    ImageButton anadirFoto;
+    private ImageView imagenMascotaCM;
+    private ImageButton anadirFoto;
 
-    TextView nombreMCM, tipoMCM, fechaMCM, nxipMCM;
-    EditText medicacionMCM, alergiaMCM;
-    ListView listaCitasMascota;
+    private TextView nombreMCM, tipoMCM, fechaMCM, nxipMCM;
+    private EditText medicacionMCM, alergiaMCM;
+    private ListView listaCitasMascota;
 
-    Button guardar;
+    private Button guardar;
 
-    Context context;
+    private Context context;
 
-    Mascota mascotaOrg;
-    String idMascota;
+    private Mascota mascotaOrg;
+    private String idMascota;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,10 +262,12 @@ public class ConsultarMascota extends FragmentActivity {
         //Toast.makeText(context, "Boton activado", Toast.LENGTH_SHORT).show();
 
         if (!medicacionMCM.getText().toString().equals(mascotaOrg.getMedicamento())){
-            dbconeccion.updateMedM(Integer.parseInt(idMascota), medicacionMCM.getText().toString());
+            if (medicacionMCM.getText().toString().isEmpty()) dbconeccion.updateMedM(Integer.parseInt(idMascota), "No");
+            else dbconeccion.updateMedM(Integer.parseInt(idMascota), medicacionMCM.getText().toString());
         }
         if (!alergiaMCM.getText().toString().equals(mascotaOrg.getAlergia())){
-            dbconeccion.updateAlerM(Integer.parseInt(idMascota), alergiaMCM.getText().toString());
+            if (alergiaMCM.getText().toString().isEmpty()) dbconeccion.updateAlerM(Integer.parseInt(idMascota), "No");
+            else dbconeccion.updateAlerM(Integer.parseInt(idMascota), alergiaMCM.getText().toString());
         }
         if (!mascotaOrg.getPath().equals(Path)) {
             dbconeccion.updatePathM(Integer.parseInt(idMascota),Path);
