@@ -245,16 +245,31 @@
 
             <View style="@style/Divisor"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_marginLeft="35dp"
-                android:textSize="17sp"
-                android:padding="5dp"
-                android:text="Citas de la mascota:"/>
+                android:orientation="vertical"
+                android:weightSum="1">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginLeft="35dp"
+                    android:textSize="17sp"
+                    android:text="Citas de la mascota:"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginLeft="35dp"
+                    android:textSize="17sp"
+                    android:layout_marginBottom="5dp"
+                    android:text="(se puede eliminar cualquier cita)"/>
+
+            </LinearLayout>
 
             <ListView
                 android:layout_width="fill_parent"
