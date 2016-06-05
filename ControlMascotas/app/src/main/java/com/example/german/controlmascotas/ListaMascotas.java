@@ -198,11 +198,26 @@ public class ListaMascotas extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
-                            String nomC = adapter.getItemName(position);
-                            String identficador = Long.toString(adapter.getItemId(position));
-                            dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
-                            Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
-                            adapter.updateAdapter(dbconeccion.listarMascotas());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Eliminar cita");
+                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String nomC = adapter.getItemName(position);
+                                    String identficador = Long.toString(adapter.getItemId(position));
+                                    dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
+                                    Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
+                                    adapter.updateAdapter(dbconeccion.listarMascotas());
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.show();
                         }
                         else if (items[which].equals("Modificar mascota")) {
                             Intent consultar_mascota = new Intent(context,ConsultarMascota.class);

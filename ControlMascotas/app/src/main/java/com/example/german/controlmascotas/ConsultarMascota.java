@@ -108,7 +108,8 @@ public class ConsultarMascota extends FragmentActivity {
         tipoMCM.setText(mascotaOrg.getTipo());
         fechaMCM.setText(mascotaOrg.getFechaNac());
         nxipMCM.setText(mascotaOrg.getNXip());
-        medicacionMCM.setText(mascotaOrg.getMedicamento());
+        if (mascotaOrg.getMedicamento().equals("No")) medicacionMCM.setText(null);
+        else medicacionMCM.setText(mascotaOrg.getMedicamento());
         medicacionMCM.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -128,7 +129,8 @@ public class ConsultarMascota extends FragmentActivity {
                 }
             }
         });
-        alergiaMCM.setText(mascotaOrg.getAlergia());
+        if (mascotaOrg.getAlergia().equals("No")) alergiaMCM.setText(null);
+        else alergiaMCM.setText(mascotaOrg.getAlergia());
         alergiaMCM.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
