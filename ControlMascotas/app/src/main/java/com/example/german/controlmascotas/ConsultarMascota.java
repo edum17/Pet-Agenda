@@ -258,24 +258,44 @@ public class ConsultarMascota extends FragmentActivity {
         });
     }
 
+    private boolean tienenApostrofe() {
+        CharSequence cs = "'";
+        if (medicacionMCM.getText().toString().contains(cs)) return true;
+        else if (alergiaMCM.getText().toString().contains(cs)) return true;
+        else return false;
+    }
+
     public void updateMascota() {
         //Toast.makeText(context, "Boton activado", Toast.LENGTH_SHORT).show();
 
-        if (!medicacionMCM.getText().toString().equals(mascotaOrg.getMedicamento())){
-            if (medicacionMCM.getText().toString().isEmpty()) dbconeccion.updateMedM(Integer.parseInt(idMascota), "No");
-            else dbconeccion.updateMedM(Integer.parseInt(idMascota), medicacionMCM.getText().toString());
-        }
-        if (!alergiaMCM.getText().toString().equals(mascotaOrg.getAlergia())){
-            if (alergiaMCM.getText().toString().isEmpty()) dbconeccion.updateAlerM(Integer.parseInt(idMascota), "No");
-            else dbconeccion.updateAlerM(Integer.parseInt(idMascota), alergiaMCM.getText().toString());
-        }
-        if (!mascotaOrg.getPath().equals(Path)) {
-            dbconeccion.updatePathM(Integer.parseInt(idMascota),Path);
-        }
+        if (!tienenApostrofe()) {
+            if (!medicacionMCM.getText().toString().equals(mascotaOrg.getMedicamento())) {
+                if (medicacionMCM.getText().toString().isEmpty())
+                    dbconeccion.updateMedM(Integer.parseInt(idMascota), "No");
+                else
+                    dbconeccion.updateMedM(Integer.parseInt(idMascota), medicacionMCM.getText().toString());
+            }
+            if (!alergiaMCM.getText().toString().equals(mascotaOrg.getAlergia())) {
+                if (alergiaMCM.getText().toString().isEmpty())
+                    dbconeccion.updateAlerM(Integer.parseInt(idMascota), "No");
+                else
+                    dbconeccion.updateAlerM(Integer.parseInt(idMascota), alergiaMCM.getText().toString());
+            }
+            if (!mascotaOrg.getPath().equals(Path)) {
+                dbconeccion.updatePathM(Integer.parseInt(idMascota), Path);
+            }
 
-        Intent main = new Intent(this,MainActivity.class);
-        startActivity(main);
-        Toast.makeText(this, "Mascota actualizada" , Toast.LENGTH_SHORT).show();
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            Toast.makeText(this, "Mascota actualizada", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Error");
+            builder.setMessage("El campo medicación y alergia, no deben contener apóstrofes.");
+            builder.setNeutralButton("Aceptar", null);
+            builder.show();
+        }
     }
 
     public void anadirImagen() {

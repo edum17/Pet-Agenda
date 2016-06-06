@@ -187,38 +187,55 @@ public class NuevaMascota extends Fragment {
         mDatePicker.show();
     }
 
+    private boolean tienenApostrofe() {
+        CharSequence cs = "'";
+        if (nombre.getText().toString().contains(cs)) return true;
+        else if (tipo.getText().toString().contains(cs)) return true;
+        else if (medicamento.getText().toString().contains(cs)) return true;
+        else if (alergia.getText().toString().contains(cs)) return true;
+        else return false;
+    }
+
     public void addMascotaDB() {
         //Comprobar si el tipo de animal se ha seleccionado de una lista o se ha añadido manualmente
         if (!nombre.getText().toString().isEmpty() && !tipo.getText().toString().isEmpty() && !fecha.getText().toString().isEmpty() && !nchip.getText().toString().isEmpty()) {
+            if (!tienenApostrofe()) {
+                if (esCorrectaLaFecha()) {
+                    String med = "No";
+                    String aler = "No";
+                    if (!medicamento.getText().toString().equals(""))
+                        med = medicamento.getText().toString();
+                    if (!alergia.getText().toString().equals(""))
+                        aler = alergia.getText().toString();
 
-            if(esCorrectaLaFecha()) {
-                String med = "No";
-                String aler = "No";
-                if (!medicamento.getText().toString().equals(""))
-                    med = medicamento.getText().toString();
-                if (!alergia.getText().toString().equals("")) aler = alergia.getText().toString();
+                    Mascota m = new Mascota(nombre.getText().toString(), tipo.getText().toString(), fecha.getText().toString(), nchip.getText().toString(), med, aler, Path);
 
-                Mascota m = new Mascota(nombre.getText().toString(), tipo.getText().toString(), fecha.getText().toString(), nchip.getText().toString(), med, aler, Path);
+                    if (dbconeccion.insertarDatos(m)) {
+                        //dbconeccion.cerrar();
+                        Toast.makeText(getActivity(), "Mascota guardada", Toast.LENGTH_SHORT).show();
+                        clear();
+                    } else
+                        Toast.makeText(getActivity(), "Existe una mascota con ese nombre", Toast.LENGTH_SHORT).show();
+                } else {
+                    //fecha incorrecta
+                    Calendar mcurrentDate = Calendar.getInstance();
+                    int mYear = mcurrentDate.get(Calendar.YEAR);
+                    int mMonth = mcurrentDate.get(Calendar.MONTH);
+                    int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-                if (dbconeccion.insertarDatos(m)) {
-                    //dbconeccion.cerrar();
-                    Toast.makeText(getActivity(), "Mascota guardada", Toast.LENGTH_SHORT).show();
-                    clear();
-                } else
-                    Toast.makeText(getActivity(), "Existe una mascota con ese nombre", Toast.LENGTH_SHORT).show();
+                    String endDate = mDay + "/" + (mMonth + 1) + "/" + mYear;
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Error");
+                    builder.setMessage("La fecha es incorrecta, debe de estar estar entre 1/1/1900 y " + endDate + ".");
+                    builder.setNeutralButton("Aceptar", null);
+                    builder.show();
+                }
             }
             else {
-                //fecha incorrecta
-                Calendar mcurrentDate=Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth=mcurrentDate.get(Calendar.MONTH);
-                int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
-
-                String endDate = mDay + "/" + (mMonth+1) + "/" + mYear;
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Error");
-                builder.setMessage("La fecha es incorrecta, debe de estar estar entre 1/1/1900 y " + endDate + ".");
+                builder.setMessage("El nombre de la mascota, el tipo de animal, la medicación y la alergia, no deben contener apóstrofes.");
                 builder.setNeutralButton("Aceptar", null);
                 builder.show();
             }
