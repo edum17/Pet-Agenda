@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Blanco"
+    tools:context=".ConsultarCita">
+
+    <!--Mostramos el nombre de la mascota -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre:"
+            android:layout_marginTop="25dp"
+            android:padding="5dp"
+            android:textSize="17sp"
+            android:layout_marginLeft="35dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextNombreMC"
+            android:hint="Nombre de la mascota"
+            android:padding="5dp"
+            android:layout_marginTop="25dp"
+            android:inputType="text"
+            android:textSize="17sp"
+            android:gravity="left"
+            android:textColor="@color/Negro" />
+
+    </LinearLayout>
+
+    <!--Mostramos la fecha de la cita -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de la cita:"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:padding="5dp"
+            android:layout_marginLeft="35dp"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextFechaCita"
+            android:hint="Fecha cita"
+            android:layout_marginTop="25dp"
+            android:padding="5dp"
+            android:textSize="17sp"
+            android:textColor="@color/Negro"
+            android:layout_weight="0.2" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/butFechaCita"
+            android:layout_marginTop="23dp"
+            android:background="@android:drawable/ic_menu_my_calendar"
+            android:onClick=""/>
+    </LinearLayout>
+
+
+    <!--Mostramos la hora de inicio de la cita -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora de inicio:"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:padding="5dp"
+            android:layout_marginLeft="35dp"/>
+
+        <TextView
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextHoraIniC"
+            android:hint="Hora de inicio"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:padding="5dp"
+            android:textColor="@color/Negro"
+            android:inputType="time"
+            android:layout_weight="0.2" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/butHoraIni"
+            android:layout_marginTop="23dp"
+            android:background="@android:drawable/ic_menu_day"
+            android:onClick=""/>
+    </LinearLayout>
+
+    <!--Mostramos el tipo de cita de la cita -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo de cita:"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:padding="5dp"
+            android:layout_marginLeft="35dp"/>
+
+        <EditText
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextTipoC"
+            android:hint="Tipo de cita"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:textColor="@color/Negro"
+            android:inputType="text"
+            android:layout_weight="0.2" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/butTipoC"
+            android:layout_marginTop="23dp"
+            android:background="@android:drawable/ic_menu_more"
+            android:onClick=""/>
+    </LinearLayout>
+
+    <!--Mostramos el tipo de cita de la cita -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/butGuardarMod"
+            android:textColor="@color/Blanco"
+            android:id="@+id/butGuardarMod"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:onClick="updateCita()"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_style"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+</LinearLayout>

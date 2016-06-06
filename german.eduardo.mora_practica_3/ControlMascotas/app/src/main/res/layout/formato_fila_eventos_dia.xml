@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="30dp">
+
+    <TextView
+        android:id="@+id/fila_evento_horaIni"
+        android:text="HoraIni"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textColor="@color/Negro"/>
+
+    <TextView
+        android:id="@+id/fila_evento_evento"
+        android:text="Evento"
+        android:textSize="15sp"
+        android:gravity="left"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/Negro"/>
+
+
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Blanco">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Filtrar las mascotas por:"
+        android:id="@+id/textViewMascotas"
+        android:textSize="17sp"
+        android:padding="5dp"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <Button
+            android:layout_width="55dip"
+            android:layout_height="55dip"
+            android:id="@+id/imageButTodas"
+            android:text="Todas"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:textAllCaps="false"
+            android:background="@color/Blanco"
+            android:drawableTop="@drawable/icono_app_todas"/>
+
+        <Button
+            android:layout_width="55dip"
+            android:layout_height="55dip"
+            android:id="@+id/imageButTipos"
+            android:text="Tipos"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="false"
+            android:background="@color/Blanco"
+            android:drawableTop="@drawable/icono_mascotas_todas"/>
+
+        <Button
+            android:layout_width="55dip"
+            android:layout_height="55dip"
+            android:id="@+id/imageButTratEsp"
+            android:text="Trat."
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="false"
+            android:background="@color/Blanco"
+            android:drawableTop="@drawable/icono_tratamiento_especial" />
+
+        <Button
+            android:layout_width="55dip"
+            android:layout_height="55dip"
+            android:id="@+id/imageButSinTratEsp"
+            android:text="Sin trat."
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:background="@color/Blanco"
+            android:drawableTop="@drawable/icono_perro_con_gafas"/>
+
+        <Button
+            android:layout_width="55dip"
+            android:layout_height="55dip"
+            android:id="@+id/imageButVacu"
+            android:text="Vacuna"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:textAllCaps="false"
+            android:background="@color/Blanco"
+            android:drawableTop="@drawable/icono_vacunas"/>
+
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/listViewMascotas"
+        android:layout_gravity="center_horizontal"
+        android:padding="5dp"/>
+</LinearLayout>

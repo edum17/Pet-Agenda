@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Blanco"
+    tools:context=".NuevaCita">
+
+    <!--Mostramos el nombre de la mascota -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="65dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre:"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:padding="5dp"
+            android:layout_marginLeft="35dp"/>
+
+        <TextView
+            android:layout_width="170dp"
+            android:layout_height="27dp"
+            android:id="@+id/textViewNombreM"
+            android:hint="Nombre de la mascota"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:inputType="text"
+            android:textColor="@color/Negro"
+            android:layout_weight="0.42" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/butNombreM"
+            android:layout_marginTop="23dp"
+            android:background="@android:drawable/ic_menu_more"
+            android:onClick=""/>
+    </LinearLayout>
+
+    <!--Mostramos la fecha de la cita -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de la cita:"
+            android:layout_marginTop="25dp"
+            android:padding="5dp"
+            android:textSize="17sp"
+            android:layout_marginLeft="35dp"/>
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="27dp"
+            android:id="@+id/textViewFechaCita"
+            android:hint="Fecha de la cita"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:inputType="date"
+            android:textColor="@color/Negro"
+            android:layout_weight="0.42" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/butFechaCita"
+            android:layout_marginTop="23dp"
+            android:background="@android:drawable/ic_menu_my_calendar"
+            android:onClick=""/>
+    </LinearLayout>
+
+
+    <!--Mostramos la hora de inicio de la cita -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora de la cita:"
+            android:layout_marginTop="25dp"
+            android:textSize="17sp"
+            android:padding="5dp"
+            android:layout_marginLeft="35dp"/>
+
+        <TextView
+            android:layout_width="127dp"
+            android:layout_height="27dp"
+            android:id="@+id/textViewHoraIni"
+            android:hint="Hora de inicio"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/Negro"
+            android:textSize="17sp"
+            android:inputType="time"
+            android:layout_weight="0.42" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/butHoraIni"
+            android:layout_marginTop="23dp"
+            android:background="@android:drawable/ic_menu_day"
+            android:onClick=""/>
+    </LinearLayout>
+
+    <!--Mostramos el tipo de cita de la cita -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo de cita:"
+            android:layout_marginTop="25dp"
+            android:padding="5dp"
+            android:textSize="17sp"
+            android:layout_marginLeft="35dp"/>
+
+        <EditText
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/eTextTipoE"
+            android:hint="Tipo de cita"
+            android:layout_marginTop="25dp"
+            android:padding="5dp"
+            android:textSize="17sp"
+            android:textColor="@color/Negro"
+            android:inputType="text"
+            android:layout_weight="0.42" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/butTipoC"
+            android:layout_marginTop="23dp"
+            android:background="@android:drawable/ic_menu_more"
+            android:onClick=""/>
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/butCrea"
+        android:textColor="@color/Blanco"
+        android:id="@+id/butCrea"
+        android:layout_marginTop="25dp"
+        android:padding="5dp"
+        android:textSize="17sp"
+        android:onClick="addCita()"
+        android:textAllCaps="false"
+        android:background="@drawable/btn_style"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

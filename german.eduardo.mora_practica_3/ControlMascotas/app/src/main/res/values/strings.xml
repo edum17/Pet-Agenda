@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">MascotApps</string>
+    <string name="app_second_name">Control de mascotas</string>
+
+    <string name="title_section1">Agenda</string>
+    <string name="title_section2">Nueva cita</string>
+    <string name="title_section3">Mascotas</string>
+    <string name="title_section4">Nueva mascota</string>
+    <string name="title_section5">About</string>
+
+    <array name="nav_drawer_icons">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </array>
+
+
+    <string name="navigation_drawer_open">Abrir navigation drawer</string>
+    <string name="navigation_drawer_close">Cerrar navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+    //Ayuda
+    <string name="action_settings_AyudaAgenda">Ayuda</string>
+    <string name="action_settings_AyudaNuevaMascota">Ayuda</string>
+    <string name="action_settings_AyudaListaMascotas">Ayuda</string>
+
+    //Nueva Mascota
+    <string name="txtMascotas">Mascotas</string>
+    <string name="editTNombreM" />
+    <string name="textVNumeroC">Número de chip:</string>
+    <string name="buttonFecha">Fecha</string>
+    <string name="butGuardar">Guardar</string>
+
+    //Layout Consultar Mascota
+    <string name="activity_consultar_mascota">Consultar mascota</string>
+    <string name="butGuardarModCM">Guardar cambios</string>
+    <string name="action_settings_ConsultarMascota">Ayuda</string>
+
+
+    //Nueva cita
+    <string name="activity_crear_cita">Nueva cita</string>
+    <string name="butCrea">Crear cita</string>
+    <string name="butNotificaCita">Notifica cita</string>
+    <string name="action_settings_CrearCita">Ayuda</string>
+
+
+    //Consultar cita
+    <string name="activity_consultar_cita">Cita</string>
+    <string name="butGuardarMod">Guardar cambios</string>
+    <string name="action_settings_ConsultarCita">Ayuda</string>
+
+</resources>
