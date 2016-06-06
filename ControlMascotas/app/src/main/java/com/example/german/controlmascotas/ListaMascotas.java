@@ -199,8 +199,8 @@ public class ListaMascotas extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Eliminar cita");
-                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setTitle("Eliminar mascota");
+                            builder.setMessage("¿Desea eliminar ésta mascota?");
                             builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -253,8 +253,8 @@ public class ListaMascotas extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Eliminar cita");
-                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setTitle("Eliminar mascota");
+                            builder.setMessage("¿Desea eliminar ésta mascota?");
                             builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -311,8 +311,8 @@ public class ListaMascotas extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Eliminar cita");
-                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setTitle("Eliminar mascota");
+                            builder.setMessage("¿Desea eliminar ésta mascota?");
                             builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -368,8 +368,8 @@ public class ListaMascotas extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Eliminar cita");
-                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setTitle("Eliminar mascota");
+                            builder.setMessage("¿Desea eliminar ésta mascota?");
                             builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -512,8 +512,8 @@ public class ListaMascotas extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Eliminar cita");
-                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setTitle("Eliminar mascota");
+                            builder.setMessage("¿Desea eliminar ésta mascota?");
                             builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
