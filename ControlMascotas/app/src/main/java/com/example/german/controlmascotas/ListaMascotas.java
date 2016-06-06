@@ -252,15 +252,31 @@ public class ListaMascotas extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
-                            String nomC = adapter.getItemName(position);
-                            String identficador = Long.toString(adapter.getItemId(position));
-                            dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
-                            Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
-                            ArrayList<Mascota> actualizada = dbconeccion.listarMascotasPorTipo(tipo);
-                            if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
-                            else {
-                                listarMascotas();
-                            }
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Eliminar cita");
+                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String nomC = adapter.getItemName(position);
+                                    String identficador = Long.toString(adapter.getItemId(position));
+                                    dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
+                                    Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
+                                    ArrayList<Mascota> actualizada = dbconeccion.listarMascotasPorTipo(tipo);
+                                    if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
+                                    else {
+                                        listarMascotas();
+                                    }
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.show();
+
                         } else if (items[which].equals("Modificar mascota")) {
                             Intent consultar_mascota = new Intent(context, ConsultarMascota.class);
                             String identficador = Long.toString(adapter.getItemId(position));
@@ -294,15 +310,30 @@ public class ListaMascotas extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
-                            String nomC = adapter.getItemName(position);
-                            String identficador = Long.toString(adapter.getItemId(position));
-                            dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
-                            Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
-                            ArrayList<Mascota> actualizada = dbconeccion.listarMascotasPorTratamiento(tratamiento);
-                            if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
-                            else {
-                                listarMascotas();
-                            }
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Eliminar cita");
+                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String nomC = adapter.getItemName(position);
+                                    String identficador = Long.toString(adapter.getItemId(position));
+                                    dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
+                                    Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
+                                    ArrayList<Mascota> actualizada = dbconeccion.listarMascotasPorTratamiento(tratamiento);
+                                    if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
+                                    else {
+                                        listarMascotas();
+                                    }
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.show();
                         } else if (items[which].equals("Modificar mascota")) {
                             Intent consultar_mascota = new Intent(context, ConsultarMascota.class);
                             String identficador = Long.toString(adapter.getItemId(position));
@@ -336,15 +367,30 @@ public class ListaMascotas extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
-                            String nomC = adapter.getItemName(position);
-                            String identficador = Long.toString(adapter.getItemId(position));
-                            dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
-                            Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
-                            ArrayList<Mascota> actualizada = dbconeccion.listarMascotasSinTratamiento();
-                            if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
-                            else {
-                                listarMascotas();
-                            }
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Eliminar cita");
+                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String nomC = adapter.getItemName(position);
+                                    String identficador = Long.toString(adapter.getItemId(position));
+                                    dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
+                                    Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
+                                    ArrayList<Mascota> actualizada = dbconeccion.listarMascotasSinTratamiento();
+                                    if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
+                                    else {
+                                        listarMascotas();
+                                    }
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.show();
                         } else if (items[which].equals("Modificar mascota")) {
                             Intent consultar_mascota = new Intent(context, ConsultarMascota.class);
                             String identficador = Long.toString(adapter.getItemId(position));
@@ -465,15 +511,30 @@ public class ListaMascotas extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals("Eliminar mascota")) {
-                            String nomC = adapter.getItemName(position);
-                            String identficador = Long.toString(adapter.getItemId(position));
-                            dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
-                            Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
-                            ArrayList<Mascota> actualizada = dbconeccion.listarMascotasEnElIntervalo(fechaIni,fechaFin);
-                            if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
-                            else {
-                                listarMascotas();
-                            }
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Eliminar cita");
+                            builder.setMessage("¿Desea eliminar ésta cita?");
+                            builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String nomC = adapter.getItemName(position);
+                                    String identficador = Long.toString(adapter.getItemId(position));
+                                    dbconeccion.eliminarMascotaYCitas(Integer.parseInt(identficador));
+                                    Toast.makeText(context, "La mascota " + nomC + " ha sido eliminada", Toast.LENGTH_SHORT).show();
+                                    ArrayList<Mascota> actualizada = dbconeccion.listarMascotasEnElIntervalo(fechaIni,fechaFin);
+                                    if (actualizada.size() > 0) adapter.updateAdapter(actualizada);
+                                    else {
+                                        listarMascotas();
+                                    }
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.show();
                         } else if (items[which].equals("Modificar mascota")) {
                             Intent consultar_mascota = new Intent(context, ConsultarMascota.class);
                             String identficador = Long.toString(adapter.getItemId(position));
